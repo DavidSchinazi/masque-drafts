@@ -33,7 +33,7 @@ TODO Abstract
 
 # Introduction
 
-TODO Introduction
+TODO Introduction.
 
 
 # Conventions and Definitions
@@ -46,7 +46,7 @@ when, and only when, they appear in all capitals, as shown here.
 
 # Security Considerations
 
-TODO Security
+TODO Security.
 
 
 # IANA Considerations
