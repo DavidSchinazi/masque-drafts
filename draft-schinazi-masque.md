@@ -33,8 +33,8 @@ normative:
 
 informative:
   RFC7427:
+  RFC8441:
   RFC8471:
-  I-D.ietf-httpbis-h2-websockets:
   I-D.ietf-httpbis-http2-secondary-certs:
   I-D.pardue-httpbis-http-network-tunnelling:
   I-D.schwartz-httpbis-helium:
@@ -254,9 +254,9 @@ This proposal was inspired directly or indirectly by prior work from many
 people. In particular, this work is related to
 {{I-D.schwartz-httpbis-helium}} and
 {{I-D.pardue-httpbis-http-network-tunnelling}}. The mechanism used to
-run the MASQUE protocol over HTTP/2 streams was inspired by
-{{I-D.ietf-httpbis-h2-websockets}}. Using the OID for the signature algorithm
-was inspired by Signature Authentication in IKEv2 {{RFC7427}}.
+run the MASQUE protocol over HTTP/2 streams was inspired by {{RFC8441}}.
+Using the OID for the signature algorithm was inspired by Signature
+Authentication in IKEv2 {{RFC7427}}.
 
 The author would like to thank Christophe A., an inspiration and true leader
 of VPNs.
