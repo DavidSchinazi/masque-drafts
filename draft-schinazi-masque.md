@@ -43,7 +43,8 @@ informative:
 
 --- abstract
 
-This document describes a mechanism that allows co-locating and obfuscating
+This document describes MASQUE (Multiplexed Application Substrate over QUIC
+Encryption). MASQUE is a mechanism that allows co-locating and obfuscating
 networking applications behind an HTTPS web server. The currently prevalent
 use-case is to allow running a VPN server that is indistinguishable from an
 HTTPS server to any unauthenticated observer. We do not expect major providers
@@ -63,7 +64,8 @@ the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 # Introduction
 
-This document describes a mechanism that allows co-locating and obfuscating
+This document describes MASQUE (Multiplexed Application Substrate over QUIC
+Encryption). MASQUE is a mechanism that allows co-locating and obfuscating
 networking applications behind an HTTPS web server. The currently prevalent
 use-case is to allow running a VPN server that is indistinguishable from an
 HTTPS server to any unauthenticated observer. We do not expect major providers
