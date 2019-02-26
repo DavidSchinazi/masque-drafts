@@ -171,6 +171,12 @@ for the DATAGRAM extension {{I-D.pauly-quic-datagram}}.
 
 # Mechanisms the Server Can Advertise to Authenticated Clients
 
+Once a server has authenticated the client's MASQUE CONNECT request,
+it advertises services that the client may use. These services allow
+for example varying degrees of proxying services to help a client
+obfuscate the ultimate destination of their traffic.
+
+
 ## HTTP Proxy
 
 The client can make proxied HTTP requests through the server to other
