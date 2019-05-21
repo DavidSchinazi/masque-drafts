@@ -74,6 +74,12 @@ willing to take the risk of getting blocked, as shown when domain fronting
 was blocked. An expected use would be for individuals to enable this behind
 their personal websites via easy to configure open-source software.
 
+*DISCUSS*: do we want to provide a VPN service, or just an HTTP/QUIC
+service? VPN services requires interacting with the network layer,
+providing spearate addresses to clients, etc. This is much harder to
+deploy than a proxy service for which the proxy just needs a single
+port.
+
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
 the approach it is taking. As we have not yet found a home for this work,
@@ -93,6 +99,66 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 document are to be interpreted as described in BCP 14 {{RFC2119}} {{RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
 
+# Scenarios
+
+There are three important scenarios for deploying a QUIC proxy: the home server
+scenario, the hidden client scenario, and the onion scenario.
+
+## Home Server Scenario
+
+It is often difficult to connect to a home server. The IP address might
+change over time. Firewalls in the home router or in the network may block
+incoming connections. Deploying a "proxy in the cloud" helps resolve
+these issues.
+
+In the simplest instatiation of the scenario, the home server establishes
+QUIC connection with proxy server "in the cloud", and the DNS records of the
+homeserver point to address of the proxy server in the cloud. The clients
+of the home server will send their QUIC messages to the proxy. The proxy
+will identify the final destination of the messages by looking at
+the SNI in Initial packets, or the Destination CID in handshake and short packets.
+The proxy forwards these packets to the QUIC server as "datagram".
+The home server treat packets as if received on UDP socket.
+The home server forwards its own packets to the proxy as datagram.
+The proxy relays QUIC packets to the client.
+
+Optionally, the QUIC server may use the "preferred address" mechanism to suggest
+migration to a direct connection, bypassing the proxy.
+
+Optionally, local clients may discover the local server, without using the proxy.
+
+## Hidden client scenario
+
+There are many clients who would rather not establish a direct connection to
+web servers, for example to avoid location tracking. The clients can do that
+for their QUIC connection by running through a proxy server. The web server
+will only see the IP address of the proxy, not that of the client.
+
+In a simple instantioation of the scenario, the client establishes a QUIC connection
+with the proxy. The client sends QUIC messages to the proxy as datagrams.
+The proxy decapsulates the messages, sends them to web server.
+The web server replies to proxy. The proxy uses the destination CID to
+determines which client should process the packet, and forwards QUIC messages
+as Datagrams on the client-proxy connection.
+
+## Onion scenario
+
+The hidden client scenario only provides partial connection against tracking,
+because the proxy knows the address of the client. Onion routing solves that
+issue. Onion routing is available for TCP/TLS, but the proxy design should
+make it available for QUIC as well.
+
+In the onion scenario, the client establishes a connection to proxy, then through
+that to another proxy, etc. This creates a tree of proxies rooted at the client.
+QUIC connections are mapped to a specific branch of the tree.
+The first proxy knows the actual address of the client,
+but the other proxies only know the address of the previous proxy.
+To assure reasonable privacy, the path should include at least 3 proxies.
+
+Hidden server can similarly hide between several layers of proxy. Hidden servers
+should not publish their address in the DNS. They may use an Onion DHT service
+instead (see Tor ".onion"), or in fact any other mechanism.
+This is out of scope in this spec.
 
 # Requirements
 
@@ -120,6 +186,62 @@ would reply to differently than if it were a normal web server.
 When QUIC is blocked, MASQUE can run over TCP and still satisfy
 previous requirements. Note that in this scenario performance may be
 negatively impacted.
+
+## Proxy and client authentication
+
+QUIC relies on TLS, the client or the home server will normally authenticate the proxy by verifying the proxy's certificate.
+In the home server and hidden client scenarios, the proxy may also want to verify the server's identity before providing service.
+In the onion scenario,the client probably wants to remain anonymous.
+
+There are two classes of reasons for requiring authentication of the proxy's client: legal and economics.
+
+In some jurisdictions, a proxy may be held responsible if the home server publishes "illegal" content or the hidden client accesses it.
+This reasoning leads many Wi-Fi network to require some explicit consent before allowing a client to connect.
+In free countries, it is enough for the client to check a box acknowledging that it won't do anything illegal.
+In authoritarian countries, Wi-Fi providers are supposed to verify and log the client's identity.
+We might expect proxy services to have the same type of legal requirements, but to require more automation.
+The "consent" form require human intervention, which is hard to automate. Verifying a certificate is easier.
+
+There is also an economic access to proxy provision. Providing robust proxy services to multiple clients may be costly.
+Proxies probably need some kind of business model. Some may use a "subscription" model, tied to client authentication.
+They will authenticate the client and verify that subscription fees have been paid before providing service.
+
+The subscription business model may not be adequate in the "onion" scenario, which aim to hide clients' identities.
+We might explore "temporary certificates" that prove that the client is authorized to use the service without disclosing the identity.
+We might also explore some kind of micropayment system. The client would get anonymous "coins" from a service manager.
+The proxies could collect the coins, and redeem them to pay for the service.
+The agreement to "not do naything illegal" could be verified by the service manager before prividing coins.
+The whole micropayment architecture is probably out of scope in the proxy design, but there should be an API to enable it. 
+
+## Single proxy address
+
+A proxy should not require more network access than a regular server.
+A typical server only listens on a single UDP port, typically 443.
+Proxy services should not require listening to additional UDP ports, or
+opening additional ports in the local firewall.
+
+## SNI routing and hidden SNI
+
+In the "home server" scenario, the proxy will relay connection requests based on the server SNI.
+The protocol should allow configuration of that SNI, typically after verifying the home server's identity.
+
+The proxy should support ESNI. This is very much the same scenario as a server farm or CDN supporting ESNI.
+
+Supporting ESNI adds constraints in the forwarding of incoming connections.
+The proxy can decrypt the ESNI, but the home server cannot. The server will need some of the ESNI data.
+The proxy must forward them to the client.
+
+## Destination CID
+
+The proxy will receive packets in which the destination is identified by the DCID.
+
+In standard code, the DCID is chosen independently by each client, and some clients
+may not be using any DCID at all. The proxy could observe collisions, or be
+unable to determine which client should receive a packet.
+
+To ensure routability, the clients should synchronize their use of CID with the
+proxy. This may require stating a minimum length, imposing some form of randomness,
+or even getting the proxy to propose CID values.
 
 
 # Overview of the Mechanism
