@@ -46,12 +46,12 @@ informative:
 This document describes MASQUE (Multiplexed Application Substrate over QUIC
 Encryption). MASQUE is a mechanism that allows co-locating and obfuscating
 networking applications behind an HTTPS web server. The currently prevalent
-use-case is to allow running a VPN server that is indistinguishable from an
-HTTPS server to any unauthenticated observer. We do not expect major providers
-and CDNs to deploy this behind their main TLS certificate, as they are not
-willing to take the risk of getting blocked, as shown when domain fronting
-was blocked. An expected use would be for individuals to enable this behind
-their personal websites via easy to configure open-source software.
+use-case is to allow running a proxy or VPN server that is indistinguishable
+from an HTTPS server to any unauthenticated observer. We do not expect major
+providers and CDNs to deploy this behind their main TLS certificate, as they
+are not willing to take the risk of getting blocked, as shown when domain
+fronting was blocked. An expected use would be for individuals to enable this
+behind their personal websites via easy to configure open-source software.
 
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
@@ -67,12 +67,12 @@ the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 This document describes MASQUE (Multiplexed Application Substrate over QUIC
 Encryption). MASQUE is a mechanism that allows co-locating and obfuscating
 networking applications behind an HTTPS web server. The currently prevalent
-use-case is to allow running a VPN server that is indistinguishable from an
-HTTPS server to any unauthenticated observer. We do not expect major providers
-and CDNs to deploy this behind their main TLS certificate, as they are not
-willing to take the risk of getting blocked, as shown when domain fronting
-was blocked. An expected use would be for individuals to enable this behind
-their personal websites via easy to configure open-source software.
+use-case is to allow running a proxy or VPN server that is indistinguishable
+from an HTTPS server to any unauthenticated observer. We do not expect major
+providers and CDNs to deploy this behind their main TLS certificate, as they
+are not willing to take the risk of getting blocked, as shown when domain
+fronting was blocked. An expected use would be for individuals to enable this
+behind their personal websites via easy to configure open-source software.
 
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
@@ -100,10 +100,10 @@ This section describes the goals and requirements chosen for the MASQUE
 protocol.
 
 
-## Invisibility of VPN Usage
+## Invisibility of Usage
 
-An authenticated client using the VPN appears to observers as a regular HTTPS
-client. Observers only see that HTTP/3 or HTTP/2 is being used over an
+An authenticated client using MASQUE features appears to observers as a regular
+HTTPS client. Observers only see that HTTP/3 or HTTP/2 is being used over an
 encrypted channel. No part of the exchanges between client and server may
 stick out. Note that traffic analysis is currently considered out of scope.
 
