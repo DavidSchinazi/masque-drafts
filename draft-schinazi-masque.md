@@ -36,6 +36,7 @@ informative:
   RFC8441:
   RFC8471:
   I-D.ietf-httpbis-http2-secondary-certs:
+  I-D.ietf-tls-esni:
   I-D.pardue-httpbis-http-network-tunnelling:
   I-D.schwartz-httpbis-helium:
   I-D.sullivan-tls-post-handshake-auth:
@@ -92,6 +93,50 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in BCP 14 {{RFC2119}} {{RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
+
+
+# Usage Scenarios
+
+There are currently multiple usage scenarios that can benefit from MASQUE.
+
+
+## Protection from Network Providers
+
+Some users may wish to obfuscate the destination of their network traffic from
+their network provider. This prevents network providers from using data
+harvested from this network traffic in ways the user did not intend.
+
+
+## Protection from Web Servers
+
+There are many clients who would rather not establish a direct connection to
+web servers, for example to avoid location tracking. The clients can do that
+by running their traffic through a MASQUE server. The web server will only see
+the IP address of the MASQUE server, not that of the client.
+
+
+## Making a Home Server Available
+
+It is often difficult to connect to a home server. The IP address might
+change over time. Firewalls in the home router or in the network may block
+incoming connections. Using a MASQUE server as a rendez-vous point helps
+resolve these issues.
+
+
+## Onion Routing
+
+Routing traffic through a MASQUE server only provides partial protection
+against tracking, because the MASQUE server knows the address of the client.
+Onion routing as it exists today mitigates this issue for TCP/TLS. A MASQUE
+server could allow onion routing over QUIC.
+
+In this scenario, the client establishes a connection to the MASQUE server,
+then through that to another MASQUE server, etc. This creates a tree of MASQUE
+servers rooted at the client. QUIC connections are mapped to a specific branch
+of the tree. The first MASQUE server knows the actual address of the client,
+but the other MASQUE servers only know the address of the previous server.
+To assure reasonable privacy, the path should include at least 3 MASQUE
+servers.
 
 
 # Requirements
@@ -174,9 +219,7 @@ for the DATAGRAM extension {{I-D.pauly-quic-datagram}}.
 # Mechanisms the Server Can Advertise to Authenticated Clients
 
 Once a server has authenticated the client's MASQUE CONNECT request,
-it advertises services that the client may use. These services allow
-for example varying degrees of proxying services to help a client
-obfuscate the ultimate destination of their traffic.
+it advertises services that the client may use.
 
 
 ## HTTP Proxy
@@ -211,6 +254,23 @@ order. The target IP and port are sent as part of the URL query. Resetting
 that stream instructs the server to release any associates resources.
 
 
+## QUIC Proxying
+
+By leveraging QUIC client connection IDs, a MASQUE server can act as a QUIC
+proxy while only using one UDP port. The server informs the client of a
+scheme client connection IDs (for example, random of a minimum length or vended
+by the MASQUE server) and then the server can forward those packets to further
+web servers.
+
+This mechanism can elide the connection IDs on the link between the client
+and MASQUE server by negotiating a mapping between DATAGRAM_IDs and the tuple
+(client connection ID, server connection ID, server IP address, server port).
+
+Compared to UDP proxying, this mode has the advantage of only requiring one UDP
+port to be open on the MASQUE server, and can lower the overhead on the link
+between client and MASQUE server by compressing connection IDs.
+
+
 ## IP Proxying
 
 For the rare cases where the previous mechanisms are not sufficient, proxying
@@ -227,6 +287,21 @@ and server, and that will most likely be the smallest MTU link in the path
 due to QUIC header and authentication tag overhead. The client is responsible
 for not sending overly large UDP packets and notifying the server of the low
 MTU. Therefore PMTUD is currently seen as out of scope of this document.
+
+
+## Service Registration
+
+MASQUE can be used to make a home server accessible on the wide area. The home
+server authenticates to the MASQUE server and registers a domain name it wishes
+to serve. The MASQUE server can then forward any traffic it receives for that
+domain name (by inspecting the TLS Server Name Indication (SNI) extension) to
+the home server. This received traffic is not authenticated and it allows
+non-modified clients to communicate with the home server without knowing it is
+not colocated with the MASQUE server.
+
+To help obfuscate the home server, deployments can use Encrypted Server Name
+Indication (ESNI) {{I-D.ietf-tls-esni}}. That will require the MASQUE server
+sending the cleartext SNI to the home server.
 
 
 # Security Considerations
