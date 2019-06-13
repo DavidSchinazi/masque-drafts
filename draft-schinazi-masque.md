@@ -164,7 +164,8 @@ would reply to differently than if it were a normal web server.
 
 When QUIC is blocked, MASQUE can run over TCP and still satisfy
 previous requirements. Note that in this scenario performance may be
-negatively impacted.
+negatively impacted. MASQUE implementations using HTTP/3 MUST support the
+fallback to HTTP/2 to avoid incentivizing censors to block HTTP/3 or QUIC.
 
 
 # Overview of the Mechanism
