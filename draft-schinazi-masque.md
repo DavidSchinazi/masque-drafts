@@ -150,7 +150,7 @@ protocol.
 An authenticated client using MASQUE features appears to observers as a regular
 HTTPS client. Observers only see that HTTP/3 or HTTP/2 is being used over an
 encrypted channel. No part of the exchanges between client and server may
-stick out. Note that traffic analysis is currently considered out of scope.
+stick out. Note that traffic analysis is discussed in {{traffic-analysis}}.
 
 
 ## Invisibility of the Server
@@ -308,6 +308,22 @@ sending the cleartext SNI to the home server.
 
 Here be dragons. TODO: slay the dragons.
 
+## Traffic Analysis {#traffic-analysis}
+
+While MASQUE ensures that proxied traffic appears similar to regular HTTP
+traffic, it doesn't inherently defeat traffic analysis. However, the fact that
+MASQUE leverages QUIC allows it to segment STREAM frames over multiple packets
+and add PADDING frames to change the observable characteristics of its
+encrypted traffic. The exact details of how to change traffic patterns to
+defeat traffic analysis is considered an open research question and is out of
+scope for this document.
+
+When multiple MASQUE servers are available, a client can leverage QUIC
+connection migration to seamlessly transition its end-to-end QUIC connections
+by treating separate MASQUE servers as different paths. This could afford an
+additional level of obfuscation in hopes of rendering traffic analysis less
+effective.
+
 
 # IANA Considerations
 
@@ -339,7 +355,8 @@ people. In particular, this work is related to
 {{I-D.pardue-httpbis-http-network-tunnelling}}. The mechanism used to
 run the MASQUE protocol over HTTP/2 streams was inspired by {{RFC8441}}.
 Using the OID for the signature algorithm was inspired by Signature
-Authentication in IKEv2 {{RFC7427}}.
+Authentication in IKEv2 {{RFC7427}}. Brendan Moran is to thank for the idea
+of leveraging connection migration across MASQUE servers.
 
 The author would like to thank Christophe A., an inspiration and true leader
 of VPNs.
