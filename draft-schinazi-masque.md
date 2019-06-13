@@ -56,9 +56,9 @@ behind their personal websites via easy to configure open-source software.
 
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
-the approach it is taking. As we have not yet found a home for this work,
-discussion is encouraged to happen on the GitHub repository which contains
-the draft: <https://github.com/DavidSchinazi/masque-drafts>.
+the approach it is taking. Discussion of this work is encouraged to happen on
+the MASQUE IETF mailing list <masque@ietf.org> or on the GitHub repository
+which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 
 --- middle
@@ -77,9 +77,9 @@ behind their personal websites via easy to configure open-source software.
 
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
-the approach it is taking. As we have not yet found a home for this work,
-discussion is encouraged to happen on the GitHub repository which contains
-the draft: <https://github.com/DavidSchinazi/masque-drafts>.
+the approach it is taking. Discussion of this work is encouraged to happen on
+the MASQUE IETF mailing list <masque@ietf.org> or on the GitHub repository
+which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 MASQUE leverages the efficient head-of-line blocking prevention features of
 the QUIC transport protocol {{I-D.ietf-quic-transport}} when MASQUE is used
