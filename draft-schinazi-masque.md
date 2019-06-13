@@ -325,6 +325,16 @@ additional level of obfuscation in hopes of rendering traffic analysis less
 effective.
 
 
+## Untrusted Servers
+
+As with any proxy or VPN technology, MASQUE hides some of the client's private
+information (such as who they are communicating with) from their network
+provider by transferring that information to the MASQUE server. It is paramount
+that clients only use MASQUE servers that they trust, as a malicious actor
+could easily setup a MASQUE server and advertise it as a privacy solution in
+hopes of attracting users to send it their traffic.
+
+
 # IANA Considerations
 
 We will need to register:
