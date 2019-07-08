@@ -143,8 +143,7 @@ would reply to differently than if it were a normal web server.
 
 When QUIC is blocked, MASQUE can run over TCP and still satisfy
 previous requirements. Note that in this scenario performance may be
-negatively impacted. MASQUE implementations using HTTP/3 MUST support the
-fallback to HTTP/2 to avoid incentivizing censors to block HTTP/3 or QUIC.
+negatively impacted.
 
 
 # Overview of the Mechanism
@@ -282,6 +281,14 @@ not colocated with the MASQUE server.
 To help obfuscate the home server, deployments can use Encrypted Server Name
 Indication (ESNI) {{?I-D.ietf-tls-esni}}. That will require the MASQUE server
 sending the cleartext SNI to the home server.
+
+
+# Operation over HTTP/2
+
+MASQUE implementations using HTTP/3 MUST support the fallback to HTTP/2 to
+avoid incentivizing censors to block HTTP/3 or QUIC. When running over HTTP/2,
+MASQUE uses the Extended CONNECT method to negotiate the use of datagrams over
+an HTTP/2 stream {{!I-D.kinnear-httpbis-http2-transport}}.
 
 
 # Security Considerations
