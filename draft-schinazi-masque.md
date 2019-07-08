@@ -225,9 +225,9 @@ that stream instructs the server to release any associates resources.
 
 By leveraging QUIC client connection IDs, a MASQUE server can act as a QUIC
 proxy while only using one UDP port. The server informs the client of a
-scheme client connection IDs (for example, random of a minimum length or vended
-by the MASQUE server) and then the server can forward those packets to further
-web servers.
+scheme for client connection IDs (for example, random of a minimum length or
+vended by the MASQUE server) and then the server can forward those packets to
+further web servers.
 
 This mechanism can elide the connection IDs on the link between the client
 and MASQUE server by negotiating a mapping between DATAGRAM_IDs and the tuple
