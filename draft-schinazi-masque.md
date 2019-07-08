@@ -290,6 +290,12 @@ avoid incentivizing censors to block HTTP/3 or QUIC. When running over HTTP/2,
 MASQUE uses the Extended CONNECT method to negotiate the use of datagrams over
 an HTTP/2 stream {{!I-D.kinnear-httpbis-http2-transport}}.
 
+MASQUE implementations SHOULD discover that HTTP/3 is available (as opposed to
+only HTTP/2) using the same mechanism as regular HTTP traffic. This current
+standardized mechanism for this is HTTP Alternative Services {{!RFC7838}},
+but future mechanisms such as {{?I-D.schwartz-httpbis-dns-alt-svc}} can be
+used if they become widespread.
+
 
 # Security Considerations
 
