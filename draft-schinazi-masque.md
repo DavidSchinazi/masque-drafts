@@ -192,7 +192,8 @@ it advertises services that the client may use.
 
 The client can make proxied HTTP requests through the server to other
 servers. In practice this will mean using the CONNECT method to establish a
-stream over which to run TLS to a different remote destination.
+stream over which to run TLS to a different remote destination. The proxy
+applies back-pressure to streams in both directions.
 
 
 ## DNS over HTTPS {#doh}
