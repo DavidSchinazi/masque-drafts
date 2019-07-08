@@ -155,7 +155,9 @@ maintains a list of authorized MASQUE clients, and their public key.
 The client starts by establishing a regular HTTPS connection to the server
 (HTTP/3 over QUIC or HTTP/2 over TLS 1.3 {{!RFC8446}} over TCP), and validates
 the server's TLS certificate as it normally would for HTTPS. If validation
-fails, the connection is aborted. The client then uses HTTP Transport
+fails, the connection is aborted. At this point the client can send regular
+unauthenticated HTTP requests to the server. When it wishes to start MASQUE,
+the client uses HTTP Transport
 Authentication (draft-schinazi-httpbis-transport-auth) to prove its
 possession of its associated key. The client sends the
 Transport-Authentication header alongside an HTTP CONNECT request for
