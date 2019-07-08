@@ -278,6 +278,8 @@ Both of these entries are listed with the following qualifiers:
 {:numbered="false"}
 
 The authors would like to thank many members of the IETF community, as this
-document is the fruit of many hallway conversations.
+document is the fruit of many hallway conversations. Using the OID for the
+signature and HMAC algorithms was inspired by Signature Authentication in
+IKEv2 {{?RFC7427}}.
 
 

@@ -155,37 +155,17 @@ maintains a list of authorized MASQUE clients, and their public key.
 The client starts by establishing a regular HTTPS connection to the server
 (HTTP/3 over QUIC or HTTP/2 over TLS 1.3 {{!RFC8446}} over TCP), and validates
 the server's TLS certificate as it normally would for HTTPS. If validation
-fails, the connection is aborted. The client then uses a TLS keying material
-exporter {{!RFC5705}} with label "EXPORTER-masque" and no context to generate a
-32-byte key. This key is then used as a nonce to prevent replay attacks. The
-client then sends an HTTP CONNECT request for "/.well-known/masque/initial"
-with the :protocol pseudo-header field set to "masque", and a
-"Masque-Authentication:" header. The MASQUE authentication header differs
-from the HTTP "Authorization" header in that it applies to the underlying
-connection instead of being per-request. It can use either a shared secret
-or asymmetric authentication. The asymmetric variant uses authentication
-method "PublicKey", and it transmits a signature of the nonce with the
-client's public key encoded in base64 format, followed by other information
-such as the client username and signature algorithm OID. The symmetric
-variant uses authentication method "HMAC" and transmits an HMAC of the
-nonce with the shared secret instead of a signature. For example this header
-could look like:
+fails, the connection is aborted. The client then uses HTTP Transport
+Authentication (draft-schinazi-httpbis-transport-auth) to prove its
+possession of its associated key. The client sends the
+Transport-Authentication header alongside an HTTP CONNECT request for
+"/.well-known/masque/initial" with the :protocol pseudo-header field set to
+"masque".
 
-~~~
-Masque-Authentication: PublicKey u="am9obi5kb2U=";a=1.3.101.112;
-s="SW5zZXJ0IHNpZ25hdHVyZSBvZiBub25jZSBoZXJlIHdo
-aWNoIHRha2VzIDUxMiBiaXRzIGZvciBFZDI1NTE5IQ=="
-
-Masque-Authentication: HMAC u="am9obi5kb2U=";a=2.16.840.1.101.3.4.2.3;
-s="SW5zZXJ0IHNpZ25hdHVyZSBvZiBub25jZSBoZXJlIHdo
-aWNoIHRha2VzIDUxMiBiaXRzIGZvciBFZDI1NTE5IQ=="
-~~~
-{: #auth-format title="MASQUE Authentication Format Example"}
-
-When the server receives this CONNECT request, it verifies the signature and
+When the server receives this CONNECT request, it authenticates the client and
 if that fails responds with code "405 Method Not Allowed", making sure its
 response is the same as what it would return for any unexpected CONNECT
-request. If the signature verifies, the server responds with code
+request. If authentication succeeds, the server responds with code
 "101 Switching Protocols", and from then on this HTTP stream is now dedicated
 to the MASQUE protocol. That protocol provides a reliable bidirectional
 message exchange mechanism, which is used by the client and server to
@@ -332,12 +312,6 @@ hopes of attracting users to send it their traffic.
 
 We will need to register:
 
-* the TLS keying material exporter label "EXPORTER-masque" (spec required)
-<https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#exporter-labels>
-
-* the new HTTP header "Masque-Authentication"
-<https://www.iana.org/assignments/message-headers/message-headers.xhtml>
-
 * the "/.well-known/masque/" URI (expert review)
 <https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml>
 
@@ -357,9 +331,8 @@ people. In particular, this work is related to
 {{?I-D.schwartz-httpbis-helium}} and
 {{?I-D.pardue-httpbis-http-network-tunnelling}}. The mechanism used to
 run the MASQUE protocol over HTTP/2 streams was inspired by {{?RFC8441}}.
-Using the OID for the signature algorithm was inspired by Signature
-Authentication in IKEv2 {{?RFC7427}}. Brendan Moran is to thank for the idea
-of leveraging connection migration across MASQUE servers.
+Brendan Moran is to thank for the idea of leveraging connection migration
+across MASQUE servers.
 
 The author would like to thank Christophe A., an inspiration and true leader
 of VPNs.
