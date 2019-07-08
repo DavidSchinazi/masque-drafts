@@ -20,27 +20,6 @@ author:
     country: "United States of America"
     email: dschinazi.ietf@gmail.com
 
-normative:
-  RFC2119:
-  RFC5705:
-  RFC7540:
-  RFC8174:
-  RFC8446:
-  RFC8484:
-  I-D.ietf-quic-http:
-  I-D.ietf-quic-transport:
-  I-D.pauly-quic-datagram:
-
-informative:
-  RFC7427:
-  RFC8441:
-  RFC8471:
-  I-D.ietf-httpbis-http2-secondary-certs:
-  I-D.ietf-tls-esni:
-  I-D.pardue-httpbis-http-network-tunnelling:
-  I-D.schwartz-httpbis-helium:
-  I-D.sullivan-tls-post-handshake-auth:
-
 
 --- abstract
 
@@ -82,16 +61,16 @@ the MASQUE IETF mailing list <masque@ietf.org> or on the GitHub repository
 which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 MASQUE leverages the efficient head-of-line blocking prevention features of
-the QUIC transport protocol {{I-D.ietf-quic-transport}} when MASQUE is used
-in an HTTP/3 {{I-D.ietf-quic-http}} server. MASQUE can also run in an
-HTTP/2 server {{RFC7540}} but at a performance cost.
+the QUIC transport protocol {{!I-D.ietf-quic-transport}} when MASQUE is used
+in an HTTP/3 {{!I-D.ietf-quic-http}} server. MASQUE can also run in an
+HTTP/2 server {{!RFC7540}} but at a performance cost.
 
 
 ## Conventions and Definitions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in BCP 14 {{RFC2119}} {{RFC8174}}
+document are to be interpreted as described in BCP 14 {{!RFC2119}} {{!RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
 
 
@@ -175,10 +154,10 @@ for its domain. The client has a public/private key pair, and the server
 maintains a list of authorized MASQUE clients, and their public key.
 (Alternatively, clients can also be authenticated using a shared secret.)
 The client starts by establishing a regular HTTPS connection to the server
-(HTTP/3 over QUIC or HTTP/2 over TLS 1.3 {{RFC8446}} over TCP), and validates
+(HTTP/3 over QUIC or HTTP/2 over TLS 1.3 {{!RFC8446}} over TCP), and validates
 the server's TLS certificate as it normally would for HTTPS. If validation
 fails, the connection is aborted. The client then uses a TLS keying material
-exporter {{RFC5705}} with label "EXPORTER-masque" and no context to generate a
+exporter {{!RFC5705}} with label "EXPORTER-masque" and no context to generate a
 32-byte key. This key is then used as a nonce to prevent replay attacks. The
 client then sends an HTTP CONNECT request for "/.well-known/masque/initial"
 with the :protocol pseudo-header field set to "masque", and a
@@ -214,7 +193,7 @@ message exchange mechanism, which is used by the client and server to
 negotiate what protocol options are supported and enabled by policy, and
 client VPN configuration such as IP addresses. When using QUIC, this protocol
 also allows endpoints to negotiate the use of QUIC extensions, such as support
-for the DATAGRAM extension {{I-D.pauly-quic-datagram}}.
+for the DATAGRAM extension {{!I-D.pauly-quic-datagram}}.
 
 
 # Mechanisms the Server Can Advertise to Authenticated Clients
@@ -232,7 +211,7 @@ stream over which to run TLS to a different remote destination.
 
 ## DNS over HTTPS
 
-The client can send DNS queries using DNS over HTTPS (DoH) {{RFC8484}}
+The client can send DNS queries using DNS over HTTPS (DoH) {{!RFC8484}}
 to the MASQUE server.
 
 
@@ -301,7 +280,7 @@ non-modified clients to communicate with the home server without knowing it is
 not colocated with the MASQUE server.
 
 To help obfuscate the home server, deployments can use Encrypted Server Name
-Indication (ESNI) {{I-D.ietf-tls-esni}}. That will require the MASQUE server
+Indication (ESNI) {{?I-D.ietf-tls-esni}}. That will require the MASQUE server
 sending the cleartext SNI to the home server.
 
 
@@ -362,11 +341,11 @@ likely to define new registries of its own.
 
 This proposal was inspired directly or indirectly by prior work from many
 people. In particular, this work is related to
-{{I-D.schwartz-httpbis-helium}} and
-{{I-D.pardue-httpbis-http-network-tunnelling}}. The mechanism used to
-run the MASQUE protocol over HTTP/2 streams was inspired by {{RFC8441}}.
+{{?I-D.schwartz-httpbis-helium}} and
+{{?I-D.pardue-httpbis-http-network-tunnelling}}. The mechanism used to
+run the MASQUE protocol over HTTP/2 streams was inspired by {{?RFC8441}}.
 Using the OID for the signature algorithm was inspired by Signature
-Authentication in IKEv2 {{RFC7427}}. Brendan Moran is to thank for the idea
+Authentication in IKEv2 {{?RFC7427}}. Brendan Moran is to thank for the idea
 of leveraging connection migration across MASQUE servers.
 
 The author would like to thank Christophe A., an inspiration and true leader
@@ -400,19 +379,19 @@ If the server or client want to hide that HTTP/2 is used, the client can set
 its ALPN to an older version of HTTP and then use the Upgrade header to
 upgrade to HTTP/2 inside the TLS encryption.
 
-The client authentication used here is similar to how Token Binding {{RFC8471}}
-operates, but it has very different goals. MASQUE does not use token binding
-directly because using token binding requires sending the token_binding TLS
-extension in the TLS ClientHello, and that would stick out compared to a
-regular TLS connection.
+The client authentication used here is similar to how Token
+Binding {{?RFC8471}} operates, but it has very different goals. MASQUE does
+not use token binding directly because using token binding requires sending
+the token_binding TLS extension in the TLS ClientHello, and that would stick
+out compared to a regular TLS connection.
 
-TLS post-handshake authentication {{I-D.sullivan-tls-post-handshake-auth}}
+TLS post-handshake authentication {{?I-D.sullivan-tls-post-handshake-auth}}
 is not used by this proposal because that requires sending the
 "post_handshake_auth" extension in the TLS ClientHello, and that would stick
 out from a regular HTTPS connection.
 
 Client authentication could have benefited from Secondary Certificate
-Authentication in HTTP/2 {{I-D.ietf-httpbis-http2-secondary-certs}},
+Authentication in HTTP/2 {{?I-D.ietf-httpbis-http2-secondary-certs}},
 however that has two downsides: it requires the server advertising that
 it supports it in its SETTINGS, and it cannot be sent unprompted by the
 client, so the server would have to request authentication.
