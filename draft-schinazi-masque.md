@@ -176,6 +176,11 @@ client VPN configuration such as IP addresses. When using QUIC, this protocol
 also allows endpoints to negotiate the use of QUIC extensions, such as support
 for the DATAGRAM extension {{!I-D.pauly-quic-datagram}}.
 
+Clients MUST NOT attempt to "resume" MASQUE state similarly to how TLS
+sessions can be resumed. Every new QUIC or TLS connection requires fully
+authenticating the client and server. QUIC 0-RTT and TLS early data MUST
+NOT be used with MASQUE as they are not forward secure.
+
 
 # Mechanisms the Server Can Advertise to Authenticated Clients {#mechanisms}
 
