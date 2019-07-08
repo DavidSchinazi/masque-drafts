@@ -42,7 +42,7 @@ which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 --- middle
 
-# Introduction
+# Introduction {#introduction}
 
 This document describes MASQUE (Multiplexed Application Substrate over QUIC
 Encryption). MASQUE is a mechanism that allows co-locating and obfuscating
@@ -66,7 +66,7 @@ in an HTTP/3 {{!I-D.ietf-quic-http}} server. MASQUE can also run in an
 HTTP/2 server {{!RFC7540}} but at a performance cost.
 
 
-## Conventions and Definitions
+## Conventions and Definitions {#conventions}
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
@@ -74,19 +74,19 @@ document are to be interpreted as described in BCP 14 {{!RFC2119}} {{!RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
 
 
-# Usage Scenarios
+# Usage Scenarios {#usage-scenarios}
 
 There are currently multiple usage scenarios that can benefit from MASQUE.
 
 
-## Protection from Network Providers
+## Protection from Network Providers {#protection-providers}
 
 Some users may wish to obfuscate the destination of their network traffic from
 their network provider. This prevents network providers from using data
 harvested from this network traffic in ways the user did not intend.
 
 
-## Protection from Web Servers
+## Protection from Web Servers {#protection-servers}
 
 There are many clients who would rather not establish a direct connection to
 web servers, for example to avoid location tracking. The clients can do that
@@ -94,7 +94,7 @@ by running their traffic through a MASQUE server. The web server will only see
 the IP address of the MASQUE server, not that of the client.
 
 
-## Making a Home Server Available
+## Making a Home Server Available {#home-server}
 
 It is often difficult to connect to a home server. The IP address might
 change over time. Firewalls in the home router or in the network may block
@@ -102,7 +102,7 @@ incoming connections. Using a MASQUE server as a rendez-vous point helps
 resolve these issues.
 
 
-## Onion Routing
+## Onion Routing {#onion}
 
 Routing traffic through a MASQUE server only provides partial protection
 against tracking, because the MASQUE server knows the address of the client.
@@ -118,13 +118,13 @@ To assure reasonable privacy, the path should include at least 3 MASQUE
 servers.
 
 
-# Requirements
+# Requirements {#requirements}
 
 This section describes the goals and requirements chosen for the MASQUE
 protocol.
 
 
-## Invisibility of Usage
+## Invisibility of Usage {#invisibility-usage}
 
 An authenticated client using MASQUE features appears to observers as a regular
 HTTPS client. Observers only see that HTTP/3 or HTTP/2 is being used over an
@@ -132,21 +132,21 @@ encrypted channel. No part of the exchanges between client and server may
 stick out. Note that traffic analysis is discussed in {{traffic-analysis}}.
 
 
-## Invisibility of the Server
+## Invisibility of the Server {#invisibility-server}
 
 To anyone without private keys, the server is indistinguishable from a regular
 web server. It is impossible to send an unauthenticated probe that the server
 would reply to differently than if it were a normal web server.
 
 
-## Fallback to HTTP/2 over TLS over TCP
+## Fallback to HTTP/2 over TLS over TCP {#fallback-h2}
 
 When QUIC is blocked, MASQUE can run over TCP and still satisfy
 previous requirements. Note that in this scenario performance may be
 negatively impacted.
 
 
-# Overview of the Mechanism
+# Overview of the Mechanism {#overview}
 
 The server runs an HTTPS server on port 443, and has a valid TLS certificate
 for its domain. The client has a public/private key pair, and the server
@@ -195,26 +195,26 @@ also allows endpoints to negotiate the use of QUIC extensions, such as support
 for the DATAGRAM extension {{!I-D.pauly-quic-datagram}}.
 
 
-# Mechanisms the Server Can Advertise to Authenticated Clients
+# Mechanisms the Server Can Advertise to Authenticated Clients {#mechanisms}
 
 Once a server has authenticated the client's MASQUE CONNECT request,
 it advertises services that the client may use.
 
 
-## HTTP Proxy
+## HTTP Proxy {#http-proxy}
 
 The client can make proxied HTTP requests through the server to other
 servers. In practice this will mean using the CONNECT method to establish a
 stream over which to run TLS to a different remote destination.
 
 
-## DNS over HTTPS
+## DNS over HTTPS {#doh}
 
 The client can send DNS queries using DNS over HTTPS (DoH) {{!RFC8484}}
 to the MASQUE server.
 
 
-## UDP Proxying
+## UDP Proxying {#udp-proxy}
 
 In order to support WebRTC or QUIC to further servers, clients need a way to
 relay UDP onwards to a remote server. In practice for most widely deployed
@@ -233,7 +233,7 @@ order. The target IP and port are sent as part of the URL query. Resetting
 that stream instructs the server to release any associates resources.
 
 
-## QUIC Proxying
+## QUIC Proxying {#quic-proxy}
 
 By leveraging QUIC client connection IDs, a MASQUE server can act as a QUIC
 proxy while only using one UDP port. The server informs the client of a
@@ -250,7 +250,7 @@ port to be open on the MASQUE server, and can lower the overhead on the link
 between client and MASQUE server by compressing connection IDs.
 
 
-## IP Proxying
+## IP Proxying {#ip-proxy}
 
 For the rare cases where the previous mechanisms are not sufficient, proxying
 can be performed at the IP layer. This would use a different DATAGRAM_ID and
@@ -259,7 +259,7 @@ stream with two byte length prefix would be used. The server can inspect the
 IP datagram to look for the destination address in the IP header.
 
 
-## Path MTU Discovery
+## Path MTU Discovery {#pmtud}
 
 In the main deployment of this mechanism, QUIC will be used between client
 and server, and that will most likely be the smallest MTU link in the path
@@ -268,7 +268,7 @@ for not sending overly large UDP packets and notifying the server of the low
 MTU. Therefore PMTUD is currently seen as out of scope of this document.
 
 
-## Service Registration
+## Service Registration {#service-registration}
 
 MASQUE can be used to make a home server accessible on the wide area. The home
 server authenticates to the MASQUE server and registers a domain name it wishes
@@ -283,7 +283,7 @@ Indication (ESNI) {{?I-D.ietf-tls-esni}}. That will require the MASQUE server
 sending the cleartext SNI to the home server.
 
 
-# Operation over HTTP/2
+# Operation over HTTP/2 {#http2}
 
 MASQUE implementations using HTTP/3 MUST support the fallback to HTTP/2 to
 avoid incentivizing censors to block HTTP/3 or QUIC. When running over HTTP/2,
@@ -297,7 +297,7 @@ but future mechanisms such as {{?I-D.schwartz-httpbis-dns-alt-svc}} can be
 used if they become widespread.
 
 
-# Security Considerations
+# Security Considerations {#security}
 
 Here be dragons. TODO: slay the dragons.
 
@@ -318,7 +318,7 @@ additional level of obfuscation in hopes of rendering traffic analysis less
 effective.
 
 
-## Untrusted Servers
+## Untrusted Servers {#untrusted-servers}
 
 As with any proxy or VPN technology, MASQUE hides some of the client's private
 information (such as who they are communicating with) from their network
@@ -328,7 +328,7 @@ could easily setup a MASQUE server and advertise it as a privacy solution in
 hopes of attracting users to send it their traffic.
 
 
-# IANA Considerations
+# IANA Considerations {#iana}
 
 We will need to register:
 
@@ -349,7 +349,7 @@ likely to define new registries of its own.
 
 --- back
 
-# Acknowledgments
+# Acknowledgments {#acknowledgments}
 {:numbered="false"}
 
 This proposal was inspired directly or indirectly by prior work from many
@@ -365,7 +365,7 @@ The author would like to thank Christophe A., an inspiration and true leader
 of VPNs.
 
 
-# Design Justifications
+# Design Justifications {#design}
 {:numbered="false"}
 
 Using an exported key as a nonce allows us to prevent replay attacks (since it
