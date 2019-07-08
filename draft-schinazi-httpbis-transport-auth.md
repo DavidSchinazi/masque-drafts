@@ -207,7 +207,9 @@ Transport Authentication allows a user-agent to authenticate to an origin
 server while guaranteeing freshness and without the need for the server
 to transmit a nonce to the user agent. This allows the server to accept
 authenticated clients without revealing that it supports or expects
-authentication for some resources.
+authentication for some resources. It also allows authentication without
+the user agent leaking the presence of authentication to observers due to
+clear-text TLS Client Hello extensions.
 
 
 # IANA Considerations {#iana}
