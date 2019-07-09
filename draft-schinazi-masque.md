@@ -158,7 +158,7 @@ the server's TLS certificate as it normally would for HTTPS. If validation
 fails, the connection is aborted. At this point the client can send regular
 unauthenticated HTTP requests to the server. When it wishes to start MASQUE,
 the client uses HTTP Transport
-Authentication (draft-schinazi-httpbis-transport-auth) to prove its
+Authentication {{!I-D.schinazi-httpbis-transport-auth}} to prove its
 possession of its associated key. The client sends the
 Transport-Authentication header alongside an HTTP CONNECT request for
 "/.well-known/masque/initial" with the :protocol pseudo-header field set to
