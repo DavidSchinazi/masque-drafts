@@ -110,7 +110,7 @@ its transport connection with an origin server.
 ~~~
 
 
-## The u Directive {#u-directive}
+## The u Directive {#directive-u}
 
 The OPTIONAL "u" (user-id) directive specifies the user-id that the user
 agent wishes to authenticate. It is encoded using
@@ -121,7 +121,7 @@ Base64 (Section 4 of {{!RFC4648}}).
 ~~~
 
 
-## The p Directive {#p-directive}
+## The p Directive {#directive-p}
 
 The OPTIONAL "p" (proof) directive specifies the proof that the user agent
 provides to attest to possessing the credential that matches its user-id.
@@ -132,7 +132,7 @@ It is encoded using Base64 (Section 4 of {{!RFC4648}}).
 ~~~
 
 
-## The a Directive {#a-directive}
+## The a Directive {#directive-a}
 
 The OPTIONAL "a" (algorithm) directive specifies the algorithm used to compute
 the proof transmitted in the "p" directive.
