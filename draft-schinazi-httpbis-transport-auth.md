@@ -146,7 +146,9 @@ the proof transmitted in the "p" directive.
 
 The Transport Authentication Framework allows defining Transport
 Authentication Schemes, which specify how to authenticate user-ids. This
-documents defined the "Signature" and "HMAC" schemes.
+document defines "Signature" and "HMAC" schemes. Authentication checks
+for these schemes MUST run in constant time with respect to user-ids
+and corresponding authentication values.
 
 
 ## Signature {#signature}
