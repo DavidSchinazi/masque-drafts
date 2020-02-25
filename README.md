@@ -2,9 +2,20 @@
 
 This is the working area for the individual Internet-Draft, "The MASQUE Protocol".
 
-* [Editor's Copy](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque.html)
+### The MASQUE Protocol - draft-schinazi-masque
+* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque.html)
 * [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque)
 * [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque.diff)
+
+### MASQUE Obfuscation - draft-schinazi-masque-obfuscation
+* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-obfuscation.html)
+* [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-obfuscation)
+* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-obfuscation.diff)
+
+### HTTP Transport Authentication - draft-schinazi-httpbis-transport-auth
+* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-httpbis-transport-auth.html)
+* [Individual Draft](https://tools.ietf.org/html/draft-schinazi-httpbis-transport-auth)
+* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-httpbis-transport-auth.diff)
 
 ## Building the Draft
 
