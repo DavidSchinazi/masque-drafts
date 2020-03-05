@@ -69,8 +69,17 @@ when, and only when, they appear in all capitals, as shown here.
 
 # Overview
 
+A client that intents to use a MASQUE server for forwarding support to an appliaction server, when
+e.g. end-to-end connectivity is not possible and additional encryption is desired, opens an HTTP/3
+connection to the MASQUE server. The proxy IP address and port number (e.g. 443) are either known
+or have been previously discovered which is out of scope for this document.
 
-
+It then negotiates use of supported MASQUE Applications with the
+MASQUE server and instructs the server to forward its end-to-end traffic to the target server respectively.
+This will, when successfully negotiated, lead to a setup where an end-to-end connection between the client and
+the target server is tunnelled within an outer HTTP/s or QUIC connection between the client and the proxy. 
+The proxy observes and forwards the end-to-end traffic between the client and the server but cannot
+alter or decrypt it as it is end-to-end security protected.
 
 # MASQUE Negotiation {#negotiation}
 
