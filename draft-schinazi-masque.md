@@ -25,10 +25,10 @@ author:
 
 This document describes MASQUE (Multiplexed Application Substrate over QUIC
 Encryption). MASQUE is a framework that allows concurrently running multiple
-networking applications inside an HTTP/3 connection. For example, MASQUE can
-allow a QUIC client to negotiate proxying capability with an HTTP/3 server,
+networking applications inside a QUIC or HTTP/3 connection. For example, MASQUE can
+allow a QUIC client to negotiate proxying capability with a MASQUE server,
 and subsequently make use of this functionality while concurrently processing
-HTTP/3 requests and responses.
+multiple HTTP/3 requests and responses.
 
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
@@ -43,10 +43,10 @@ which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 This document describes MASQUE (Multiplexed Application Substrate over QUIC
 Encryption). MASQUE is a framework that allows concurrently running multiple
-networking applications inside an HTTP/3 connection (see
+networking applications inside a QUIC or HTTP/3 connection (see
 {{!HTTP3=I-D.ietf-quic-http}}). For example, MASQUE can allow a QUIC client to
-negotiate proxying capability with an HTTP/3 server, and subsequently make use
-of this functionality while concurrently processing HTTP/3 requests and
+negotiate proxying capability with a MASQUE server, and subsequently make use
+of this functionality while concurrently processing multiple HTTP/3 requests and
 responses.
 
 MASQUE Negotiation is performed using HTTP mechanisms, but MASQUE applications
@@ -67,6 +67,10 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 document are to be interpreted as described in BCP 14 {{!RFC2119}} {{!RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
 
+# Overview
+
+
+
 
 # MASQUE Negotiation {#negotiation}
 
@@ -77,6 +81,10 @@ MASQUE applications and advertise support for MASQUE extensions. The MASQUE
 server indicates support for MASQUE by sending an HTTP status code 200 response,
 and can use the data to inform the client of which MASQUE applications are now
 in use, and various configuration parameters.
+
+If the server does not reply with a 200 response, MASQUE is not supported and 
+the client SHOULD close the QUIC connection and connect to the traget server
+directly instead.
 
 Both the MASQUE negotiation initial request and its response carry a list of
 type-length-value fields. The type field is a number corresponding to a MASQUE
@@ -89,10 +97,11 @@ MASQUE applications.
 
 # MASQUE Applications {#applications}
 
-As soon as the server has accepted the client's MASQUE initial request, it can
-advertise support for MASQUE Applications, which will be multiplexed over this
-HTTP/3 connection.
-
+As soon as the server has accepted the client's MASQUE initial request, it
+advertises support for certain MASQUE Applications. These application can be
+multiplexed over this HTTP/3 connection or directly on top of different QUIC streams
+within the same underlying QUIC connection. Applications can provide forwarding as well as an
+direct communication channel between the client and the MASQUE server.
 
 ## HTTP Proxy {#http-proxy}
 
