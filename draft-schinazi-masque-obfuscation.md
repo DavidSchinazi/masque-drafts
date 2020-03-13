@@ -61,7 +61,7 @@ the MASQUE IETF mailing list <masque@ietf.org> or on the GitHub repository
 which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
 
 MASQUE Obfuscation is built upon the MASQUE protocol
-{{!MASQUE=I-D.schinazi-masque}}. MASQUE Obfuscation leverages the efficient
+{{!MASQUE=I-D.schinazi-masque-protocol}}. MASQUE Obfuscation leverages the efficient
 head-of-line blocking prevention features of the QUIC transport protocol
 {{!QUIC=I-D.ietf-quic-transport}} when MASQUE Obfuscation is used in an HTTP/3
 {{!HTTP3=I-D.ietf-quic-http}} server. MASQUE Obfuscation can also run in an

@@ -46,14 +46,14 @@ HTTP request, but also its underlying transport.
 
 Traditional HTTP semantics specify that HTTP is a stateless protocol where
 each request can be understood in isolation {{!RFC7230}}. However, the
-emergence of QUIC {{?I-D.ietf-quic-transport}} as a new transport protocol
-that can carry HTTP {{?I-D.ietf-quic-http}} and the existence of QUIC
-extensions such as the DATAGRAM frame {{?I-D.pauly-quic-datagram}} enable new
-uses of HTTP such as {{?I-D.vvv-webtransport-http3}} and
-{{?I-D.schinazi-masque}} where some traffic is exchanged that is disctinct
-from HTTP requests and responses. In order to authenticate this traffic, it
-is necessary to authenticate the underlying transport (e.g., QUIC or
-TLS {{!RFC8446}}) instead of authenticate each request individually. This
+emergence of QUIC {{?QUIC=I-D.ietf-quic-transport}} as a new transport
+protocol that can carry HTTP {{?HTTP3=I-D.ietf-quic-http}} and the existence
+of QUIC extensions such as the DATAGRAM frame {{?DGRAM=I-D.ietf-quic-datagram}}
+enable new uses of HTTP such as {{?WEBTRANS-H=I-D.vvv-webtransport-http3}} and
+{{?MASQUE=I-D.schinazi-masque-protocol}} where some traffic is exchanged that
+is disctinct from HTTP requests and responses. In order to authenticate this
+traffic, it is necessary to authenticate the underlying transport (e.g., QUIC
+or TLS {{!RFC8446}}) instead of authenticate each request individually. This
 mechanism aims to supplement the HTTP Authentication Framework {{?RFC7235}},
 not replace it.
 
@@ -88,7 +88,7 @@ This document uses the Augmented BNF defined in {{!RFC5234}} and updated by
 This document only defines Transport Authentication for uses of HTTP with TLS.
 This includes any use of HTTP over TLS as typically used for HTTP/2, or
 HTTP/3 where the transport protocol uses TLS as its authentication and key
-exchange mechanism {{?I-D.ietf-quic-tls}}.
+exchange mechanism {{?QUIC-TLS=I-D.ietf-quic-tls}}.
 
 The user agent leverages a TLS keying material exporter {{!RFC5705}} to
 generate a nonce which can be signed using the user-id's key. The keying
@@ -104,9 +104,9 @@ The "Transport-Authentication" header allows a user agent to authenticate
 its transport connection with an origin server.
 
 ~~~
-  Transport-Authentication = transp-auth-scheme *( OWS ";" OWS parameter )
-  transp-auth-scheme       = token
-  parameter                = token "=" ( token / quoted-string )
+  Transport-Authentication = tpauth-scheme *( OWS ";" OWS param )
+  tpauth-scheme            = token
+  param                    = token "=" ( token / quoted-string )
 ~~~
 
 
@@ -164,7 +164,8 @@ For example, the user-id "john.doe" authenticating using Ed25519 {{?RFC8410}}
 could produce the following header (lines are folded to fit):
 
 ~~~
-Transport-Authentication: Signature u="am9obi5kb2U=";a=1.3.101.112;
+Transport-Authentication: Signature u="am9obi5kb2U=";
+a=1.3.101.112;
 p="SW5zZXJ0IHNpZ25hdHVyZSBvZiBub25jZSBoZXJlIHdo
 aWNoIHRha2VzIDUxMiBiaXRzIGZvciBFZDI1NTE5IQ=="
 ~~~
@@ -186,7 +187,8 @@ HMAC-SHA-512 {{?RFC6234}} could produce the following
 header (lines are folded to fit):
 
 ~~~
-Transport-Authentication: HMAC u="am9obi5kb2U=";a=2.16.840.1.101.3.4.2.3;
+Transport-Authentication: HMAC u="am9obi5kb2U=";
+a=2.16.840.1.101.3.4.2.3;
 p="SW5zZXJ0IEhNQUMgb2Ygbm9uY2UgaGVyZSB3aGljaCB0YWtl
 cyA1MTIgYml0cyBmb3IgU0hBLTUxMiEhISEhIQ=="
 ~~~
@@ -223,11 +225,11 @@ registry maintained at
 <https://www.iana.org/assignments/message-headers/>.
 
 ~~~
-  +--------------------------+----------+--------------+---------------+
-  |    Header Field Name     | Protocol |    Status    |   Reference   |
-  +--------------------------+----------+--------------+---------------+
-  | Transport-Authentication |   http   | experimental | This document |
-  +--------------------------+----------+--------------+---------------+
+  +--------------------------+----------+--------+---------------+
+  |    Header Field Name     | Protocol | Status |   Reference   |
+  +--------------------------+----------+--------+---------------+
+  | Transport-Authentication |   http   |  exp   | This document |
+  +--------------------------+----------+--------+---------------+
 ~~~
 
 

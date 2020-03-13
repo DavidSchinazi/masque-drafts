@@ -2,7 +2,7 @@
 
 This is the working area for the individual Internet-Draft, "The MASQUE Protocol".
 
-### The MASQUE Protocol - draft-schinazi-masque
+### The MASQUE Protocol - draft-schinazi-masque-protocol
 * [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-protocol.html)
 * [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-protocol)
 * [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-protocol.diff)
