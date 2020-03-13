@@ -1,7 +1,7 @@
 ---
 title: MASQUE Obfuscation
 abbrev: MASQUE Obfuscation
-docname: draft-schinazi-masque-obfuscation
+docname: draft-schinazi-masque-obfuscation-latest
 category: exp
 
 ipr: trust200902

@@ -1,7 +1,7 @@
 ---
 title: HTTP Transport Authentication
 abbrev: HTTP Transport Authentication
-docname: draft-schinazi-httpbis-transport-auth
+docname: draft-schinazi-httpbis-transport-auth-latest
 category: exp
 
 ipr: trust200902
