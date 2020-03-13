@@ -1,7 +1,7 @@
 ---
 title: The MASQUE Protocol
 abbrev: MASQUE
-docname: draft-schinazi-masque
+docname: draft-schinazi-masque-protocol-latest
 category: exp
 
 ipr: trust200902
