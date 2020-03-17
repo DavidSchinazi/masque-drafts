@@ -36,8 +36,8 @@ websites via easy to configure open-source software.
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
 the approach it is taking. Discussion of this work is encouraged to happen on
-the MASQUE IETF mailing list <masque@ietf.org> or on the GitHub repository
-which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
+the MASQUE IETF mailing list [](masque@ietf.org) or on the GitHub repository
+which contains the draft: [](https://github.com/DavidSchinazi/masque-drafts).
 
 
 --- middle
@@ -57,8 +57,8 @@ websites via easy to configure open-source software.
 This document is a straw-man proposal. It does not contain enough details to
 implement the protocol, and is currently intended to spark discussions on
 the approach it is taking. Discussion of this work is encouraged to happen on
-the MASQUE IETF mailing list <masque@ietf.org> or on the GitHub repository
-which contains the draft: <https://github.com/DavidSchinazi/masque-drafts>.
+the MASQUE IETF mailing list [](masque@ietf.org) or on the GitHub repository
+which contains the draft: [](https://github.com/DavidSchinazi/masque-drafts).
 
 MASQUE Obfuscation is built upon the MASQUE protocol
 {{!MASQUE=I-D.schinazi-masque-protocol}}. MASQUE Obfuscation leverages the efficient
