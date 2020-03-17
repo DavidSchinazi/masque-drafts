@@ -31,8 +31,8 @@ and subsequently make use of this functionality while concurrently processing
 HTTP/3 requests and responses.
 
 Discussion of this work is encouraged to happen on the MASQUE IETF mailing
-list <masque@ietf.org> or on the GitHub repository which contains the draft:
-<https://github.com/DavidSchinazi/masque-drafts>.
+list [](masque@ietf.org) or on the GitHub repository which contains the draft:
+[](https://github.com/DavidSchinazi/masque-drafts).
 
 
 --- middle
@@ -52,8 +52,8 @@ can subsequently leverage QUIC {{!QUIC=I-D.ietf-quic-transport}} features
 without using HTTP.
 
 Discussion of this work is encouraged to happen on the MASQUE IETF mailing
-list <masque@ietf.org> or on the GitHub repository which contains the draft:
-<https://github.com/DavidSchinazi/masque-drafts>.
+list [](masque@ietf.org) or on the GitHub repository which contains the draft:
+[](https://github.com/DavidSchinazi/masque-drafts).
 
 
 ## Conventions and Definitions {#conventions}
