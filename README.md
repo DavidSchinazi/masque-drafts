@@ -17,6 +17,11 @@ This is the working area for the individual Internet-Draft, "The MASQUE Protocol
 * [Individual Draft](https://tools.ietf.org/html/draft-schinazi-httpbis-transport-auth)
 * [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-httpbis-transport-auth.diff)
 
+### The CONNECT-UDP HTTP Method - draft-schinazi-masque-connect-udp
+* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-connect-udp.html)
+* [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp)
+* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-connect-udp.diff)
+
 ## Building the Draft
 
 Formatted text and HTML versions of the draft can be built using `make`.
