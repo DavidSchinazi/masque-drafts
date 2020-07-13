@@ -22,6 +22,11 @@ This is the working area for the individual Internet-Draft, "The MASQUE Protocol
 * [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp)
 * [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-connect-udp.diff)
 
+### Requirements for a MASQUE Protocol to Proxy IP Traffic - draft-cms-masque-ip-proxy-reqs
+* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-cms-masque-ip-proxy-reqs.html)
+* [Individual Draft](https://tools.ietf.org/html/draft-cms-masque-ip-proxy-reqs)
+* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-cms-masque-ip-proxy-reqs.diff)
+
 ## Building the Draft
 
 Formatted text and HTML versions of the draft can be built using `make`.
