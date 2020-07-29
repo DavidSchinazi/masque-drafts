@@ -114,6 +114,16 @@ without a VPN client installed on the user's device. This style of connectivity
 can also be used to connect devices that cannot run VPN clients through to the
 network.
 
+## Consumer VPN
+
+Consumer VPNs refer to network applications that allow a user to hide some
+properties of their traffic from some network observers. In particular, it can
+hide the identity of servers the client is connecting to from the client's
+network provider, and can hide the client's IP address (and derived geographical
+information) from the servers they are communicating with. Note that this hidden
+information is now available to the VPN service provider, so is only beneficial
+for clients who trust the VPN service provider more than other entities.
+
 # Requirements
 
 This section lists requirements for a protocol that can proxy IP over an HTTP
@@ -133,30 +143,30 @@ packets, in their unmodified entirety. The protocol will support both IPv6
 
 ## Maximum Transmission Unit
 
-The protocol will allow endpoints to negotiate the Maximum Transmission Unit
-(MTU) in use over a given Data Transport. This will allow avoiding IP
-fragmentation, especially as IPv6 does not allow IP fragmentation by nodes
+The protocol will allow endpoints to inform each other of the Maximum
+Transmission Unit (MTU) they are willing to forward. This will allow avoiding
+IP fragmentation, especially as IPv6 does not allow IP fragmentation by nodes
 along the path.
 
 ## IP Assignment
 
-Both the client or server may request to be assigned an IP address range. In
-response to the request, the peer will respond with an IP address range of its
-choosing.
+The server will assign an IP address of its choosing to the client. The client
+may suggest a preference of IP address which the server can choose to follow.
 
 ## Route Negotiation
 
 At any point in an IP Session (not limited to its initial negotiation), the
-protocol will allow both client and server to request routes to specific IP
-address ranges. In response to this request, the peer will have the ability to
-respond with a subset of routes that it is willing to accept, or deny the
-request.
+protocol will allow both client and server to inform its peer that it can route
+a set of IP prefixes. Both endpoints can also request a route to a given prefix,
+and the peer can choose to provide that route or not.
 
 ## Identity
 
 When negotiating the creation of an IP Session, the protocol will allow both
 endpoints to exchange an identifier. For example, both endpoints will be able
-to identify themselves by sending a fully-qualified domain name.
+to identify themselves by sending a fully-qualified domain name. Note that
+the Identity requirement does not cover authenticating the identifier; that
+requirement is covered by {{authentication}}.
 
 ## Transport Security
 
@@ -192,7 +202,9 @@ performance.
 
 A passive network observer not participating in the encrypted connection should
 not be able to distinguish an IP proxying session from regular encrypted HTTP
-Web traffic.
+Web traffic. Specifically, any data sent unencrypted (such as headers, or parts
+of the handshake) should look like the same unencrypted data that would be
+present for Web traffic. Traffic analysis is out of scope for this requirement.
 
 ## Support HTTP/2 and HTTP/3
 
@@ -252,6 +264,12 @@ modification to packets they forward. Doing so is out of scope for the proxying
 protocol. In particular, the ability to discover the presence of a NAT,
 negotiate NAT bindings, or check connectivity through a NAT is explicitly out
 of scope and left to future extensions.
+
+Servers that do not perform NAT will commonly forward packets similarly to how
+a traditionnal IP router would, but the specific of that are considered out of
+scope. In particular, decrementing the Hop Limit (or TTL) field of the IP header
+is out of scope for MASQUE and expected to be performed by a router behind the
+MASQUE server, or collocated with it.
 
 ## IP Packet Extraction
 
