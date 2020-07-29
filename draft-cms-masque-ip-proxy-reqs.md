@@ -152,6 +152,8 @@ along the path.
 
 The server will assign an IP address of its choosing to the client. The client
 may suggest a preference of IP address which the server can choose to follow.
+Similarly, to support the network-to-network use case, the client will be able
+to assign an IP address to the server, and the server may suggest a preference.
 
 ## Route Negotiation
 
