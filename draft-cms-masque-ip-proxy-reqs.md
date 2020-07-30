@@ -90,6 +90,16 @@ when, and only when, they appear in all capitals, as shown here.
 There are multiple reasons to deploy an IP proxying protocol. This section
 discusses some examples of use cases that MUST be supported by the protocol.
 
+## Consumer VPN
+
+Consumer VPNs refer to network applications that allow a user to hide some
+properties of their traffic from some network observers. In particular, it can
+hide the identity of servers the client is connecting to from the client's
+network provider, and can hide the client's IP address (and derived geographical
+information) from the servers they are communicating with. Note that this hidden
+information is now available to the VPN service provider, so is only beneficial
+for clients who trust the VPN service provider more than other entities.
+
 ## Point to Point Connectivity
 
 Point-to-point connectivity creates a private, encrypted and authenticated
@@ -113,16 +123,6 @@ the entire networks are connected to each other and route packets transparently
 without a VPN client installed on the user's device. This style of connectivity
 can also be used to connect devices that cannot run VPN clients through to the
 network.
-
-## Consumer VPN
-
-Consumer VPNs refer to network applications that allow a user to hide some
-properties of their traffic from some network observers. In particular, it can
-hide the identity of servers the client is connecting to from the client's
-network provider, and can hide the client's IP address (and derived geographical
-information) from the servers they are communicating with. Note that this hidden
-information is now available to the VPN service provider, so is only beneficial
-for clients who trust the VPN service provider more than other entities.
 
 # Requirements
 
@@ -150,10 +150,11 @@ along the path.
 
 ## IP Assignment
 
-The server will assign an IP address of its choosing to the client. The client
-may suggest a preference of IP address which the server can choose to follow.
-Similarly, to support the network-to-network use case, the client will be able
-to assign an IP address to the server, and the server may suggest a preference.
+The server will be able to assign an IP address of its choosing to the client.
+The client may suggest a preference of IP address which the server can choose
+to follow. Similarly, to support the network-to-network use case, the client
+will be able to assign an IP address to the server, and the server may suggest
+a preference.
 
 ## Route Negotiation
 
