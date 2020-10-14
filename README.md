@@ -17,15 +17,11 @@ This is the working area for the individual Internet-Draft, "The MASQUE Protocol
 * [Individual Draft](https://tools.ietf.org/html/draft-schinazi-httpbis-transport-auth)
 * [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-httpbis-transport-auth.diff)
 
-### The CONNECT-UDP HTTP Method - draft-schinazi-masque-connect-udp
-* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-connect-udp.html)
-* [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp)
-* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-connect-udp.diff)
+### Adopted Drafts
 
-### Requirements for a MASQUE Protocol to Proxy IP Traffic - draft-cms-masque-ip-proxy-reqs
-* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-cms-masque-ip-proxy-reqs.html)
-* [Individual Draft](https://tools.ietf.org/html/draft-cms-masque-ip-proxy-reqs)
-* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-cms-masque-ip-proxy-reqs.diff)
+The following drafts were moved from this repository after adoption by the [MASQUE Working Group](https://datatracker.ietf.org/wg/masque/documents/):
+* [draft-cms-masque-ip-proxy-reqs](https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs)
+* [draft-schinazi-masque-connect-udp](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp)
 
 ## Building the Draft
 
