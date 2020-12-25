@@ -327,7 +327,7 @@ Validated QUIC Proxy DATAGRAM frames contain the following fields:
 Flow Identifier:
 
 : The flow identifier represents the compression context used
-by this frame. Calidated compression contexts MUST NOT use the
+by this frame. Validated compression contexts MUST NOT use the
 `new_quic_proxy_compression_context_flow_id` value received during
 negotiation.
 
@@ -457,7 +457,7 @@ Validated UDP Proxy DATAGRAM frames contain the following fields:
 Flow Identifier:
 
 : The flow identifier represents the compression context used
-by this frame. Calidated compression contexts MUST NOT use the
+by this frame. Validated compression contexts MUST NOT use the
 `new_udp_proxy_compression_context_flow_id` value received during
 negotiation.
 
