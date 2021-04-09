@@ -3,6 +3,7 @@ title: HTTP Transport Authentication
 abbrev: HTTP Transport Authentication
 docname: draft-schinazi-httpbis-transport-auth-latest
 category: exp
+wg: MASQUE
 
 ipr: trust200902
 keyword: Internet-Draft

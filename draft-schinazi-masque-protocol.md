@@ -3,6 +3,7 @@ title: The MASQUE Protocol
 abbrev: MASQUE
 docname: draft-schinazi-masque-protocol-latest
 category: exp
+wg: MASQUE
 
 ipr: trust200902
 keyword: Internet-Draft

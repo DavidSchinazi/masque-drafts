@@ -3,6 +3,7 @@ title: MASQUE Obfuscation
 abbrev: MASQUE Obfuscation
 docname: draft-schinazi-masque-obfuscation-latest
 category: exp
+wg: MASQUE
 
 ipr: trust200902
 keyword: Internet-Draft
