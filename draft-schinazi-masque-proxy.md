@@ -81,7 +81,7 @@ Some users may wish to obfuscate the destination of their network traffic
 from their network provider. This prevents network providers from using data
 harvested from this network traffic in ways the user did not intend.
 
-## Partitionning
+## Partitioning
 
 While routing traffic through a MASQUE proxy reduces the network provider's
 ability to observe traffic, that information is transfered to the proxy
