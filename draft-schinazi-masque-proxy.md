@@ -134,7 +134,9 @@ In such scenarios, MASQUE is a better fit since it operates at the granularity
 of a connection. However, there are scenarios where a user agent might want to
 make non-correlatable requests (e.g., to anonymously report telemetry); for
 those, OHTTP provides better efficiency than using MASQUE with a separate
-connection per request.
+connection per request. While OHTTP and MASQUE are separate technologies that
+serve different use cases, they can be colocated on the same HTTP server that
+acts as both a MASQUE Proxy and an OHTTP Relay.
 
 ## DoH
 
