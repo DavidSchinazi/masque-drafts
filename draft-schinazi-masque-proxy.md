@@ -23,7 +23,6 @@ author:
     code: 94043
     country: United States of America
     email: dschinazi.ietf@gmail.com
-
 informative:
   H3:
     =: RFC9114
@@ -43,16 +42,19 @@ privacy guarantees.
 
 # Introduction
 
-When the CONNECT method was introduced {{?CONNECT=RFC2817}}, HTTP gained the
-ability to create tunnels that allow proxying any TCP-based protocol over HTTP.
-While non-TCP-based protocols were always prevalent on the Internet, the
-large-scale deployment of QUIC {{?QUIC=RFC9000}} meant that TCP no longer
-represented the majority of Internet traffic. Simultaneously, the creation of
-HTTP/3 {{H3}} allowed running HTTP over a non-TCP-based protocol. In
-particular, QUIC allows disabling loss recovery {{?DGRAM=RFC9221}} and that
-can then be used in HTTP {{?HTTP-DGRAM=RFC9297}}. This confluence of events
-created both the possibility and the necessity for new proxying technologies
-in HTTP.
+In the early days of HTTP, requests and responses weren't encrypted. In order
+to add features such as caching, HTTP proxies were developed to parse HTTP
+requests from clients and forward them on to other HTTP servers. As SSL/TLS
+became more common, the CONNECT method was introduced {{?CONNECT=RFC2817}} to
+allow proxying SSL/TLS over HTTP. That gave HTTP the ability to create tunnels
+that allow proxying any TCP-based protocol. While non-TCP-based protocols were
+always prevalent on the Internet, the large-scale deployment of QUIC
+{{?QUIC=RFC9000}} meant that TCP no longer represented the majority of
+Internet traffic. Simultaneously, the creation of HTTP/3 {{H3}} allowed
+running HTTP over a non-TCP-based protocol. In particular, QUIC allows
+disabling loss recovery {{?DGRAM=RFC9221}} and that can then be used in HTTP
+{{?HTTP-DGRAM=RFC9297}}. This confluence of events created both the possibility
+and the necessity for new proxying technologies in HTTP.
 
 This led to the creation of MASQUE (Multiplexed Application Substrate over
 QUIC Encryption). MASQUE allows proxying both UDP ({{?CONNECT-UDP=RFC9298}})
