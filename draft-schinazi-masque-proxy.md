@@ -1,5 +1,5 @@
 ---
-title: The MASQUE Privacy Proxy
+title: The MASQUE Proxy
 docname: draft-schinazi-masque-proxy-latest
 submissiontype: independent
 number:
@@ -35,9 +35,9 @@ informative:
 
 MASQUE (Multiplexed Application Substrate over QUIC Encryption) is a set of
 protocols and extensions to HTTP that allow proxying all kinds of Internet
-traffic over HTTP. This document defines the concept of a "MASQUE Privacy
-Proxy", an Internet-accessible node that can relay client traffic in order
-to provide privacy guarantees.
+traffic over HTTP. This document defines the concept of a "MASQUE Proxy", an
+Internet-accessible node that can relay client traffic in order to provide
+privacy guarantees.
 
 --- middle
 
