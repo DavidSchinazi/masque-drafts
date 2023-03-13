@@ -144,8 +144,8 @@ acts as both a MASQUE Proxy and an OHTTP Relay.
 
 DNS over HTTPS {{?DoH=RFC8484}} allows encrypting DNS traffic by sending it
 through an encrypted HTTP connection. Colocating a DoH server with a MASQUE
-CONNECT-IP server provides better performance than using DNS over port 53
-inside the encrypted tunnel.
+IP proxy provides better performance than using DNS over port 53 inside the
+encrypted tunnel.
 
 # Security Considerations
 
