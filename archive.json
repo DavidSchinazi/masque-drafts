@@ -1,0 +1,1393 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-06-06T00:45:19.285196+00:00",
+  "repo": "DavidSchinazi/masque-drafts",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "MDU6SXNzdWU0NDY1NzgwMTU=",
+      "title": "VPN or QUIC Proxy?",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/1",
+      "state": "OPEN",
+      "author": "huitema",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I would like to support a QUIC proxy because it is much easier to deploy, requires just one port.",
+      "createdAt": "2019-05-21T11:58:43Z",
+      "updatedAt": "2019-11-11T19:30:13Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Why not both? I think we can have MASQUE be a framework where both proxy and VPN can be negotiated and co-exist.",
+          "createdAt": "2019-06-13T02:38:35Z",
+          "updatedAt": "2019-06-13T02:38:35Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "COLLABORATOR",
+          "body": "As long as the client does not actually expect a VPN, that's fine with me. But consider my little server on AWS. It has access to exactly one IPv4 address and one IPv6 address, so it cannot possibly act as an IP level VPN. But it can act as a proxy.",
+          "createdAt": "2019-06-13T02:49:00Z",
+          "updatedAt": "2019-06-13T02:49:00Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Agreed, the server needs to clearly advertise which services it offers.\r\n\r\nThat said, you can run an IP-level VPN with a single IP as long as you use NAT. This is one of the rare use cases where NAT actually helps the client by providing IP obfuscation.",
+          "createdAt": "2019-06-13T02:56:48Z",
+          "updatedAt": "2019-06-13T02:56:48Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "COLLABORATOR",
+          "body": "You could try to run a NAT, but I would rather not be forced to implement that. Lots of complexity, attack surface, etc.",
+          "createdAt": "2019-06-13T03:20:46Z",
+          "updatedAt": "2019-06-13T03:20:46Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Fair enough. I just want to keep VPN as a potential use-case, but agree that working on proxying is higher priority.",
+          "createdAt": "2019-06-13T16:33:28Z",
+          "updatedAt": "2019-06-13T16:33:28Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "MDU6SXNzdWU0Njc3NDc0Mzc=",
+      "title": "Security issue: abusing third parties",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/3",
+      "state": "OPEN",
+      "author": "huitema",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "One of the security issues with Masque proxies is whether they can be used to attack third parties. The attacking client would connect to the Masque server, and push packets towards a third party with a goal of attacking that party. It could be part of a \"targeted\" attack, sending specially crafted packets to activate a bug and crash or pwn the target. Or it could be a volumetric attack, with the client sending large number of transactions to try DOS the target.\r\n\r\nSuch abuses can cause reputation issues for the proxy, eventually landing the proxy's IP address in some kind of blacklist. It seems that Masque implementations should recognize the issue and do something about it.\r\n\r\nThe first line of defense is of course to only serve authorized clients, but that's not a perfect defense. Attackers could somehow hack an authorized client and get its credentials. Or, they could subscribe to the service with a throw-away identity.\r\n\r\nThe second line of defense, used for example in TURN, is to restrict what clients can do. This amounts to building some kind of basic firewall in the Masque proxy, with rules like inspecting packets or limiting packet rates.\r\n\r\nI wonder whether we should add text to that effect in the specification?",
+      "createdAt": "2019-07-13T17:37:38Z",
+      "updatedAt": "2020-02-25T19:38:50Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This makes sense to me. Perhaps we can go into more detail in a new subsection of Security Considerations?",
+          "createdAt": "2019-07-15T22:00:19Z",
+          "updatedAt": "2019-07-15T22:00:19Z"
+        },
+        {
+          "author": "eighthave",
+          "authorAssociation": "NONE",
+          "body": "I agree these are all valid issues, but it seems to me that they would be handled outside of MASQUE itself.  It seems to me that MASQUE should serve as the glue between a QUIC server and an HTTP CONNECT proxy daemon.  A standard HTTP CONNECT proxy implementation should cover connecting to an auth backend as well as restrictions on what is allowed to be proxied.  For example, _privoxy_ provides _enforce-blocks_: https://www.privoxy.org/3.0.26/user-manual/config.html#ENFORCE-BLOCKS\r\n\r\nMASQUE might need to specify how these blocks/limits/etc are communicated to the client, e.g. if the HTTP CONNECT methods don't cover everything.  My gut feeling is that HTTP status codes will probably be enough.",
+          "createdAt": "2020-02-25T13:21:00Z",
+          "updatedAt": "2020-02-25T13:21:00Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "I agree that these issues don't necessarily need to be handled in the MASQUE protocol text, but mentioning it in the Security Considerations section can't hurt",
+          "createdAt": "2020-02-25T19:38:50Z",
+          "updatedAt": "2020-02-25T19:38:50Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "MDU6SXNzdWU1MTAyMjUwNDA=",
+      "title": "Pluggable Transports - any relationship?",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/4",
+      "state": "OPEN",
+      "author": "m4mb01t4l14n0",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Our community, working with the [PEARG](https://irtf.org/pearg) folks in IRTF, submitted an Internet Draft of our on-going work on network traffic obfuscation called \"Pluggable Transports\".  It's [HERE](https://www.ietf.org/id/draft-oliver-pluggable-transports-00.txt). I'm one of the authors.  This work, begun at the Tor Project with later cooperation from organizations serving the Human Rights and Internet Freedom areas, has been focused on TCP. We'd be interested to understand if there is a relationship between this work and your work on MASQUE, and/or if there is possibility to cooperate.   ",
+      "createdAt": "2019-10-21T19:20:34Z",
+      "updatedAt": "2019-11-12T20:31:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "I would love to cooperate on this! The main goal of MASQUE is to provide a general-purpose mechanism to multiplex transports with HTTP/3 connections in the way that is hard to distinguish by unauthenticated third-parties. I definitely see Tor pluggable transports as a compelling use-case for MASQUE.\r\n\r\nWhat would it take to create a MASQUE pluggable transport?\r\n\r\nNote that we haven't yet built an implementation of MASQUE, mainly because the project contributors are focused on QUIC right now, but as QUIC nears standardization I think there'll be energy to build MASQUE and see if it works in the real world.",
+          "createdAt": "2019-10-21T20:04:31Z",
+          "updatedAt": "2019-10-21T20:04:31Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\nOn 10/21/2019 1:04 PM, David Schinazi wrote:\n>\n> I would love to cooperate on this! The main goal of MASQUE is to\n> provide a general-purpose mechanism to multiplex transports with\n> HTTP/3 connections in the way that is hard to distinguish by\n> unauthenticated third-parties. I definitely see Tor pluggable\n> transports as a compelling use-case for MASQUE.\n>\n> What would it take to create a MASQUE pluggable transport?\n>\n> Note that we haven't yet built an implementation of MASQUE, mainly\n> because the project contributors are focused on QUIC right now, but as\n> QUIC nears standardization I think there'll be energy to build MASQUE\n> and see if it works in the real world.\n>\nI am actually busy writing an implementation of a Quic proxy based on\nMasque and Picoquic. I am actually writing a protocol implementation\nthat can work either on top of H3 (or H09), sending the protocol\ncommands over post, or directly on top of Quic, reserving an ALPN for\nQuic in Quic. It is basically the same code, with a bit of glue. The\ndifference in overhead is minimal.\n\nFor a proxy scenario or an onion scenario, the overhead that matters is\nthe recursive encapsulation of Quic packets in datagram frames. The\nnative scenario can assume that all datagrams contain forwarded Quic\npackets, but the HTTP scenarios cannot -- there needs to be at least one\nbyte to differentiate that from other usages of Quic datagrams. That one\nbyte probably matters less for the onion scenario than the general\nstealth of appearing like H3 traffic.\n\nThe good part of writing implementations is that it forces thinking hard\nabout protocol issues. How do we manage header compression in the\ndatagram frame payload so as to minimize the additional overhead of each\nforwarding hop? How do we deal with inbound routing by DCID while\nsolving synchronization issues and potential security issues? If we want\nto support inbound connections, do we need an explicit authentication\nscheme to match SNI and relays? Can we use self-certifying names like\n.onion?\n\nMore about all that soon...\n\n-- Christian Huitema\n\n",
+          "createdAt": "2019-10-22T00:54:15Z",
+          "updatedAt": "2019-10-22T00:54:15Z"
+        },
+        {
+          "author": "m4mb01t4l14n0",
+          "authorAssociation": "NONE",
+          "body": "@DavidSchinazi will you be at IETF106 in Singapore?  Perhaps we can discuss implementation possibilities (and practicalities).  ",
+          "createdAt": "2019-11-12T17:08:06Z",
+          "updatedAt": "2019-11-12T17:08:06Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Hi @m4mb01t4l14n0 ! Yes @huitema and I will be in Singapore. We were thinking of hanging out at the QUIC table at the hackathon over the weekend. Will you be there for that?",
+          "createdAt": "2019-11-12T18:42:05Z",
+          "updatedAt": "2019-11-12T18:42:05Z"
+        },
+        {
+          "author": "m4mb01t4l14n0",
+          "authorAssociation": "NONE",
+          "body": "@DavidSchinazi YES, I will be there for hackathon, arriving Friday (though I'm staying at a non-conference hotel for the first 3 nights).  I'll look you up (I might be doing a hackathon session myself - have to verify that). ",
+          "createdAt": "2019-11-12T19:28:48Z",
+          "updatedAt": "2019-11-12T19:28:48Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "@m4mb01t4l14n0 sounds good! Feel free to [email me](https://tools.ietf.org/html/draft-schinazi-masque-01#page-13) when you're there!",
+          "createdAt": "2019-11-12T20:31:50Z",
+          "updatedAt": "2019-11-12T20:31:50Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "MDU6SXNzdWU1NjcxNTMwMjA=",
+      "title": "MASQUE request processing MUST run in constant time",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/5",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Imagine adversary Adv knows the username of a MASQUE user, and observes a connection to a supposed MASQUE server. Adv could determine whether or not the user initiated a MASQUE connection as follows:\r\n\r\n1. Connect to the server and send a MASQUE request with the correct username and bogus signature. Measure the time to response as T1.\r\n2. Connect to the server and send a MASQUE request with a bogus username and signature. Measure the time to response as T2.\r\n\r\nIf T1 >> T2, this suggests that the username is valid for the given MASQUE server. \r\n\r\nMASQUE servers should process (username, signature) request tuples in constant time so as to not leak this type of information.",
+      "createdAt": "2020-02-18T20:56:56Z",
+      "updatedAt": "2021-06-05T17:05:07Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Agreed. I'll add a MUST to require that verifying the username and signature is a constant-time operation.",
+          "createdAt": "2020-02-18T21:40:37Z",
+          "updatedAt": "2020-02-18T21:40:37Z"
+        },
+        {
+          "author": "klzgrad",
+          "authorAssociation": "NONE",
+          "body": "Related: To satisfy the requirement of server invisibility https://www.ietf.org/archive/id/draft-schinazi-masque-obfuscation-04.html#name-invisibility-of-the-server, a request without authentication must also use the same constant time to not expose the server.",
+          "createdAt": "2021-06-05T17:05:07Z",
+          "updatedAt": "2021-06-05T17:05:07Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "MDU6SXNzdWU1NzA0ODA5MTI=",
+      "title": "corp/organization VPN use case",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/7",
+      "state": "CLOSED",
+      "author": "eighthave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The abstract seems to unnecessarily restrict the use case for MASQUE.  I can see a very clear use case for corporations/governments/organizations: VPNs are being blocked and tracked more and more frequently.  Travelling employees need VPNs to work.  Such groups would then want to run MASQUE on their own infrastructure to obfuscate their own VPN traffic.  Many OpenVPN providers offer obfs4 tunneling, for example.  If the network that the travelling employee has access to blocks all OpenVPN traffic, then MASQUE to their own infrastructure would help.\r\n\r\n@m4mb01t4l14n0 @uniqx",
+      "createdAt": "2020-02-25T10:50:37Z",
+      "updatedAt": "2020-02-25T19:58:31Z",
+      "closedAt": "2020-02-25T19:58:31Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Which abstract are you referring to? The [MASQUE](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque.html) one or the [MASQUE Obfuscation](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-obfuscation.html) one?",
+          "createdAt": "2020-02-25T19:35:10Z",
+          "updatedAt": "2020-02-25T19:35:10Z"
+        },
+        {
+          "author": "eighthave",
+          "authorAssociation": "NONE",
+          "body": "oops, sorry I was responding to this old draft: https://tools.ietf.org/html/draft-schinazi-masque-00",
+          "createdAt": "2020-02-25T19:58:31Z",
+          "updatedAt": "2020-02-25T19:58:31Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "MDU6SXNzdWU1NzA1MDAyMjc=",
+      "title": "explicitly state that MASQUE's HTTP CONNECT should reply as if it wasn't there",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/8",
+      "state": "CLOSED",
+      "author": "eighthave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "From 3. Overview of the Mechanism, I understand the goal as making sure that the HTTP CONNECT responses do not divulge whether MASQUE is present or not.   I think this needs to be spelled out a bit more, since HTTP CONNECT can be used without any auth.  This would then make it clear that the MASQUE server should respond to HTTP CONNECT requests without auth the same as it would for failed auth.  Or maybe its better to say that the MASQUE server only considers HTTP CONNECT requests with MASQUE pseudo-header, and everything else is entirely ignored.\r\n\r\n@uniqx @m4mb01t4l14n0",
+      "createdAt": "2020-02-25T11:23:35Z",
+      "updatedAt": "2020-02-25T20:20:07Z",
+      "closedAt": "2020-02-25T20:20:07Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "I think you may have read an outdated copy, does the latest [overview section](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-obfuscation.html#name-overview-of-the-mechanism) handle this better?",
+          "createdAt": "2020-02-25T19:37:26Z",
+          "updatedAt": "2020-02-25T19:37:26Z"
+        },
+        {
+          "author": "eighthave",
+          "authorAssociation": "NONE",
+          "body": "Yes, sorry.  The current document in this GitHub repo is clear on this.",
+          "createdAt": "2020-02-25T20:20:07Z",
+          "updatedAt": "2020-02-25T20:20:07Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "MDU6SXNzdWU1NzA3OTc4ODY=",
+      "title": "Transport-Authentication should be a structured header",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/9",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Since HTTP Structured Headers ([draft-ietf-httpbis-header-structure](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure)) are nearing publication, we should turn `Transport-Authentication` from [draft-schinazi-httpbis-transport-auth](https://davidschinazi.github.io/masque-drafts/draft-schinazi-httpbis-transport-auth.html) into an Item Structured Header.",
+      "createdAt": "2020-02-25T19:58:45Z",
+      "updatedAt": "2020-02-25T19:58:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "MDU6SXNzdWU1NzYyNDIxNzA=",
+      "title": "Add more details on negotiation of the listed services",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/11",
+      "state": "CLOSED",
+      "author": "mirjak",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Would be good to already add a table with type-length-value entries for the services that are described in the draft. I assume we will have a IANA registry for that...?",
+      "createdAt": "2020-03-05T13:10:06Z",
+      "updatedAt": "2020-03-13T02:11:27Z",
+      "closedAt": "2020-03-13T02:11:27Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Done with ad552d46a3602d3de17b5e829d9ac36436be8323",
+          "createdAt": "2020-03-13T02:11:27Z",
+          "updatedAt": "2020-03-13T02:11:27Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "MDU6SXNzdWU1NzYyNDMzMDA=",
+      "title": "MASQUE application or service?",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/12",
+      "state": "OPEN",
+      "author": "mirjak",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "We discussed already which term to use. Not sure we fully concluded here but in the charter I think it's service now. Should this be updated in this draft respectively?",
+      "createdAt": "2020-03-05T13:11:59Z",
+      "updatedAt": "2020-03-05T17:57:02Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Let's discuss how we want to name things in the Working Group if/when it gets chartered.",
+          "createdAt": "2020-03-05T17:57:02Z",
+          "updatedAt": "2020-03-05T17:57:02Z"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "MDU6SXNzdWU1ODI3NTk5MzE=",
+      "title": "Don't use .well-known",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/14",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "You don't need to do that.  Configuring a URL seems as likely to work as a domain name and it provides additional deployment flexibility for the application.",
+      "createdAt": "2020-03-17T05:12:38Z",
+      "updatedAt": "2020-03-17T23:24:38Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "That's a good point! I think we'll want to keep #15 in mind when making this change but if we allow any URL and require a `Sec-` header we're probably in better shape?",
+          "createdAt": "2020-03-17T23:24:37Z",
+          "updatedAt": "2020-03-17T23:24:37Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "MDU6SXNzdWU1ODMwMTU1MzE=",
+      "title": "Securing MASQUE usage from web-based JavaScript",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/15",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Created out of mailing list discussion, summary of the points discussed there:\r\n\r\n* MASQUE has some similarity to other mechanisms that modify the behaviour of an HTTP connection after a negotiation phase (e.g. conventional CONNECT, WebSocket upgrade etc).\r\n* Legacy HTTP proxying can be [vulnerable](https://www.kb.cert.org/vuls/id/150227/). Programmatic request generation such as via the Fetch API provide several measures to prevent scripts from exploiting such mechanisms. Either through [forbidding methods](https://fetch.spec.whatwg.org/#methods) or [forbidding header names prefixed with `Sec-` or `Proxy-`](https://fetch.spec.whatwg.org/#forbidden-header-name) (e.g. as required by the [WebSocket protocol ](https://tools.ietf.org/html/rfc6455#section-11.3.1).\r\n* it is reasonable to assume that MASQUE proxying applications make be affected by the class of vulnerability\r\n* draft-schinazi-masque-protocol-01 negotiation uses POST requests and has defines no mandatory headers\r\n\r\nSome possible actions to provide mitigations:\r\n\r\n* acknowledge that as a new protocol, MASQUE is not affected by legacy deployment concerns. Provide guidance in Security Considerations for new deployments of MASQUE.\r\n* Consider if MASQUE negotiation should be blocked from implementation in web-based JavaScript. If so define something to do so e.g.:\r\n  * Keep POST but define some forbidden header\r\n  * More drastically, move away from POST to something else such as extended CONNECT.",
+      "createdAt": "2020-03-17T13:32:18Z",
+      "updatedAt": "2020-03-17T23:20:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for filing! If we keep using POST for negotiation, adding a custom header such as `Sec-Masque` could mitigate this class of issues",
+          "createdAt": "2020-03-17T23:20:31Z",
+          "updatedAt": "2020-03-17T23:20:31Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "MDU6SXNzdWU1ODMxNDQ4ODI=",
+      "title": "What is the MASQUE POST body content-type",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/16",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The client part of negotiation requires a client to send a POST request with a sequence of TLVs. What is the content-type of that payload body?",
+      "createdAt": "2020-03-17T16:36:32Z",
+      "updatedAt": "2020-03-17T23:19:08Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "That's a good point, we probably will want to define and register a new Media Type with [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).",
+          "createdAt": "2020-03-17T23:19:07Z",
+          "updatedAt": "2020-03-17T23:19:07Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "MDU6SXNzdWU1ODczMjk3MjA=",
+      "title": "Improve threat model documentation",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/17",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "... Per feedback from Martin during the BoF.",
+      "createdAt": "2020-03-24T22:59:00Z",
+      "updatedAt": "2020-03-24T22:59:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 18,
+      "id": "MDU6SXNzdWU1OTA2NzA1NTQ=",
+      "title": "Rename \"validated\" in compression contexts",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/18",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The word \"validated\" is already used to discuss address validation is QUIC. Perhaps we should use \"confirmed\" instead? Then again that's already used for the handshake...\r\n\r\n(Thanks @martinthomson for the feedback)",
+      "createdAt": "2020-03-30T23:34:21Z",
+      "updatedAt": "2020-03-30T23:34:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 19,
+      "id": "MDU6SXNzdWU1OTA2NzA1OTA=",
+      "title": "QUIC Proxying needs more explanatory text",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/19",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Proxying QUIC isn't a completely straightforward concept, the draft should spend more time explaining what it accomplishes and what external bits are required (such as return routing of packets for example). A sequence diagram showing the flow of packets might help.\r\n\r\n(Thanks @martinthomson for the feedback)",
+      "createdAt": "2020-03-30T23:34:26Z",
+      "updatedAt": "2020-03-30T23:34:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "MDU6SXNzdWU1OTA2NzA2Mzg=",
+      "title": "QUIC Proxying should better explain compression contexts",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/20",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The text should do a better job of explaining how compression contexts are used, and how they interact with DATAGRAM flow identifiers. In a nutshell, the compression context is identified by a number that is in the DATAGRAM flow identifier namespace, but that needs to be better explained.\r\n\r\n(Thanks @martinthomson for the feedback)",
+      "createdAt": "2020-03-30T23:34:32Z",
+      "updatedAt": "2020-03-30T23:34:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "MDU6SXNzdWU2MDE3MTY2NDI=",
+      "title": "CONNECT-UDP and multiple intermediaries",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/21",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> Note that when multiple proxies are involved in a CONNECT-UDP request, all the HTTP connections along the path need to be using HTTP/3 [H3] or later in order for UDP payloads to be sent over QUIC DATAGRAM frames.\r\n\r\nHow is this true?  The first proxy should convert the stream of encapsulated UDP datagrams into actual UDP datagrams.  That means that the second proxy won't see these as part of the connection.\r\n\r\nThis is only an issue if the proxy wants to pass the DATAGRAM frames on to the next proxy.  But that's not what is being asked of it, if it does that, it does so on its own recognizance.  (I should add: if it chooses to forward to a next hop that uses h2, then it can take the DATAGRAM frames and stuff them into the request stream.)",
+      "createdAt": "2020-04-17T05:41:14Z",
+      "updatedAt": "2020-08-28T04:04:32Z",
+      "closedAt": "2020-08-28T04:04:32Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "It's definitely possible for a chain of proxies to use heterogeneous encodings for their UDP packets, by which I mean if the topology is `Client - ProxyA - ProxyB - Destination` then we could build this so that `Client - ProxyA` uses DATAGRAM frames whereas `ProxyA - ProxyB` uses the stream encoding with HTTP/2.\r\n\r\nI don't think the benefits outweigh the added complexity, so the current design is all-or-nothing: if all legs supports H3-DATAGRAM then it can be used, otherwise fallback to the stream encoding.",
+          "createdAt": "2020-04-17T18:27:39Z",
+          "updatedAt": "2020-04-17T18:27:39Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm not really clear on how you think that might work.  If Client and Proxy A negotiate the use of DATAGRAM, does this depend on Proxy A verifying first that Proxy B also supports DATAGRAM?  How do you ensure that the identifiers are comprehensible to all parties?",
+          "createdAt": "2020-04-20T04:03:13Z",
+          "updatedAt": "2020-04-20T04:03:13Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/1)",
+          "createdAt": "2020-08-28T04:04:32Z",
+          "updatedAt": "2020-08-28T04:04:32Z"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "id": "MDU6SXNzdWU2MDE3MTg1NTk=",
+      "title": "CONNECT-UDP request body",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/22",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": ">    A payload within a CONNECT-UDP request message has no defined semantics; a CONNECT-UDP request with a non-empty payload is malformed.\r\n\r\nI think that this text is out of sync with the rest of the doc.  The payload is used to carry UDP packets, even when you use DATAGRAM frames.",
+      "createdAt": "2020-04-17T05:47:01Z",
+      "updatedAt": "2020-08-28T04:06:31Z",
+      "closedAt": "2020-08-28T04:06:31Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "I think this is just a question of semantics. CONNECT takes over the stream, and therefore the contents of that stream are not considered to be the payload of the HTTP response.\r\n\r\nFrom [RFC 7231 s4.3.6](https://tools.ietf.org/html/rfc7231#section-4.3.6):\r\n>   A payload within a CONNECT request message has no defined semantics;\r\n>   sending a payload body on a CONNECT request might cause some existing\r\n>   implementations to reject the request.",
+          "createdAt": "2020-04-17T18:11:12Z",
+          "updatedAt": "2020-04-17T18:11:12Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/2)",
+          "createdAt": "2020-08-28T04:06:31Z",
+          "updatedAt": "2020-08-28T04:06:31Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "MDU6SXNzdWU2MDE3MTg4MTQ=",
+      "title": "Datagram-Flow-Id is hop-by-hop",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/23",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "That is *probably* OK for something with CONNECT-like semantics, but we did explicitly choose to disable hop-by-hop fields in HTTP/2.",
+      "createdAt": "2020-04-17T05:47:47Z",
+      "updatedAt": "2020-08-28T04:09:01Z",
+      "closedAt": "2020-08-28T04:09:01Z",
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I just realized that, because this is a new method and will be treated as such by intermediaries that don't understand it, they will pass Datagram-Flow-Id along.  That is very much a bad thing as the server on the next hop might have negotiated H3_DATAGRAM with the intermediary for other reasons.  If the next hop understands the setting, it might send responses in datagrams that will then be dropped by the intermediary (because it doesn't understand Datagram-Flow-Id).\r\n\r\nThat is, on a chain of entities from client A, intermediary B, and intermediary C, if all of them support H3_DATAGRAM, but B does not support Datagram-Flow-Id or CONNECT-UDP, this ultimately results in packets being sent on the request stream for a while, then DATAGRAM frames being sent toward the intermediary and being dropped. ",
+          "createdAt": "2020-04-17T05:53:04Z",
+          "updatedAt": "2020-04-17T05:53:04Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Regarding your first comment, I agree that this is somewhat of a hop-by-hop field. Do you have a proposal that achieves the same result without using a hop-by-hop field?\r\n\r\nRegarding your second comment, it's not possible for intermediaries to not understand this and still pass it along. If the intermediary doesn't know about this spec it'll respond with status code 405 \"Method Not Allowed\" instead of forwarding it.",
+          "createdAt": "2020-04-17T18:14:57Z",
+          "updatedAt": "2020-04-17T18:14:57Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Proxies aren't required to understand all methods, so why would it send a 405?  I mean, some might because they want to police what methods they pass, but they are not required to do so.",
+          "createdAt": "2020-04-20T04:22:35Z",
+          "updatedAt": "2020-04-20T04:22:35Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Sorry, I should have said 501 \"Not Implemented\", not 405.",
+          "createdAt": "2020-07-24T18:56:17Z",
+          "updatedAt": "2020-07-24T18:56:17Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/3)",
+          "createdAt": "2020-08-28T04:09:01Z",
+          "updatedAt": "2020-08-28T04:09:01Z"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "MDU6SXNzdWU2MDE3MjQ1Mzg=",
+      "title": "Flow duration",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/24",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The CONNECT-UDP proxy has to act a little like a NAT when it forwards UDP.  It has to assign a source IP and port.  Those probably need to be dedicated to the flow for its lifetime.  However, UDP lacks the clear signals of TCP about connection termination, so we need a clear definition of what lifetime is.  \r\n\r\nIt is perhaps reasonable to tie the lifetime of the allocation to the existence of the stream, but then the connection from the client might drop mid-flow; how long does the proxy need to avoid reusing that address?\r\n\r\nThe proxy might also decide that idleness is cause for dropping bindings.  The client needs to know this because it will need to make new tunnels to continue communication if it goes idle for too long.",
+      "createdAt": "2020-04-17T06:03:14Z",
+      "updatedAt": "2020-08-28T04:10:37Z",
+      "closedAt": "2020-08-28T04:10:37Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "The intent was to have the lifetime of the UDP socket be tied to the existence of the CONNECT-UDP stream. But I agree that we should add text indicating that a server MAY want to garbage collect these after idle periods, and in that case it MUST close the corresponding stream to inform the client.",
+          "createdAt": "2020-04-17T18:17:11Z",
+          "updatedAt": "2020-04-17T18:17:11Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/4)",
+          "createdAt": "2020-08-28T04:10:37Z",
+          "updatedAt": "2020-08-28T04:10:37Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "MDU6SXNzdWU2MDE3MjYzMjQ=",
+      "title": "Address mapping and return flow routing",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/25",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The design here would appear to permit the use of 'Address and Port-Dependent Mapping' as defined in [Section 4.1 of RFC 4787](https://tools.ietf.org/html/rfc4787#section-4.1).  However, that document strongly recommends that an 'Endpoint-Independent Mapping' is used so as to make UNSAF methods work.  This document should define those rules.\r\n\r\nRelated #24.",
+      "createdAt": "2020-04-17T06:07:34Z",
+      "updatedAt": "2020-08-28T04:12:26Z",
+      "closedAt": "2020-08-28T04:12:26Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "The current text explicitly only allows \"Address and Port-Dependent Mapping\". It attempted to define those rules clearly in [section 6](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-6). UNSAF is currently considered out of scope and not supported. I'm not sure whether we want to increase the scope and add that complexity.",
+          "createdAt": "2020-04-17T18:23:20Z",
+          "updatedAt": "2020-04-17T18:23:20Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/5)",
+          "createdAt": "2020-08-28T04:12:26Z",
+          "updatedAt": "2020-08-28T04:12:26Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "MDU6SXNzdWU2MTI4ODMwNTQ=",
+      "title": "Datagram-Flow-Id size limits",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/26",
+      "state": "CLOSED",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "As of `connect-udp-00`, the `Datagram-Flow-Id` is [defined](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-5) as a [structured header of type sh-integer](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure-18#section-3.3.1). The max value for those is 10^15-1, but in theory flow IDs can go up to 2^62-1 (~4*10^18). We should either:\r\n- specify an alternate encoding, such as [an sh-binary byte sequence with specified endianness and maximum width](https://lists.w3.org/Archives/Public/ietf-http-wg/2020AprJun/0077.html)\r\n- note that values over 10^15-1 cannot be encoded and reaching that flow identifier should trigger closing the HTTP/3 connection and restarting it",
+      "createdAt": "2020-05-05T20:44:24Z",
+      "updatedAt": "2020-08-28T04:14:11Z",
+      "closedAt": "2020-08-28T04:14:10Z",
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "NONE",
+          "body": "I think the lower limit is ok. As a tangent, it might play nice with H2 fallback that uses stream IDs which are restricted to 2^31",
+          "createdAt": "2020-05-05T21:17:45Z",
+          "updatedAt": "2020-05-05T21:17:45Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/6)",
+          "createdAt": "2020-08-28T04:14:10Z",
+          "updatedAt": "2020-08-28T04:14:10Z"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "MDU6SXNzdWU2MjYwMjQzMzU=",
+      "title": "CONNECT-UDP should communicate MTU",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/27",
+      "state": "CLOSED",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "CONNECT-UDP can be used across multiple proxy hops, and each of these hops can have a different MTU, so it could be useful for the client to be notified of the maximum DATAGRAM payload size that will make it across all the hops. This value could also change over time, so we could consider adding the ability to communicate that.",
+      "createdAt": "2020-05-27T20:55:35Z",
+      "updatedAt": "2020-08-28T04:15:34Z",
+      "closedAt": "2020-08-28T04:15:33Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This might be best handled by an extension to CONNECT-UDP, but keeping the issue open for now.",
+          "createdAt": "2020-07-24T18:51:26Z",
+          "updatedAt": "2020-07-24T18:51:26Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/7)",
+          "createdAt": "2020-08-28T04:15:33Z",
+          "updatedAt": "2020-08-28T04:15:33Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "MDU6SXNzdWU2Nzg3NzA5MjM=",
+      "title": "CONNECT-UDP needs a request target URI",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/29",
+      "state": "CLOSED",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
+      "createdAt": "2020-08-13T22:29:20Z",
+      "updatedAt": "2020-08-28T04:17:36Z",
+      "closedAt": "2020-08-28T04:17:36Z",
+      "comments": [
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "draft-ietf-httpbis-semantics notes CONNECT as a special case because it's only used for tunnelling by proxies and usually not even implemented by the origin server. This is the same scenario as we have for any new connect method and I think we should therefore follow the same semantics as already defined for CONNECT.",
+          "createdAt": "2020-08-14T13:38:09Z",
+          "updatedAt": "2020-08-14T13:38:09Z"
+        },
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "NONE",
+          "body": "`udp://target-host:port`?",
+          "createdAt": "2020-08-14T18:33:46Z",
+          "updatedAt": "2020-08-14T18:33:46Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This issue has been moved to the [official WG repo](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/8)",
+          "createdAt": "2020-08-28T04:17:36Z",
+          "updatedAt": "2020-08-28T04:17:36Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0MjgwODIxOTUz",
+      "title": "Adding scenario specs, targeting a QUIC proxy instead of a VPN",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/2",
+      "state": "OPEN",
+      "author": "huitema",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2019-05-21T14:54:47Z",
+      "updatedAt": "2021-03-12T16:38:56Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "main",
+      "baseRefOid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5",
+      "headRepository": "huitema/masque-drafts",
+      "headRefName": "scenario-proxy",
+      "headRefOid": "77136ee0554dd32589b4ad44a8b0f2f84cf5a915",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Apologies for the delayed response, it's been a busy few weeks. I've taken a lot of text from this PR and added it to the document. Let me know what you think!",
+          "createdAt": "2019-06-13T02:39:14Z",
+          "updatedAt": "2019-06-13T02:39:14Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzc3OTA3MTU2",
+      "title": "Add constant time note.",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/6",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-02-20T18:24:13Z",
+      "updatedAt": "2021-03-12T16:38:56Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "main",
+      "baseRefOid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5",
+      "headRepository": "chris-wood/masque-drafts",
+      "headRefName": "caw/nit",
+      "headRefOid": "04b400d04a973c87fddc861ec3cbc0c12c577637",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzg0MjU4OTcw",
+      "title": "Edits on negotiation and http/3",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/10",
+      "state": "OPEN",
+      "author": "mirjak",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-03-05T12:53:30Z",
+      "updatedAt": "2021-03-12T16:38:56Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "main",
+      "baseRefOid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5",
+      "headRepository": "mirjak/masque-drafts",
+      "headRefName": "patch-1",
+      "headRefOid": "c999ab41da77c6ede67025f5e93472eff649cf07",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzg5NjI3MjE0",
+      "title": "Linkss",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/13",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Did you know that you can put this sort of note in a file called `.note.xml` and it will be automatically included in all drafts?  You have to use XML, but you can also have the file automatically generated with `make -f lib/setup.mk .note.xml`.  That saves repetition, and it puts the right annotations on it so that it won't make it to publication by accident.",
+      "createdAt": "2020-03-17T05:09:30Z",
+      "updatedAt": "2020-03-17T23:21:51Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "master",
+      "baseRefOid": "ed7d300b87a006d6f0da200ce14925263568ddd5",
+      "headRepository": "martinthomson/masque-drafts",
+      "headRefName": "linkss",
+      "headRefOid": "e89481934c42bdb4ed2755395750a305aa46de0b",
+      "closedAt": "2020-03-17T23:21:51Z",
+      "mergedAt": "2020-03-17T23:21:51Z",
+      "mergedBy": "DavidSchinazi",
+      "mergeCommit": {
+        "oid": "a8670ea640764ce5d6adbb047dd57124cc0805b3"
+      },
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Belay the automation suggestion, this contains drafts for multiple working groups, so you have to roll your own.",
+          "createdAt": "2020-03-17T05:10:38Z",
+          "updatedAt": "2020-03-17T05:10:38Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 28,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDU4Njg1NTQ2",
+      "title": "Initial draft of proxy reqs feedback from IETF 108",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/28",
+      "state": "MERGED",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-07-29T20:48:48Z",
+      "updatedAt": "2021-03-12T16:40:11Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "master",
+      "baseRefOid": "d3d3d51264923f72d0e10343be117510e73ff319",
+      "headRepository": "DavidSchinazi/masque-drafts",
+      "headRefName": "proxy_reqs_updates_from_108",
+      "headRefOid": "8a33bc23337e78d5ef131ae954fbf37c89a89b7b",
+      "closedAt": "2020-08-04T00:24:46Z",
+      "mergedAt": "2020-08-04T00:24:46Z",
+      "mergedBy": "DavidSchinazi",
+      "mergeCommit": {
+        "oid": "b42f29b4d0ad000dac25eaca8dfa1b2229b7e859"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU4NjM1MDkx",
+          "commit": {
+            "abbreviatedOid": "3f6ef60"
+          },
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2020-07-30T18:02:12Z",
+          "updatedAt": "2020-07-30T18:05:27Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "While this is all true, I consider this a special-case of point-to-network connectivity. I would suggest moving it above, or merging it.",
+              "createdAt": "2020-07-30T18:02:12Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "This unfortunately is incompatible with the network-to-network case, where the server does not a priori know that the IPs on the remote side are, and needs to accept advertisements from the client. In fact, the client may not have an IP to assign, as it is acting as a \"router\" for the remote network (and have its own IP assigned already)",
+              "createdAt": "2020-07-30T18:03:12Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            },
+            {
+              "originalPosition": 4,
+              "body": "This is not how I would expect the N2N case to work. Both sides have preexisting IPs and should just be advertising routes to each other.",
+              "createdAt": "2020-07-30T18:05:20Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU4NzAzOTA3",
+          "commit": {
+            "abbreviatedOid": "781b9f1"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-30T19:44:38Z",
+          "updatedAt": "2020-07-30T19:44:38Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I moved it to the top - I think keeping them separate will make it clearer, since it wasn't obvious to EKR originally.",
+              "createdAt": "2020-07-30T19:44:38Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU4NzA0NTg5",
+          "commit": {
+            "abbreviatedOid": "781b9f1"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-30T19:45:43Z",
+          "updatedAt": "2020-07-30T19:45:43Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "OK Rephrased to \"will be able to\"",
+              "createdAt": "2020-07-30T19:45:43Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU4NzA1NTg2",
+          "commit": {
+            "abbreviatedOid": "781b9f1"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-30T19:47:09Z",
+          "updatedAt": "2020-07-30T19:47:10Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "From your email, I thought that for N2N we need the client to able to assign the server an IP from the client network. If not, why do we need this?",
+              "createdAt": "2020-07-30T19:47:09Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5MzUxOTQ4",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T17:46:45Z",
+          "updatedAt": "2020-07-31T17:46:45Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "There's actually a few cases here, some of which are n2n and some of which are p2n.\r\n\r\nFor p2n, there's two operating modes we want:\r\n* Give me a (new) IP address\r\n* I prefer a specific IP address, if available\r\n\r\nThe latter is useful if you had a more dynamic assignment model and the VPN client re-connected, in order to keep the same IP assignment and avoid resetting TCP/QUIC connections over the tunnel.\r\n\r\nFor n2n, the operating mode will be one of\r\n* Delegate a (new) IP range to the client network (but I anticipate this to be rare)\r\n* Client announces an existing IP range",
+              "createdAt": "2020-07-31T17:46:45Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5MzUyMTE2",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-07-31T17:47:03Z",
+          "updatedAt": "2020-07-31T17:47:03Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5Mzc4MTM1",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T18:30:32Z",
+          "updatedAt": "2020-07-31T18:30:32Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Discussed offline, let's keep the IP Assignment and Route Negotiation requirements separate, even if we won't need to use the entire cross-product of possibilities.",
+              "createdAt": "2020-07-31T18:30:32Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDAxOTI4",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T19:13:12Z",
+          "updatedAt": "2020-07-31T19:13:13Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "I still believe that this interaction would work most naturally with the client requesting the IP address to assign. In lay terms, all I really want to say here is:\r\n\r\n- If one of the endpoints wants an address, but doesn't have any opinion about what that address should be then it should be allowed to say \"give me some address that you're able/willing to route to and I'll use it\".\r\n- If one of the endpoints has a set of addresses that it wants its peer to be able to route to, then it should be able to say \"here's some addresses I'm able to route to\" and the peer can agree or disagree to accept them.",
+              "createdAt": "2020-07-31T19:13:13Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDA0MTI5",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2020-07-31T19:17:27Z",
+          "updatedAt": "2020-07-31T19:20:43Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "For the network-to-network use case, I had been expecting that we'd use the route negotiation approach -- with either side saying \"here's the set of IP ranges that you can talk to in my network\". This is assuming that both sides already have an address space that they own and they're just looking to expose it to the other side.\r\n\r\nAre you thinking of some other scenario?",
+              "createdAt": "2020-07-31T19:17:27Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": "Is there much precedent for the request-a-route approach? I'd sort of envisioned both sides telling the other \"here's the full set of addresses I'm willing to let you route to\". If other addresses ranges later become routable, then the endpoint could push out another announcement.",
+              "createdAt": "2020-07-31T19:20:07Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDI4MjQx",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T19:55:27Z",
+          "updatedAt": "2020-07-31T19:55:27Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "There's precedent in as much as that's how IKEv2 traffic selectors work. That approach allows the client to say \"I'd like a route to ::/0\" or \"I'd like to route to this intranet\" and the server can use that in determining what it'll let the client use",
+              "createdAt": "2020-07-31T19:55:27Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDI4NzA3",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T19:56:16Z",
+          "updatedAt": "2020-07-31T19:56:16Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "I was thinking of the case where the client owns an intranet prefix and can tell the server \"here's an IP address for you from my intranet\"",
+              "createdAt": "2020-07-31T19:56:16Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDI5MTg1",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T19:57:03Z",
+          "updatedAt": "2020-07-31T19:57:04Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "I agree that this is more natural, but having the ability to unilaterally offer an address could be useful?",
+              "createdAt": "2020-07-31T19:57:03Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDM4ODQ4",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T20:05:01Z",
+          "updatedAt": "2020-07-31T20:05:02Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "Hm, but in that scenario, how do we know that the server _wants_ to have an address within the client's intranet? Or are you saying that the client handing the server an ip address range is the client's way of telling the server that it should use that address?",
+              "createdAt": "2020-07-31T20:05:02Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDQzMTYy",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T20:13:34Z",
+          "updatedAt": "2020-07-31T20:13:34Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "I think it could be too... but I worry that this introduces a lot of overlap with the route announcement approach, which I'm not sure how to reconcile.\r\n\r\nGiven that the unilateral offering could be rephrased into having the other peer request an address, it seems to afford us a feature that we can already achieve in other ways.",
+              "createdAt": "2020-07-31T20:13:34Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDU5NDQ1MDAx",
+          "commit": {
+            "abbreviatedOid": "b519caa"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-07-31T20:17:17Z",
+          "updatedAt": "2020-07-31T20:17:17Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "I see. I think that could be useful in the Consumer VPN scenario you describe above where the client is asking for routes to public addresses that it's already aware of.\r\n\r\nI'm trying to think through how naturally this approach fits when it needs to request a route into a private network and it has no knowledge of the private network's address space. How does the client know what ranges to request a route to in that scenario?",
+              "createdAt": "2020-07-31T20:17:17Z",
+              "updatedAt": "2020-07-31T23:12:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDYwMzIxMzEw",
+          "commit": {
+            "abbreviatedOid": "8a33bc2"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-03T20:32:27Z",
+          "updatedAt": "2020-08-03T20:32:28Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "In that scenario, the client doesn't request routes, it instead relies on the server unilaterally announcing them.",
+              "createdAt": "2020-08-03T20:32:27Z",
+              "updatedAt": "2020-08-03T20:32:28Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDYwMzk1NDk2",
+          "commit": {
+            "abbreviatedOid": "8a33bc2"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-08-03T23:10:33Z",
+          "updatedAt": "2020-08-03T23:10:33Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDYwMzk1ODky",
+          "commit": {
+            "abbreviatedOid": "8a33bc2"
+          },
+          "author": "dallasmccall",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-03T23:11:47Z",
+          "updatedAt": "2020-08-03T23:11:47Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "That's reasonable. In the interest of not nit'ing too hard this early on, approved.",
+              "createdAt": "2020-08-03T23:11:47Z",
+              "updatedAt": "2020-08-03T23:11:47Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDYwNDE4MzM4",
+          "commit": {
+            "abbreviatedOid": "8a33bc2"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-04T00:23:22Z",
+          "updatedAt": "2020-08-04T00:23:22Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "Thanks! And I fully agree that we'll iterate on this text many times before this gets published.",
+              "createdAt": "2020-08-04T00:23:22Z",
+              "updatedAt": "2020-08-04T00:23:22Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDYwNDE4NTk2",
+          "commit": {
+            "abbreviatedOid": "8a33bc2"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-04T00:24:09Z",
+          "updatedAt": "2020-08-04T00:24:09Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Makes sense, I reverted this change and made address assignment request-response again.",
+              "createdAt": "2020-08-04T00:24:09Z",
+              "updatedAt": "2020-08-04T00:24:09Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDYwNDE4NzM3",
+          "commit": {
+            "abbreviatedOid": "8a33bc2"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-04T00:24:35Z",
+          "updatedAt": "2020-08-04T00:24:35Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "Makes sense, I reverted this change and made address assignment request-response again.",
+              "createdAt": "2020-08-04T00:24:35Z",
+              "updatedAt": "2020-08-04T00:24:35Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTQ1NjQwNjE5",
+      "title": "typo fix s/Calidated/Validated/",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/30",
+      "state": "MERGED",
+      "author": "DavidWittman",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-12-25T23:49:08Z",
+      "updatedAt": "2020-12-26T16:05:19Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "master",
+      "baseRefOid": "7d8f27597ca608f86ee9ac75aa381de34b6c3f35",
+      "headRepository": "DavidWittman/masque-drafts",
+      "headRefName": "patch-1",
+      "headRefOid": "bf3b13146816fcaf3cf2766d7f9a89ad27e1adcc",
+      "closedAt": "2020-12-26T16:05:19Z",
+      "mergedAt": "2020-12-26T16:05:19Z",
+      "mergedBy": "DavidSchinazi",
+      "mergeCommit": {
+        "oid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU4ODgwODQ2",
+          "commit": {
+            "abbreviatedOid": "bf3b131"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Thank you!",
+          "createdAt": "2020-12-26T16:05:03Z",
+          "updatedAt": "2020-12-26T16:05:03Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
