@@ -4,8 +4,8 @@ This is the working area for various individual Internet-Drafts related to MASQU
 
 ## The MASQUE Proxy - draft-schinazi-masque-proxy
 * [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-proxy.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-schinazi-masque-proxy/)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-schinazi-masque-proxy)
-* [DataTracker STatus Page](https://datatracker.ietf.org/doc/draft-schinazi-masque-proxy/)
 * [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-proxy.diff)
 
 ## Adopted Drafts
