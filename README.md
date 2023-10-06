@@ -1,23 +1,17 @@
-# The MASQUE Protocol
+# MASQUE
 
 This is the working area for various individual Internet-Drafts related to MASQUE.
 
-### The MASQUE Protocol - draft-schinazi-masque-protocol
-* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-protocol.html)
-* [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-protocol)
-* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-protocol.diff)
+## The MASQUE Proxy - draft-schinazi-masque-proxy
+* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-proxy.html)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-schinazi-masque-proxy)
+* [DataTracker STatus Page](https://datatracker.ietf.org/doc/draft-schinazi-masque-proxy/)
+* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-proxy.diff)
 
-### MASQUE Obfuscation - draft-schinazi-masque-obfuscation
-* [Editor's Copy](https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-obfuscation.html)
-* [Individual Draft](https://tools.ietf.org/html/draft-schinazi-masque-obfuscation)
-* [Compare Editor's Copy to Individual Draft](https://DavidSchinazi.github.io/masque-drafts/#go.draft-schinazi-masque-obfuscation.diff)
+## Adopted Drafts
 
-### Adopted Drafts
-
-The following drafts were moved from this repository after adoption by the [MASQUE Working Group](https://datatracker.ietf.org/wg/masque/documents/):
-* [draft-cms-masque-ip-proxy-reqs](https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs)
-* [draft-schinazi-masque-connect-udp](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp)
-* [draft-schinazi-httpbis-transport-auth](https://github.com/httpwg/http-extensions/blob/main/draft-ietf-httpbis-unprompted-auth.md)
+Multiple drafts were moved from this repository after adoption by the
+[MASQUE Working Group](https://datatracker.ietf.org/wg/masque/documents/).
 
 ## Building the Drafts
 
