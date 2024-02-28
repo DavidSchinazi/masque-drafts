@@ -29,6 +29,7 @@ informative:
     display: HTTP/3
   TODO:
     title: find that 20 year old email about using nested CONNECT tunnels with SSL to improve privacy
+    date: false
 
 --- abstract
 
@@ -56,11 +57,11 @@ disabling loss recovery {{?DGRAM=RFC9221}} and that can then be used in HTTP
 {{?HTTP-DGRAM=RFC9297}}. This confluence of events created both the possibility
 and the necessity for new proxying technologies in HTTP.
 
-This led to the creation of MASQUE (Multiplexed Application Substrate over
-QUIC Encryption). MASQUE allows proxying both UDP ({{?CONNECT-UDP=RFC9298}})
-and IP ({{?CONNECT-IP=I-D.ietf-masque-connect-ip}}) over HTTP. While MASQUE
-has uses beyond improving user privacy, its focus and design are best suited
-for protecting sensitive information.
+This led to the creation of MASQUE (Multiplexed Application Substrate over QUIC
+Encryption). MASQUE allows proxying both UDP ({{?CONNECT-UDP=RFC9298}}) and IP
+({{?CONNECT-IP=RFC9484}}) over HTTP. While MASQUE has uses beyond improving
+user privacy, its focus and design are best suited for protecting sensitive
+information.
 
 # Privacy Protections
 
@@ -110,7 +111,7 @@ The fact that MASQUE is layered over HTTP makes it much more resilient to
 detection. To network observers, the unencrypted bits in a QUIC connection
 used for MASQUE are indistinguishable from those of a regular Web browsing
 connection. Separately, if paired with a non-probable HTTP authentication
-scheme {{?UNPROMPTED-AUTH=I-D.ietf-httpbis-unprompted-auth}}, any Web server
+scheme {{?SIGNATURE-AUTH=I-D.ietf-httpbis-unprompted-auth}}, any Web server
 can also become a MASQUE proxy while remaining indistinguishable from a
 regular Web server. It might still be possible to detect some level of
 MASQUE usage by analyzing encrypted traffic patterns, however the cost of
@@ -126,10 +127,10 @@ privacy-focused IETF protocols.
 
 ## OHTTP
 
-Oblivious HTTP {{?OHTTP=I-D.ietf-ohai-ohttp}} uses a cryptographic primitive
-{{?HPKE=RFC9180}} that is more lightweight than TLS {{?TLS=RFC8446}}, making
-it a great fit for decorrelating HTTP requests. In traditional Web browsing,
-the user agent will often make many requests to the same origin (e.g., to load
+Oblivious HTTP {{?OHTTP=RFC9458}} uses a cryptographic primitive
+{{?HPKE=RFC9180}} that is more lightweight than TLS {{?TLS=RFC8446}}, making it
+a great fit for decorrelating HTTP requests. In traditional Web browsing, the
+user agent will often make many requests to the same origin (e.g., to load
 HTML, style sheets, images, scripts) and those requests are correlatable since
 the origin can include identifying query parameters to join separate requests.
 In such scenarios, MASQUE is a better fit since it operates at the granularity
