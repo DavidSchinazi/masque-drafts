@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                             13 March 2023
-Expires: 14 September 2023
+Intended status: Informational                          28 February 2024
+Expires: 31 August 2024
 
 
                             The MASQUE Proxy
@@ -46,11 +46,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 September 2023.
+   This Internet-Draft will expire on 31 August 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -150,7 +150,7 @@ Table of Contents
    resilient to detection.  To network observers, the unencrypted bits
    in a QUIC connection used for MASQUE are indistinguishable from those
    of a regular Web browsing connection.  Separately, if paired with a
-   non-probable HTTP authentication scheme [UNPROMPTED-AUTH], any Web
+   non-probable HTTP authentication scheme [SIGNATURE-AUTH], any Web
    server can also become a MASQUE proxy while remaining
    indistinguishable from a regular Web server.  It might still be
    possible to detect some level of MASQUE usage by analyzing encrypted
@@ -206,11 +206,10 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc2817>.
 
    [CONNECT-IP]
-              Pauly, T., Schinazi, D., Chernyakhovsky, A., Kühlewind,
-              M., and M. Westerlund, "Proxying IP in HTTP", Work in
-              Progress, Internet-Draft, draft-ietf-masque-connect-ip-08,
-              1 March 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-masque-connect-ip-08>.
+              Pauly, T., Ed., Schinazi, D., Chernyakhovsky, A.,
+              Kühlewind, M., and M. Westerlund, "Proxying IP in HTTP",
+              RFC 9484, DOI 10.17487/RFC9484, October 2023,
+              <https://www.rfc-editor.org/rfc/rfc9484>.
 
    [CONNECT-UDP]
               Schinazi, D., "Proxying UDP in HTTP", RFC 9298,
@@ -246,36 +245,35 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-irtf-pearg-
               ip-address-privacy-considerations-01>.
 
-   [OHTTP]    Thomson, M. and C. A. Wood, "Oblivious HTTP", Work in
-              Progress, Internet-Draft, draft-ietf-ohai-ohttp-07, 9
-              March 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-ohai-ohttp-07>.
+   [OHTTP]    Thomson, M. and C. A. Wood, "Oblivious HTTP", RFC 9458,
+              DOI 10.17487/RFC9458, January 2024,
+              <https://www.rfc-editor.org/rfc/rfc9458>.
 
    [PARTITION]
               Kühlewind, M., Pauly, T., and C. A. Wood, "Partitioning as
               an Architecture for Privacy", Work in Progress, Internet-
-              Draft, draft-iab-privacy-partitioning-01, 13 March 2023,
+              Draft, draft-iab-privacy-partitioning-05, 11 January 2024,
               <https://datatracker.ietf.org/doc/html/draft-iab-privacy-
-              partitioning-01>.
+              partitioning-05>.
 
    [QUIC]     Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
 
+   [SIGNATURE-AUTH]
+              Schinazi, D., Oliver, D., and J. Hoyland, "The Signature
+              HTTP Authentication Scheme", Work in Progress, Internet-
+              Draft, draft-ietf-httpbis-unprompted-auth-06, 23 January
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              httpbis-unprompted-auth-06>.
+
    [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
 
    [TODO]     "find that 20 year old email about using nested CONNECT
-              tunnels with SSL to improve privacy", n.d..
-
-   [UNPROMPTED-AUTH]
-              Schinazi, D., Oliver, D., and J. Hoyland, "HTTP Unprompted
-              Authentication", Work in Progress, Internet-Draft, draft-
-              ietf-httpbis-unprompted-auth-00, 24 February 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-
-              unprompted-auth-00>.
+              tunnels with SSL to improve privacy".
 
 Acknowledgments
 
