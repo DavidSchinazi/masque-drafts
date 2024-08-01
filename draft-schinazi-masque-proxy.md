@@ -110,7 +110,7 @@ proxies knowing the user's browsing history.
 The fact that MASQUE is layered over HTTP makes it much more resilient to
 detection. To network observers, the unencrypted bits in a QUIC connection
 used for MASQUE are indistinguishable from those of a regular Web browsing
-connection. Separately, if paired with a non-probable HTTP authentication
+connection. Separately, if paired with a non-probeable HTTP authentication
 scheme {{?SIGNATURE-AUTH=I-D.ietf-httpbis-unprompted-auth}}, any Web server
 can also become a MASQUE proxy while remaining indistinguishable from a
 regular Web server. It might still be possible to detect some level of
