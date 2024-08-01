@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                          28 February 2024
-Expires: 31 August 2024
+Intended status: Informational                             1 August 2024
+Expires: 2 February 2025
 
 
                             The MASQUE Proxy
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2024.
+   This Internet-Draft will expire on 2 February 2025.
 
 Copyright Notice
 
@@ -150,7 +150,7 @@ Table of Contents
    resilient to detection.  To network observers, the unencrypted bits
    in a QUIC connection used for MASQUE are indistinguishable from those
    of a regular Web browsing connection.  Separately, if paired with a
-   non-probable HTTP authentication scheme [SIGNATURE-AUTH], any Web
+   non-probeable HTTP authentication scheme [SIGNATURE-AUTH], any Web
    server can also become a MASQUE proxy while remaining
    indistinguishable from a regular Web server.  It might still be
    possible to detect some level of MASQUE usage by analyzing encrypted
@@ -262,11 +262,11 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc9000>.
 
    [SIGNATURE-AUTH]
-              Schinazi, D., Oliver, D., and J. Hoyland, "The Signature
+              Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
               HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-httpbis-unprompted-auth-06, 23 January
+              Draft, draft-ietf-httpbis-unprompted-auth-09, 23 July
               2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              httpbis-unprompted-auth-06>.
+              httpbis-unprompted-auth-09>.
 
    [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
