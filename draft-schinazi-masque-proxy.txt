@@ -150,7 +150,7 @@ Table of Contents
    resilient to detection.  To network observers, the unencrypted bits
    in a QUIC connection used for MASQUE are indistinguishable from those
    of a regular Web browsing connection.  Separately, if paired with a
-   non-probeable HTTP authentication scheme [SIGNATURE-AUTH], any Web
+   non-probeable HTTP authentication scheme [CONCEALED-AUTH], any Web
    server can also become a MASQUE proxy while remaining
    indistinguishable from a regular Web server.  It might still be
    possible to detect some level of MASQUE usage by analyzing encrypted
@@ -200,6 +200,13 @@ Table of Contents
    This document has no IANA actions.
 
 6.  Informative References
+
+   [CONCEALED-AUTH]
+              Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
+              HTTP Authentication Scheme", Work in Progress, Internet-
+              Draft, draft-ietf-httpbis-unprompted-auth-10, 28 August
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              httpbis-unprompted-auth-10>.
 
    [CONNECT]  Khare, R. and S. Lawrence, "Upgrading to TLS Within
               HTTP/1.1", RFC 2817, DOI 10.17487/RFC2817, May 2000,
@@ -259,13 +266,6 @@ Table of Contents
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
-
-   [SIGNATURE-AUTH]
-              Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
-              HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-httpbis-unprompted-auth-10, 28 August
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              httpbis-unprompted-auth-10>.
 
    [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,

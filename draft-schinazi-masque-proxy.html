@@ -1265,7 +1265,7 @@ proxies knowing the user's browsing history.<a href="#section-2.3-3" class="pilc
 detection. To network observers, the unencrypted bits in a QUIC connection
 used for MASQUE are indistinguishable from those of a regular Web browsing
 connection. Separately, if paired with a non-probeable HTTP authentication
-scheme <span>[<a href="#SIGNATURE-AUTH" class="cite xref">SIGNATURE-AUTH</a>]</span>, any Web server
+scheme <span>[<a href="#CONCEALED-AUTH" class="cite xref">CONCEALED-AUTH</a>]</span>, any Web server
 can also become a MASQUE proxy while remaining indistinguishable from a
 regular Web server. It might still be possible to detect some level of
 MASQUE usage by analyzing encrypted traffic patterns, however the cost of
@@ -1339,6 +1339,10 @@ the documents referenced by this one.<a href="#section-4-1" class="pilcrow">¶</
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
       </h2>
 <dl class="references">
+<dt id="CONCEALED-AUTH">[CONCEALED-AUTH]</dt>
+      <dd>
+<span class="refAuthor">Schinazi, D.</span>, <span class="refAuthor">Oliver, D.</span>, and <span class="refAuthor">J. Hoyland</span>, <span class="refTitle">"The Concealed HTTP Authentication Scheme"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-httpbis-unprompted-auth-10</span>, <time datetime="2024-08-28" class="refDate">28 August 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-unprompted-auth-10">https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-unprompted-auth-10</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="CONNECT">[CONNECT]</dt>
       <dd>
 <span class="refAuthor">Khare, R.</span> and <span class="refAuthor">S. Lawrence</span>, <span class="refTitle">"Upgrading to TLS Within HTTP/1.1"</span>, <span class="seriesInfo">RFC 2817</span>, <span class="seriesInfo">DOI 10.17487/RFC2817</span>, <time datetime="2000-05" class="refDate">May 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2817">https://www.rfc-editor.org/rfc/rfc2817</a>&gt;</span>. </dd>
@@ -1386,10 +1390,6 @@ the documents referenced by this one.<a href="#section-4-1" class="pilcrow">¶</
 <dt id="QUIC">[QUIC]</dt>
       <dd>
 <span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="SIGNATURE-AUTH">[SIGNATURE-AUTH]</dt>
-      <dd>
-<span class="refAuthor">Schinazi, D.</span>, <span class="refAuthor">Oliver, D.</span>, and <span class="refAuthor">J. Hoyland</span>, <span class="refTitle">"The Concealed HTTP Authentication Scheme"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-httpbis-unprompted-auth-10</span>, <time datetime="2024-08-28" class="refDate">28 August 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-unprompted-auth-10">https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-unprompted-auth-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TLS">[TLS]</dt>
       <dd>
