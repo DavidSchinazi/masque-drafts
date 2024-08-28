@@ -9,6 +9,7 @@ category: info
 keyword:
   - masque
   - proxy
+  - kuzh
 venue:
   repo: https://github.com/DavidSchinazi/masque-drafts
   latest: https://davidschinazi.github.io/masque-drafts/draft-schinazi-masque-proxy.html
