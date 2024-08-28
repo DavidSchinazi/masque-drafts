@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                             1 August 2024
-Expires: 2 February 2025
+Intended status: Informational                            28 August 2024
+Expires: 1 March 2025
 
 
                             The MASQUE Proxy
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 February 2025.
+   This Internet-Draft will expire on 1 March 2025.
 
 Copyright Notice
 
@@ -251,10 +251,9 @@ Table of Contents
 
    [PARTITION]
               Kühlewind, M., Pauly, T., and C. A. Wood, "Partitioning as
-              an Architecture for Privacy", Work in Progress, Internet-
-              Draft, draft-iab-privacy-partitioning-05, 11 January 2024,
-              <https://datatracker.ietf.org/doc/html/draft-iab-privacy-
-              partitioning-05>.
+              an Architecture for Privacy", RFC 9614,
+              DOI 10.17487/RFC9614, July 2024,
+              <https://www.rfc-editor.org/rfc/rfc9614>.
 
    [QUIC]     Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
@@ -264,9 +263,9 @@ Table of Contents
    [SIGNATURE-AUTH]
               Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
               HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-httpbis-unprompted-auth-09, 23 July
+              Draft, draft-ietf-httpbis-unprompted-auth-10, 28 August
               2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              httpbis-unprompted-auth-09>.
+              httpbis-unprompted-auth-10>.
 
    [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,

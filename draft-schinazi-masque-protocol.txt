@@ -4,8 +4,8 @@
 
 MASQUE                                                       D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Experimental                              1 August 2024
-Expires: 2 February 2025
+Intended status: Experimental                             28 August 2024
+Expires: 1 March 2025
 
 
                           The MASQUE Protocol
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 February 2025.
+   This Internet-Draft will expire on 1 March 2025.
 
 Copyright Notice
 
@@ -604,9 +604,9 @@ Table of Contents
 
    [ESNI]     Rescorla, E., Oku, K., Sullivan, N., and C. A. Wood, "TLS
               Encrypted Client Hello", Work in Progress, Internet-Draft,
-              draft-ietf-tls-esni-18, 4 March 2024,
+              draft-ietf-tls-esni-20, 4 August 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
-              esni-18>.
+              esni-20>.
 
 Acknowledgments
 
