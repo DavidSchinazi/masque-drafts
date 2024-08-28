@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DavidSchinazi/masque-drafts draft-schinazi-masque-proxy-03 preview</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <style type="text/css">/*<![CDATA[*/
+      body { font-family: "Helvetica Neue","Open Sans", Helvetica, Calibri,sans-serif; }
+      h1, h2, td { font-family: "Helvetica Neue", "Roboto Condensed", "Open Sans", Helvetica, Calibri, sans-serif; }
+      h1 { font-size: 20px; } h2 { font-size: 16px; }
+      table { margin: 5px 10px; border-collapse: collapse; }
+      th, td { font-weight: normal; text-align: left; padding: 2px 5px; }
+      a:link { color: #000; } a:visited { color: #00a; }
+    /*]]>*/</style>
+  </head>
+  <body>
+    <h1>Editor's drafts for draft-schinazi-masque-proxy-03 branch of <a href="https://github.com/DavidSchinazi/masque-drafts/tree/draft-schinazi-masque-proxy-03">DavidSchinazi/masque-drafts</a></h1>
+    <table id="branch-draft-schinazi-masque-proxy-03">
+      <tr>
+        <td><a href="./draft-schinazi-masque-obfuscation.html" class="html draft-schinazi-masque-obfuscation" title="MASQUE Obfuscation (HTML)">MASQUE Obfuscation</a></td>
+        <td><a href="./draft-schinazi-masque-obfuscation.txt" class="txt draft-schinazi-masque-obfuscation" title="MASQUE Obfuscation (Text)">plain text</a></td>
+        <td>same as main</td>
+      </tr>
+      <tr>
+        <td><a href="./draft-schinazi-masque-protocol.html" class="html draft-schinazi-masque-protocol" title="The MASQUE Protocol (HTML)">MASQUE</a></td>
+        <td><a href="./draft-schinazi-masque-protocol.txt" class="txt draft-schinazi-masque-protocol" title="The MASQUE Protocol (Text)">plain text</a></td>
+        <td>same as main</td>
+      </tr>
+      <tr>
+        <td><a href="./draft-schinazi-masque-proxy.html" class="html draft-schinazi-masque-proxy" title="The MASQUE Proxy (HTML)">The MASQUE Proxy</a></td>
+        <td><a href="./draft-schinazi-masque-proxy.txt" class="txt draft-schinazi-masque-proxy" title="The MASQUE Proxy (Text)">plain text</a></td>
+        <td>same as main</td>
+      </tr>
+    </table>
+    <script>
+window.onload = function() {
+  var referrer_branch = 'main';
+  // e.g., "https://github.com/user/repo/tree/main"
+  var chunks = document.referrer.split("/");
+  if (chunks[2] === 'github.com' && chunks[5] === 'tree') {
+    referrer_branch = chunks[6];
+  }
+  let branch = document.querySelector('#branch-' + referrer_branch);
+  let h = document.location.hash.substring(1);
+  if (h === 'show') {
+    document.location.hash = '#' + branch.id;
+  } else if (branch && h.startsWith('go')) {
+    let e = branch.querySelector(h.substring(2));
+    if (e && e.href) {
+      document.location = e.href;
+    }
+  }
+};
+    </script>
+  </body>
+</html>
