@@ -95,7 +95,7 @@ provider is not a meaningful security improvement.
 There is a technical solution that allows resolving this issue: it is possible
 to nest MASQUE tunnels such that traffic flows through multiple MASQUE proxies.
 This has the advantage of partitioning sensitive information to prevent
-correlation {{?PARTITION=I-D.iab-privacy-partitioning}}.
+correlation {{?PARTITION=RFC9614}}.
 
 Though the idea of nested tunnels dates back decades {{TODO}}, MASQUE now
 allows running HTTP/3 end-to-end from a user agent to an origin via multiple
