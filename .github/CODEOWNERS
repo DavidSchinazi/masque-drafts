@@ -1,0 +1,5 @@
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-schinazi-masque-obfuscation.md dschinazi.ietf@gmail.com
+draft-schinazi-masque-protocol.md dschinazi.ietf@gmail.com
+draft-schinazi-masque-proxy.md dschinazi.ietf@gmail.com
