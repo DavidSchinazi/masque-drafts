@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-06-06T00:45:19.285196+00:00",
+  "timestamp": "2024-11-07T00:34:38.333265+00:00",
   "repo": "DavidSchinazi/masque-drafts",
   "labels": [
     {
@@ -19,14 +19,14 @@
       "color": "a2eeef"
     },
     {
-      "name": "help wanted",
-      "description": "Extra attention is needed",
-      "color": "008672"
-    },
-    {
       "name": "good first issue",
       "description": "Good for newcomers",
       "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
     },
     {
       "name": "invalid",
@@ -50,15 +50,15 @@
       "id": "MDU6SXNzdWU0NDY1NzgwMTU=",
       "title": "VPN or QUIC Proxy?",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "huitema",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I would like to support a QUIC proxy because it is much easier to deploy, requires just one port.",
       "createdAt": "2019-05-21T11:58:43Z",
-      "updatedAt": "2019-11-11T19:30:13Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:56:30Z",
+      "closedAt": "2023-03-07T04:56:29Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -94,6 +94,13 @@
           "body": "Fair enough. I just want to keep VPN as a potential use-case, but agree that working on proxying is higher priority.",
           "createdAt": "2019-06-13T16:33:28Z",
           "updatedAt": "2019-06-13T16:33:28Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This is now covered by https://github.com/tfpauly/quic-proxy",
+          "createdAt": "2023-03-07T04:56:29Z",
+          "updatedAt": "2023-03-07T04:56:29Z"
         }
       ]
     },
@@ -102,15 +109,15 @@
       "id": "MDU6SXNzdWU0Njc3NDc0Mzc=",
       "title": "Security issue: abusing third parties",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "huitema",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "One of the security issues with Masque proxies is whether they can be used to attack third parties. The attacking client would connect to the Masque server, and push packets towards a third party with a goal of attacking that party. It could be part of a \"targeted\" attack, sending specially crafted packets to activate a bug and crash or pwn the target. Or it could be a volumetric attack, with the client sending large number of transactions to try DOS the target.\r\n\r\nSuch abuses can cause reputation issues for the proxy, eventually landing the proxy's IP address in some kind of blacklist. It seems that Masque implementations should recognize the issue and do something about it.\r\n\r\nThe first line of defense is of course to only serve authorized clients, but that's not a perfect defense. Attackers could somehow hack an authorized client and get its credentials. Or, they could subscribe to the service with a throw-away identity.\r\n\r\nThe second line of defense, used for example in TURN, is to restrict what clients can do. This amounts to building some kind of basic firewall in the Masque proxy, with rules like inspecting packets or limiting packet rates.\r\n\r\nI wonder whether we should add text to that effect in the specification?",
       "createdAt": "2019-07-13T17:37:38Z",
-      "updatedAt": "2020-02-25T19:38:50Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:48:40Z",
+      "closedAt": "2023-03-07T04:48:39Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -132,6 +139,13 @@
           "body": "I agree that these issues don't necessarily need to be handled in the MASQUE protocol text, but mentioning it in the Security Considerations section can't hurt",
           "createdAt": "2020-02-25T19:38:50Z",
           "updatedAt": "2020-02-25T19:38:50Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This ended up being covered in the [Security Considerations of RFC 9298](https://www.rfc-editor.org/rfc/rfc9298#name-security-considerations)",
+          "createdAt": "2023-03-07T04:48:39Z",
+          "updatedAt": "2023-03-07T04:48:39Z"
         }
       ]
     },
@@ -140,15 +154,15 @@
       "id": "MDU6SXNzdWU1MTAyMjUwNDA=",
       "title": "Pluggable Transports - any relationship?",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "m4mb01t4l14n0",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Our community, working with the [PEARG](https://irtf.org/pearg) folks in IRTF, submitted an Internet Draft of our on-going work on network traffic obfuscation called \"Pluggable Transports\".  It's [HERE](https://www.ietf.org/id/draft-oliver-pluggable-transports-00.txt). I'm one of the authors.  This work, begun at the Tor Project with later cooperation from organizations serving the Human Rights and Internet Freedom areas, has been focused on TCP. We'd be interested to understand if there is a relationship between this work and your work on MASQUE, and/or if there is possibility to cooperate.   ",
       "createdAt": "2019-10-21T19:20:34Z",
-      "updatedAt": "2019-11-12T20:31:51Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T05:00:16Z",
+      "closedAt": "2023-03-07T05:00:16Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -191,6 +205,13 @@
           "body": "@m4mb01t4l14n0 sounds good! Feel free to [email me](https://tools.ietf.org/html/draft-schinazi-masque-01#page-13) when you're there!",
           "createdAt": "2019-11-12T20:31:50Z",
           "updatedAt": "2019-11-12T20:31:50Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Overcome by events, this is now discussed on [draft-ietf-httpbis-unprompted-auth](https://datatracker.ietf.org/doc/draft-ietf-httpbis-unprompted-auth/)",
+          "createdAt": "2023-03-07T05:00:16Z",
+          "updatedAt": "2023-03-07T05:00:16Z"
         }
       ]
     },
@@ -199,15 +220,15 @@
       "id": "MDU6SXNzdWU1NjcxNTMwMjA=",
       "title": "MASQUE request processing MUST run in constant time",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Imagine adversary Adv knows the username of a MASQUE user, and observes a connection to a supposed MASQUE server. Adv could determine whether or not the user initiated a MASQUE connection as follows:\r\n\r\n1. Connect to the server and send a MASQUE request with the correct username and bogus signature. Measure the time to response as T1.\r\n2. Connect to the server and send a MASQUE request with a bogus username and signature. Measure the time to response as T2.\r\n\r\nIf T1 >> T2, this suggests that the username is valid for the given MASQUE server. \r\n\r\nMASQUE servers should process (username, signature) request tuples in constant time so as to not leak this type of information.",
       "createdAt": "2020-02-18T20:56:56Z",
-      "updatedAt": "2021-06-05T17:05:07Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:47:22Z",
+      "closedAt": "2023-03-07T04:47:22Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -222,6 +243,13 @@
           "body": "Related: To satisfy the requirement of server invisibility https://www.ietf.org/archive/id/draft-schinazi-masque-obfuscation-04.html#name-invisibility-of-the-server, a request without authentication must also use the same constant time to not expose the server.",
           "createdAt": "2021-06-05T17:05:07Z",
           "updatedAt": "2021-06-05T17:05:07Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This is now covered by https://github.com/httpwg/http-extensions/issues/2437 and is being fixed by https://github.com/httpwg/http-extensions/pull/2466",
+          "createdAt": "2023-03-07T04:47:22Z",
+          "updatedAt": "2023-03-07T04:47:22Z"
         }
       ]
     },
@@ -292,16 +320,24 @@
       "id": "MDU6SXNzdWU1NzA3OTc4ODY=",
       "title": "Transport-Authentication should be a structured header",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/9",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Since HTTP Structured Headers ([draft-ietf-httpbis-header-structure](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure)) are nearing publication, we should turn `Transport-Authentication` from [draft-schinazi-httpbis-transport-auth](https://davidschinazi.github.io/masque-drafts/draft-schinazi-httpbis-transport-auth.html) into an Item Structured Header.",
       "createdAt": "2020-02-25T19:58:45Z",
-      "updatedAt": "2020-02-25T19:58:45Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-03-07T04:43:04Z",
+      "closedAt": "2023-03-07T04:43:04Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Fixed in draft-ietf-httpbis-unprompted-auth",
+          "createdAt": "2023-03-07T04:43:04Z",
+          "updatedAt": "2023-03-07T04:43:04Z"
+        }
+      ]
     },
     {
       "number": 11,
@@ -332,15 +368,15 @@
       "id": "MDU6SXNzdWU1NzYyNDMzMDA=",
       "title": "MASQUE application or service?",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "We discussed already which term to use. Not sure we fully concluded here but in the charter I think it's service now. Should this be updated in this draft respectively?",
       "createdAt": "2020-03-05T13:11:59Z",
-      "updatedAt": "2020-03-05T17:57:02Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:49:08Z",
+      "closedAt": "2023-03-07T04:49:07Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -348,6 +384,13 @@
           "body": "Let's discuss how we want to name things in the Working Group if/when it gets chartered.",
           "createdAt": "2020-03-05T17:57:02Z",
           "updatedAt": "2020-03-05T17:57:02Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Overcome by events",
+          "createdAt": "2023-03-07T04:49:07Z",
+          "updatedAt": "2023-03-07T04:49:07Z"
         }
       ]
     },
@@ -356,15 +399,15 @@
       "id": "MDU6SXNzdWU1ODI3NTk5MzE=",
       "title": "Don't use .well-known",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "You don't need to do that.  Configuring a URL seems as likely to work as a domain name and it provides additional deployment flexibility for the application.",
       "createdAt": "2020-03-17T05:12:38Z",
-      "updatedAt": "2020-03-17T23:24:38Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:49:54Z",
+      "closedAt": "2023-03-07T04:49:54Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -372,6 +415,13 @@
           "body": "That's a good point! I think we'll want to keep #15 in mind when making this change but if we allow any URL and require a `Sec-` header we're probably in better shape?",
           "createdAt": "2020-03-17T23:24:37Z",
           "updatedAt": "2020-03-17T23:24:37Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This ended up being covered by the [Client Configuration section of RFC 9298](https://www.rfc-editor.org/rfc/rfc9298#name-client-configuration)",
+          "createdAt": "2023-03-07T04:49:54Z",
+          "updatedAt": "2023-03-07T04:49:54Z"
         }
       ]
     },
@@ -380,15 +430,15 @@
       "id": "MDU6SXNzdWU1ODMwMTU1MzE=",
       "title": "Securing MASQUE usage from web-based JavaScript",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Created out of mailing list discussion, summary of the points discussed there:\r\n\r\n* MASQUE has some similarity to other mechanisms that modify the behaviour of an HTTP connection after a negotiation phase (e.g. conventional CONNECT, WebSocket upgrade etc).\r\n* Legacy HTTP proxying can be [vulnerable](https://www.kb.cert.org/vuls/id/150227/). Programmatic request generation such as via the Fetch API provide several measures to prevent scripts from exploiting such mechanisms. Either through [forbidding methods](https://fetch.spec.whatwg.org/#methods) or [forbidding header names prefixed with `Sec-` or `Proxy-`](https://fetch.spec.whatwg.org/#forbidden-header-name) (e.g. as required by the [WebSocket protocol ](https://tools.ietf.org/html/rfc6455#section-11.3.1).\r\n* it is reasonable to assume that MASQUE proxying applications make be affected by the class of vulnerability\r\n* draft-schinazi-masque-protocol-01 negotiation uses POST requests and has defines no mandatory headers\r\n\r\nSome possible actions to provide mitigations:\r\n\r\n* acknowledge that as a new protocol, MASQUE is not affected by legacy deployment concerns. Provide guidance in Security Considerations for new deployments of MASQUE.\r\n* Consider if MASQUE negotiation should be blocked from implementation in web-based JavaScript. If so define something to do so e.g.:\r\n  * Keep POST but define some forbidden header\r\n  * More drastically, move away from POST to something else such as extended CONNECT.",
       "createdAt": "2020-03-17T13:32:18Z",
-      "updatedAt": "2020-03-17T23:20:31Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:57:35Z",
+      "closedAt": "2023-03-07T04:57:34Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -396,6 +446,13 @@
           "body": "Thanks for filing! If we keep using POST for negotiation, adding a custom header such as `Sec-Masque` could mitigate this class of issues",
           "createdAt": "2020-03-17T23:20:31Z",
           "updatedAt": "2020-03-17T23:20:31Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Overcome by events, this ended up being resolved by switching to CONNECT / Upgrade",
+          "createdAt": "2023-03-07T04:57:34Z",
+          "updatedAt": "2023-03-07T04:57:34Z"
         }
       ]
     },
@@ -404,15 +461,15 @@
       "id": "MDU6SXNzdWU1ODMxNDQ4ODI=",
       "title": "What is the MASQUE POST body content-type",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The client part of negotiation requires a client to send a POST request with a sequence of TLVs. What is the content-type of that payload body?",
       "createdAt": "2020-03-17T16:36:32Z",
-      "updatedAt": "2020-03-17T23:19:08Z",
-      "closedAt": null,
+      "updatedAt": "2023-03-07T04:56:55Z",
+      "closedAt": "2023-03-07T04:56:55Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -420,6 +477,13 @@
           "body": "That's a good point, we probably will want to define and register a new Media Type with [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).",
           "createdAt": "2020-03-17T23:19:07Z",
           "updatedAt": "2020-03-17T23:19:07Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Overcome by events",
+          "createdAt": "2023-03-07T04:56:55Z",
+          "updatedAt": "2023-03-07T04:56:55Z"
         }
       ]
     },
@@ -428,64 +492,96 @@
       "id": "MDU6SXNzdWU1ODczMjk3MjA=",
       "title": "Improve threat model documentation",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "... Per feedback from Martin during the BoF.",
       "createdAt": "2020-03-24T22:59:00Z",
-      "updatedAt": "2020-03-24T22:59:00Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-03-07T04:50:31Z",
+      "closedAt": "2023-03-07T04:50:30Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "This ended up being covered in the [Security Considerations of RFC 9298](https://www.rfc-editor.org/rfc/rfc9298#name-security-considerations)",
+          "createdAt": "2023-03-07T04:50:30Z",
+          "updatedAt": "2023-03-07T04:50:30Z"
+        }
+      ]
     },
     {
       "number": 18,
       "id": "MDU6SXNzdWU1OTA2NzA1NTQ=",
       "title": "Rename \"validated\" in compression contexts",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/18",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "The word \"validated\" is already used to discuss address validation is QUIC. Perhaps we should use \"confirmed\" instead? Then again that's already used for the handshake...\r\n\r\n(Thanks @martinthomson for the feedback)",
       "createdAt": "2020-03-30T23:34:21Z",
-      "updatedAt": "2020-03-30T23:34:21Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-03-07T05:06:29Z",
+      "closedAt": "2023-03-07T05:06:28Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "https://github.com/tfpauly/quic-proxy/issues/74",
+          "createdAt": "2023-03-07T05:06:28Z",
+          "updatedAt": "2023-03-07T05:06:28Z"
+        }
+      ]
     },
     {
       "number": 19,
       "id": "MDU6SXNzdWU1OTA2NzA1OTA=",
       "title": "QUIC Proxying needs more explanatory text",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/19",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Proxying QUIC isn't a completely straightforward concept, the draft should spend more time explaining what it accomplishes and what external bits are required (such as return routing of packets for example). A sequence diagram showing the flow of packets might help.\r\n\r\n(Thanks @martinthomson for the feedback)",
       "createdAt": "2020-03-30T23:34:26Z",
-      "updatedAt": "2020-03-30T23:34:26Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-03-07T04:51:48Z",
+      "closedAt": "2023-03-07T04:51:48Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Overcome by events, these details are now tracked by https://github.com/tfpauly/quic-proxy",
+          "createdAt": "2023-03-07T04:51:48Z",
+          "updatedAt": "2023-03-07T04:51:48Z"
+        }
+      ]
     },
     {
       "number": 20,
       "id": "MDU6SXNzdWU1OTA2NzA2Mzg=",
       "title": "QUIC Proxying should better explain compression contexts",
       "url": "https://github.com/DavidSchinazi/masque-drafts/issues/20",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "The text should do a better job of explaining how compression contexts are used, and how they interact with DATAGRAM flow identifiers. In a nutshell, the compression context is identified by a number that is in the DATAGRAM flow identifier namespace, but that needs to be better explained.\r\n\r\n(Thanks @martinthomson for the feedback)",
       "createdAt": "2020-03-30T23:34:32Z",
-      "updatedAt": "2020-03-30T23:34:32Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-03-07T05:06:22Z",
+      "closedAt": "2023-03-07T05:06:21Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Closing in favor of https://github.com/tfpauly/quic-proxy/issues/74",
+          "createdAt": "2023-03-07T05:06:21Z",
+          "updatedAt": "2023-03-07T05:06:21Z"
+        }
+      ]
     },
     {
       "number": 21,
@@ -769,6 +865,22 @@
           "updatedAt": "2020-08-28T04:17:36Z"
         }
       ]
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOCjBhTM6RjGMl",
+      "title": "Editorial: Minor: Spelling error: \"probable\"",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/31",
+      "state": "CLOSED",
+      "author": "ricea",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "> \"if paired with a non-probable HTTP authentication scheme\"\r\n\r\nShould be **non-probeable**.",
+      "createdAt": "2024-08-01T09:02:04Z",
+      "updatedAt": "2024-08-01T17:43:51Z",
+      "closedAt": "2024-08-01T17:43:51Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -777,21 +889,21 @@
       "id": "MDExOlB1bGxSZXF1ZXN0MjgwODIxOTUz",
       "title": "Adding scenario specs, targeting a QUIC proxy instead of a VPN",
       "url": "https://github.com/DavidSchinazi/masque-drafts/pull/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "huitema",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2019-05-21T14:54:47Z",
-      "updatedAt": "2021-03-12T16:38:56Z",
+      "updatedAt": "2023-03-07T04:53:27Z",
       "baseRepository": "DavidSchinazi/masque-drafts",
       "baseRefName": "main",
       "baseRefOid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5",
       "headRepository": "huitema/masque-drafts",
       "headRefName": "scenario-proxy",
       "headRefOid": "77136ee0554dd32589b4ad44a8b0f2f84cf5a915",
-      "closedAt": null,
+      "closedAt": "2023-03-07T04:53:27Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -811,25 +923,33 @@
       "id": "MDExOlB1bGxSZXF1ZXN0Mzc3OTA3MTU2",
       "title": "Add constant time note.",
       "url": "https://github.com/DavidSchinazi/masque-drafts/pull/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2020-02-20T18:24:13Z",
-      "updatedAt": "2021-03-12T16:38:56Z",
+      "updatedAt": "2023-03-07T04:52:58Z",
       "baseRepository": "DavidSchinazi/masque-drafts",
       "baseRefName": "main",
       "baseRefOid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5",
       "headRepository": "chris-wood/masque-drafts",
       "headRefName": "caw/nit",
       "headRefOid": "04b400d04a973c87fddc861ec3cbc0c12c577637",
-      "closedAt": null,
+      "closedAt": "2023-03-07T04:52:57Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "OWNER",
+          "body": "Overcome by events, see https://github.com/httpwg/http-extensions/pull/2466",
+          "createdAt": "2023-03-07T04:52:57Z",
+          "updatedAt": "2023-03-07T04:52:57Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -837,21 +957,21 @@
       "id": "MDExOlB1bGxSZXF1ZXN0Mzg0MjU4OTcw",
       "title": "Edits on negotiation and http/3",
       "url": "https://github.com/DavidSchinazi/masque-drafts/pull/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2020-03-05T12:53:30Z",
-      "updatedAt": "2021-03-12T16:38:56Z",
+      "updatedAt": "2023-03-07T04:55:13Z",
       "baseRepository": "DavidSchinazi/masque-drafts",
       "baseRefName": "main",
       "baseRefOid": "d9aa42a4300c7d1537ac9667c0602166f2c5f6e5",
       "headRepository": "mirjak/masque-drafts",
       "headRefName": "patch-1",
       "headRefOid": "c999ab41da77c6ede67025f5e93472eff649cf07",
-      "closedAt": null,
+      "closedAt": "2023-03-07T04:55:13Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
