@@ -7,9 +7,9 @@
 *~
 .tags
 /*-[0-9][0-9].xml
+/.*.mk
 /.gems/
 /.refcache
-/.targets.mk
 /.venv/
 /.vscode/
 /lib
@@ -17,8 +17,6 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-schinazi-masque-obfuscation.xml
-draft-schinazi-masque-protocol.xml
 draft-schinazi-masque-proxy.xml
 package-lock.json
 report.xml
