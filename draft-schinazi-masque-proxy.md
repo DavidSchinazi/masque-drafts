@@ -51,10 +51,10 @@ became more common, the CONNECT method was introduced {{?CONNECT=RFC2817}} to
 allow proxying SSL/TLS over HTTP. That gave HTTP the ability to create tunnels
 that allow proxying any TCP-based protocol. While non-TCP-based protocols were
 always prevalent on the Internet, the large-scale deployment of QUIC
-{{?QUIC=RFC9000}} meant that TCP no longer represented the majority of
-Internet traffic. Simultaneously, the creation of HTTP/3 {{H3}} allowed
-running HTTP over a non-TCP-based protocol. In particular, QUIC allows
-disabling loss recovery {{?DGRAM=RFC9221}} and that can then be used in HTTP
+{{?QUIC=RFC9000}} meant that TCP no longer represented the majority of Internet
+traffic. Simultaneously, the creation of HTTP/3 {{H3}} allowed running HTTP
+over a non-TCP-based protocol. In particular, QUIC allows disabling loss
+recovery {{?DGRAM=RFC9221}} and that can then be used in HTTP
 {{?HTTP-DGRAM=RFC9297}}. This confluence of events created both the possibility
 and the necessity for new proxying technologies in HTTP.
 
@@ -74,23 +74,23 @@ MASQUE Proxy.
 Connecting directly to Web servers allows them to access the public IP address
 of the user. There are many privacy concerns relating to user IP addresses
 {{?IP-PRIVACY=I-D.irtf-pearg-ip-address-privacy-considerations}}. Because of
-these, many user agents would rather not establish a direct connection to
-web servers. They can do that by running their traffic through a MASQUE
-Proxy. The web server will only see the IP address of the MASQUE Proxy, not
-that of the client.
+these, many user agents would rather not establish a direct connection to web
+servers. They can do that by running their traffic through a MASQUE Proxy. The
+web server will only see the IP address of the MASQUE Proxy, not that of the
+client.
 
 ## Protection from Network Providers
 
-Some users may wish to obfuscate the destination of their network traffic
-from their network provider. This prevents network providers from using data
+Some users may wish to obfuscate the destination of their network traffic from
+their network provider. This prevents network providers from using data
 harvested from this network traffic in ways the user did not intend.
 
 ## Partitioning
 
 While routing traffic through a MASQUE proxy reduces the network provider's
 ability to observe traffic, that information is transfered to the proxy
-operator. This can be suitable for some threat models, but for the majority
-of users transferring trust from their network provider to their proxy (or VPN)
+operator. This can be suitable for some threat models, but for the majority of
+users transferring trust from their network provider to their proxy (or VPN)
 provider is not a meaningful security improvement.
 
 There is a technical solution that allows resolving this issue: it is possible
@@ -109,14 +109,14 @@ proxies knowing the user's browsing history.
 ## Obfuscation
 
 The fact that MASQUE is layered over HTTP makes it much more resilient to
-detection. To network observers, the unencrypted bits in a QUIC connection
-used for MASQUE are indistinguishable from those of a regular Web browsing
+detection. To network observers, the unencrypted bits in a QUIC connection used
+for MASQUE are indistinguishable from those of a regular Web browsing
 connection. Separately, if paired with a non-probeable HTTP authentication
-scheme {{?CONCEALED-AUTH=RFC9729}}, any Web server
-can also become a MASQUE proxy while remaining indistinguishable from a
-regular Web server. It might still be possible to detect some level of
-MASQUE usage by analyzing encrypted traffic patterns, however the cost of
-performing such an analysis at scale makes it impractical.
+scheme {{?CONCEALED-AUTH=RFC9729}}, any Web server can also become a MASQUE
+proxy while remaining indistinguishable from a regular Web server. It might
+still be possible to detect some level of MASQUE usage by analyzing encrypted
+traffic patterns, however the cost of performing such an analysis at scale
+makes it impractical.
 
 This allows MASQUE to operate on networks that disallow VPNs by using a
 combination of protocol detection and blocklists.
@@ -145,8 +145,8 @@ acts as both a MASQUE Proxy and an OHTTP Relay.
 ## DoH
 
 DNS over HTTPS {{?DoH=RFC8484}} allows encrypting DNS traffic by sending it
-through an encrypted HTTP connection. Colocating a DoH server with a MASQUE
-IP proxy provides better performance than using DNS over port 53 inside the
+through an encrypted HTTP connection. Colocating a DoH server with a MASQUE IP
+proxy provides better performance than using DNS over port 53 inside the
 encrypted tunnel.
 
 # Security Considerations
