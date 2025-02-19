@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                          18 February 2025
-Expires: 22 August 2025
+Intended status: Informational                          19 February 2025
+Expires: 23 August 2025
 
 
                             The MASQUE Proxy
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 August 2025.
+   This Internet-Draft will expire on 23 August 2025.
 
 Copyright Notice
 
@@ -203,10 +203,9 @@ Table of Contents
 
    [CONCEALED-AUTH]
               Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
-              HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-httpbis-unprompted-auth-12, 19 September
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              httpbis-unprompted-auth-12>.
+              HTTP Authentication Scheme", RFC 9729,
+              DOI 10.17487/RFC9729, February 2025,
+              <https://www.rfc-editor.org/rfc/rfc9729>.
 
    [CONNECT]  Khare, R. and S. Lawrence, "Upgrading to TLS Within
               HTTP/1.1", RFC 2817, DOI 10.17487/RFC2817, May 2000,
