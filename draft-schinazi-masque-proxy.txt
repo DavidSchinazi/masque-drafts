@@ -109,8 +109,8 @@ Table of Contents
    Connecting directly to Web servers allows them to access the public
    IP address of the user.  There are many privacy concerns relating to
    user IP addresses [IP-PRIVACY].  Because of these, many user agents
-   would rather not establish a direct connection to web servers.  They
-   can do that by running their traffic through a MASQUE Proxy.  The web
+   would rather not establish a direct connection to Web servers.  They
+   can do that by running their traffic through a MASQUE Proxy.  The Web
    server will only see the IP address of the MASQUE Proxy, not that of
    the client.
 
