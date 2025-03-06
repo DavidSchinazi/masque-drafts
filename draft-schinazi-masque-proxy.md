@@ -113,13 +113,23 @@ detection. To network observers, the unencrypted bits in a QUIC connection used
 for MASQUE are indistinguishable from those of a regular Web browsing
 connection. Separately, if paired with a non-probeable HTTP authentication
 scheme {{?CONCEALED-AUTH=RFC9729}}, any Web server can also become a MASQUE
-proxy while remaining indistinguishable from a regular Web server. It might
-still be possible to detect some level of MASQUE usage by analyzing encrypted
-traffic patterns, however the cost of performing such an analysis at scale
-makes it impractical.
+proxy while remaining indistinguishable from a regular Web server. This defeats
+detection tools that operate solely on packet formats.
 
-This allows MASQUE to operate on networks that disallow VPNs by using a
-combination of protocol detection and blocklists.
+However, it is still possible to perform statitiscal analyses on the encrypted
+data. There exist commercially available products that are able to identify
+visited websites based solely on the timing and size of encrypted packets.
+While MASQUE increases the cost of such traffic analysis efforts, it doesn't
+prevent them from being used at scale.
+
+MASQUE implementations can leverage HTTP/2 and HTTP/3's ability to introduce
+padding inside the encryption. That enables many defensive strategies such as
+ensuring that all packets are the same size, or introducing variable amounts of
+cover traffic. From a theoretical perspective, sending data at a constant
+bitrate is the only way to fully prevent statistical analysis, but introduces
+too much overhead to be deployable at scale. Determination of padding amounts
+to optimize resistance against statistical analysis remains an open research
+problem.
 
 # Related Technologies
 
