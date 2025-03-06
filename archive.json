@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-04T00:37:05.865238+00:00",
+  "timestamp": "2025-03-06T00:36:49.777100+00:00",
   "repo": "DavidSchinazi/masque-drafts",
   "labels": [
     {
@@ -880,6 +880,22 @@
       "createdAt": "2024-08-01T09:02:04Z",
       "updatedAt": "2024-08-01T17:43:51Z",
       "closedAt": "2024-08-01T17:43:51Z",
+      "comments": []
+    },
+    {
+      "number": 32,
+      "id": "I_kwDOCjBhTM6scoJi",
+      "title": "Traffic analysis isn't impractical",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/issues/32",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@martinthomson mentioned [on the MASQUE list](https://mailarchive.ietf.org/arch/msg/masque/gng9FvxzrV_t9MsxWosfhAok_Eo/):\n\n> I think that this is generally good.  One nit:\n>\n>> It might still be possible to detect some level of MASQUE usage by analyzing encrypted traffic patterns, however the cost of performing such an analysis at scale makes it impractical.\n>\n> The one lesson above all of those that Edward Snowden shared was that assumptions like this were very very wrong.  Please consider removing this statement.\n\nI agree, let's fix this.",
+      "createdAt": "2025-03-04T07:05:36Z",
+      "updatedAt": "2025-03-04T07:05:36Z",
+      "closedAt": null,
       "comments": []
     }
   ],
