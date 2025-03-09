@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-06T00:36:49.777100+00:00",
+  "timestamp": "2025-03-09T00:32:39.658100+00:00",
   "repo": "DavidSchinazi/masque-drafts",
   "labels": [
     {
@@ -1524,6 +1524,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOCjBhTM6Ns1wt",
+      "title": "Warn of the realities of traffic analysis",
+      "url": "https://github.com/DavidSchinazi/masque-drafts/pull/33",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #32\r\n\r\ncc @martinthomson ",
+      "createdAt": "2025-03-06T22:21:33Z",
+      "updatedAt": "2025-03-06T22:21:33Z",
+      "baseRepository": "DavidSchinazi/masque-drafts",
+      "baseRefName": "main",
+      "baseRefOid": "ea4574fae50490bda2bb299896f0a33b9567e6b5",
+      "headRepository": "DavidSchinazi/masque-drafts",
+      "headRefName": "traffic_analysis",
+      "headRefOid": "0cbfbcc82f1d8261e621cfa78b09de52988c6d3a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
