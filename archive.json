@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-09T00:32:39.658100+00:00",
+  "timestamp": "2025-03-11T00:37:10.374870+00:00",
   "repo": "DavidSchinazi/masque-drafts",
   "labels": [
     {
@@ -1537,7 +1537,7 @@
       "labels": [],
       "body": "Closes #32\r\n\r\ncc @martinthomson ",
       "createdAt": "2025-03-06T22:21:33Z",
-      "updatedAt": "2025-03-06T22:21:33Z",
+      "updatedAt": "2025-03-10T04:55:26Z",
       "baseRepository": "DavidSchinazi/masque-drafts",
       "baseRefName": "main",
       "baseRefOid": "ea4574fae50490bda2bb299896f0a33b9567e6b5",
@@ -1549,7 +1549,40 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOCjBhTM6fIagM",
+          "commit": {
+            "abbreviatedOid": "0cbfbcc"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM.\r\n\r\nNote that the 100% bitrate strategy has been used in some applications.  (Audio was found to leak high entropy signals about content, so some applications move to G.711 or fixed transmission rate.)",
+          "createdAt": "2025-03-10T04:52:15Z",
+          "updatedAt": "2025-03-10T04:55:26Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "TLS and QUIC also offer the ability to pad.",
+              "createdAt": "2025-03-10T04:52:15Z",
+              "updatedAt": "2025-03-10T04:55:26Z"
+            },
+            {
+              "originalPosition": 24,
+              "body": "```suggestion\r\nbitrate is the only way to fully prevent statistical analysis, but it likely introduces\r\n```",
+              "createdAt": "2025-03-10T04:52:44Z",
+              "updatedAt": "2025-03-10T04:55:26Z"
+            },
+            {
+              "originalPosition": 27,
+              "body": "```suggestion\r\ntoo much overhead to be deployable at scale. Finding padding strategies that\r\nbalance resistance against statistical analysis with overheads remains an open\r\nresearch problem.\r\n```",
+              "createdAt": "2025-03-10T04:53:40Z",
+              "updatedAt": "2025-03-10T04:55:26Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
