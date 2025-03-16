@@ -162,15 +162,15 @@ Table of Contents
    traffic analysis efforts, it doesn't prevent them from being used at
    scale.
 
-   MASQUE implementations can leverage HTTP/2 and HTTP/3's ability to
-   introduce padding inside the encryption.  That enables many defensive
-   strategies such as ensuring that all packets are the same size, or
-   introducing variable amounts of cover traffic.  From a theoretical
-   perspective, sending data at a constant bitrate is the only way to
-   fully prevent statistical analysis, but it likely introduces too much
-   overhead to be deployable at scale.  Finding padding strategies that
-   balance resistance against statistical analysis with overheads
-   remains an open research problem.
+   MASQUE implementations can leverage the ability for HTTP/2, HTTP/3,
+   TLS, or QUIC to introduce padding inside the encryption.  That
+   enables many defensive strategies such as ensuring that all packets
+   are the same size, or introducing variable amounts of cover traffic.
+   From a theoretical perspective, sending data at a constant bitrate is
+   the only way to fully prevent statistical analysis, but it likely
+   introduces too much overhead to be deployable at scale.  Finding
+   padding strategies that balance resistance against statistical
+   analysis with overheads remains an open research problem.
 
 3.  Related Technologies
 
