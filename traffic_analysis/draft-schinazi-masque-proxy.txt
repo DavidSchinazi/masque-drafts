@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                              6 March 2025
-Expires: 7 September 2025
+Intended status: Informational                             16 March 2025
+Expires: 17 September 2025
 
 
                             The MASQUE Proxy
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 September 2025.
+   This Internet-Draft will expire on 17 September 2025.
 
 Copyright Notice
 
@@ -167,10 +167,10 @@ Table of Contents
    strategies such as ensuring that all packets are the same size, or
    introducing variable amounts of cover traffic.  From a theoretical
    perspective, sending data at a constant bitrate is the only way to
-   fully prevent statistical analysis, but introduces too much overhead
-   to be deployable at scale.  Determination of padding amounts to
-   optimize resistance against statistical analysis remains an open
-   research problem.
+   fully prevent statistical analysis, but it likely introduces too much
+   overhead to be deployable at scale.  Finding padding strategies that
+   balance resistance against statistical analysis with overheads
+   remains an open research problem.
 
 3.  Related Technologies
 
