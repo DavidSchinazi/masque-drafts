@@ -13,13 +13,13 @@ traffic over HTTP. This document defines the concept of a "MASQUE Proxy", an
 Internet-accessible node that can relay client traffic in order to provide
 privacy guarantees. 
     ' name="description">
-<meta content="xml2rfc 3.27.0" name="generator">
+<meta content="xml2rfc 3.28.0" name="generator">
 <meta content="masque" name="keyword">
 <meta content="proxy" name="keyword">
 <meta content="kuzh" name="keyword">
 <meta content="draft-schinazi-masque-proxy-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.27.0
+  xml2rfc 3.28.0
     Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -1050,11 +1050,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">The MASQUE Proxy</td>
-<td class="right">February 2025</td>
+<td class="right">March 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schinazi</td>
-<td class="center">Expires 23 August 2025</td>
+<td class="center">Expires 17 September 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-schinazi-masque-proxy-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-02-19" class="published">19 February 2025</time>
+<time datetime="2025-03-16" class="published">16 March 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-08-23">23 August 2025</time></dd>
+<dd class="expires"><time datetime="2025-09-17">17 September 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1121,7 +1121,7 @@ privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1286,12 +1286,21 @@ detection. To network observers, the unencrypted bits in a QUIC connection used
 for MASQUE are indistinguishable from those of a regular Web browsing
 connection. Separately, if paired with a non-probeable HTTP authentication
 scheme <span>[<a href="#CONCEALED-AUTH" class="cite xref">CONCEALED-AUTH</a>]</span>, any Web server can also become a MASQUE
-proxy while remaining indistinguishable from a regular Web server. It might
-still be possible to detect some level of MASQUE usage by analyzing encrypted
-traffic patterns, however the cost of performing such an analysis at scale
-makes it impractical.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">This allows MASQUE to operate on networks that disallow VPNs by using a
-combination of protocol detection and blocklists.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+proxy while remaining indistinguishable from a regular Web server. This defeats
+detection tools that operate solely on packet formats.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">However, it is still possible to perform statitiscal analyses on the encrypted
+data. There exist commercially available products that are able to identify
+visited websites based solely on the timing and size of encrypted packets.
+While MASQUE increases the cost of such traffic analysis efforts, it doesn't
+prevent them from being used at scale.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-3">MASQUE implementations can leverage the ability for HTTP/2, HTTP/3, TLS, or
+QUIC to introduce padding inside the encryption. That enables many defensive
+strategies such as ensuring that all packets are the same size, or introducing
+variable amounts of cover traffic. From a theoretical perspective, sending data
+at a constant bitrate is the only way to fully prevent statistical analysis,
+but it likely introduces too much overhead to be deployable at scale. Finding
+padding strategies that balance resistance against statistical analysis with
+overheads remains an open research problem.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
