@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                               7 July 2025
-Expires: 8 January 2026
+Intended status: Informational                          28 December 2025
+Expires: 1 July 2026
 
 
                             The MASQUE Proxy
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2026.
+   This Internet-Draft will expire on 1 July 2026.
 
 Copyright Notice
 
