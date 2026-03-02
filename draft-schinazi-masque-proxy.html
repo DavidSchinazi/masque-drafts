@@ -4,34 +4,32 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>The MASQUE Proxy</title>
+<title>The MASQUE Architecture</title>
 <meta content="David Schinazi" name="author">
-<meta content='
+<meta content="
        MASQUE (Multiplexed Application Substrate over QUIC Encryption) is a set of
 protocols and extensions to HTTP that allow proxying all kinds of Internet
-traffic over HTTP. This document defines the concept of a "MASQUE Proxy", an
-Internet-accessible node that can relay client traffic in order to provide
-privacy guarantees. 
-    ' name="description">
-<meta content="xml2rfc 3.28.0" name="generator">
+traffic over HTTP. This document describes the architectural principles
+behind MASQUE, and the properties that MASQUE can provide. 
+    " name="description">
+<meta content="xml2rfc 3.31.0" name="generator">
 <meta content="masque" name="keyword">
 <meta content="proxy" name="keyword">
 <meta content="kuzh" name="keyword">
 <meta content="draft-schinazi-masque-proxy-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.0
-    Python 3.12.9
+  xml2rfc 3.31.0
+    Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
-    intervaltree 3.1.0
-    Jinja2 3.1.5
-    lxml 5.3.0
-    platformdirs 4.3.6
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.0.2
+    platformdirs 4.5.1
     pycountry 24.6.1
-    PyYAML 6.0.2
-    requests 2.32.3
-    setuptools 70.3.0
-    wcwidth 0.2.13
+    PyYAML 6.0.3
+    requests 2.32.5
+    wcwidth 0.3.0
 -->
 <link href="draft-schinazi-masque-proxy.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -172,7 +170,7 @@ privacy guarantees.
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -180,7 +178,8 @@ privacy guarantees.
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -572,6 +571,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -642,7 +642,7 @@ a.pilcrow {
   }
 }
 @media not print {
-  :hover > a.pilcrow {
+  :hover > a.pilcrow, a.pilcrow:focus {
     opacity: 1;
   }
   a.pilcrow[href]:hover {
@@ -1049,12 +1049,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">The MASQUE Proxy</td>
-<td class="right">March 2025</td>
+<td class="center">The MASQUE Architecture</td>
+<td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schinazi</td>
-<td class="center">Expires 17 September 2025</td>
+<td class="center">Expires 3 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-schinazi-masque-proxy-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-03-16" class="published">16 March 2025</time>
+<time datetime="2026-03-02" class="published">2 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-17">17 September 2025</time></dd>
+<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1082,14 +1082,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">The MASQUE Proxy</h1>
+<h1 id="title">The MASQUE Architecture</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">MASQUE (Multiplexed Application Substrate over QUIC Encryption) is a set of
 protocols and extensions to HTTP that allow proxying all kinds of Internet
-traffic over HTTP. This document defines the concept of a "MASQUE Proxy", an
-Internet-accessible node that can relay client traffic in order to provide
-privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+traffic over HTTP. This document describes the architectural principles
+behind MASQUE, and the properties that MASQUE can provide.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1121,7 +1120,7 @@ privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1130,7 +1129,7 @@ privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2025 IETF Trust and the persons identified as the
+            Copyright (c) 2026 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1138,7 +1137,10 @@ privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
             (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
             publication of this document. Please review these documents
             carefully, as they describe your rights and restrictions with
-            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="toc">
@@ -1151,19 +1153,30 @@ privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-privacy-protections" class="internal xref">Privacy Protections</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-architectural-principles" class="internal xref">Architectural Principles</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-protection-from-web-servers" class="internal xref">Protection from Web Servers</a></p>
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-benefits-of-http" class="internal xref">Benefits of HTTP</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-protection-from-network-pro" class="internal xref">Protection from Network Providers</a></p>
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-capabilities" class="internal xref">Capabilities</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-partitioning" class="internal xref">Partitioning</a></p>
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-privacy-protections" class="internal xref">Privacy Protections</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.1">
+                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="auto internal xref">2.3.1</a>.  <a href="#name-protection-from-web-servers" class="internal xref">Protection from Web Servers</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-obfuscation" class="internal xref">Obfuscation</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.2">
+                    <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="auto internal xref">2.3.2</a>.  <a href="#name-protection-from-network-pro" class="internal xref">Protection from Network Providers</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.3">
+                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-partitioning" class="internal xref">Partitioning</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.4">
+                    <p id="section-toc.1-1.2.2.3.2.4.1"><a href="#section-2.3.4" class="auto internal xref">2.3.4</a>.  <a href="#name-obfuscation" class="internal xref">Obfuscation</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1202,105 +1215,145 @@ privacy guarantees.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">In the early days of HTTP, requests and responses weren't encrypted. In order
+<p id="section-1-1">In the early days of HTTP (<span>[<a href="#HTTP" class="cite xref">HTTP</a>]</span>)), requests and responses weren't encrypted. In order
 to add features such as caching, HTTP proxies were developed to parse HTTP
-requests from clients and forward them on to other HTTP servers. As SSL/TLS
-became more common, the CONNECT method was introduced <span>[<a href="#CONNECT" class="cite xref">CONNECT</a>]</span> to
+requests from clients and forward them on to other HTTP servers. As SSL/TLS (<span>[<a href="#TLS" class="cite xref">TLS</a>]</span>)
+became more common, the CONNECT method was introduced (<span>[<a href="#CONNECT" class="cite xref">CONNECT</a>]</span>) to
 allow proxying SSL/TLS over HTTP. That gave HTTP the ability to create tunnels
 that allow proxying any TCP-based protocol. While non-TCP-based protocols were
 always prevalent on the Internet, the large-scale deployment of QUIC
-<span>[<a href="#QUIC" class="cite xref">QUIC</a>]</span> meant that TCP no longer represented the majority of Internet
-traffic. Simultaneously, the creation of HTTP/3 <span>[<a href="#H3" class="cite xref">HTTP/3</a>]</span> allowed running HTTP
+(<span>[<a href="#QUIC" class="cite xref">QUIC</a>]</span>) meant that TCP no longer represented the majority of Internet
+traffic. Simultaneously, the creation of HTTP/3 (<span>[<a href="#HTTP3" class="cite xref">HTTP/3</a>]</span>) allowed running HTTP
 over a non-TCP-based protocol. In particular, QUIC allows disabling loss
-recovery <span>[<a href="#DGRAM" class="cite xref">DGRAM</a>]</span> and that can then be used in HTTP
-<span>[<a href="#HTTP-DGRAM" class="cite xref">HTTP-DGRAM</a>]</span>. This confluence of events created both the possibility
-and the necessity for new proxying technologies in HTTP.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This led to the creation of MASQUE (Multiplexed Application Substrate over QUIC
-Encryption). MASQUE allows proxying both UDP (<span>[<a href="#CONNECT-UDP" class="cite xref">CONNECT-UDP</a>]</span>) and IP
-(<span>[<a href="#CONNECT-IP" class="cite xref">CONNECT-IP</a>]</span>) over HTTP. While MASQUE has uses beyond improving
-user privacy, its focus and design are best suited for protecting sensitive
-information.<a href="#section-1-2" class="pilcrow">¶</a></p>
+recovery (<span>[<a href="#DGRAM" class="cite xref">DGRAM</a>]</span>) and that can then be used in HTTP
+(<span>[<a href="#HTTP-DGRAM" class="cite xref">HTTP-DGRAM</a>]</span>). This confluence of events created both the possibility
+and the necessity for new proxying technologies in HTTP. This led to the
+creation of MASQUE (Multiplexed Application Substrate over QUIC Encryption)
+in 2019.<a href="#section-1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="architectural-principles">
+<section id="section-2">
+      <h2 id="name-architectural-principles">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-architectural-principles" class="section-name selfRef">Architectural Principles</a>
+      </h2>
+<p id="section-2-1">Fundamentally, the main design choice for MASQUE was to run atop HTTP. While
+this choice was initially motivated by privacy benefits (making it harder to
+distinguish MASQUE traffic from Web browsing), it also facilitated the
+deployment of MASQUE given the wide availability of HTTP implementations.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="benefits-of-http">
+<section id="section-2.1">
+        <h3 id="name-benefits-of-http">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-benefits-of-http" class="section-name selfRef">Benefits of HTTP</a>
+        </h3>
+<p id="section-2.1-1">A large number of Internet-connected services use HTTP. That has led to
+widespread implementation and adoption of HTTP. For existing deployments of
+HTTP, adding MASQUE capabilities was possible without reimplementing
+security or cryptographic protocols, as would have been necessary for other
+proxying technologies. Similarly, many aspects of the HTTP ecosystem, such
+as Denial-of-Service protection, load balancing, and monitoring were
+reused with minimal changes.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">Another benefit is the ease of integration with other components of HTTP
+(such as HTTP Authentication) and extension points (such as HTTP header
+fields).<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="capabilities">
+<section id="section-2.2">
+        <h3 id="name-capabilities">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-capabilities" class="section-name selfRef">Capabilities</a>
+        </h3>
+<p id="section-2.2-1">MASQUE allows proxying UDP (<span>[<a href="#CONNECT-UDP" class="cite xref">CONNECT-UDP</a>]</span>), IP
+(<span>[<a href="#CONNECT-IP" class="cite xref">CONNECT-IP</a>]</span>), and even Ethernet
+(<span>[<a href="#CONNECT-ETHERNET" class="cite xref">CONNECT-ETHERNET</a>]</span>) over HTTP.
+There are also a variety of extensions to these MASQUE protocols to
+support a wide range of proxying needs.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">In the rest of this document, we use the term "MASQUE proxy" to refer to
+an HTTP proxy (as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.7" class="relref">Section 3.7</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) that implements
+MASQUE capabilities.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-protections">
-<section id="section-2">
-      <h2 id="name-privacy-protections">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-privacy-protections" class="section-name selfRef">Privacy Protections</a>
-      </h2>
-<p id="section-2-1">There are currently multiple usage scenarios that can benefit from using a
-MASQUE Proxy.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<div id="protection-from-web-servers">
-<section id="section-2.1">
-        <h3 id="name-protection-from-web-servers">
-<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-protection-from-web-servers" class="section-name selfRef">Protection from Web Servers</a>
+<section id="section-2.3">
+        <h3 id="name-privacy-protections">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-privacy-protections" class="section-name selfRef">Privacy Protections</a>
         </h3>
-<p id="section-2.1-1">Connecting directly to Web servers allows them to access the public IP address
+<p id="section-2.3-1">There are currently multiple usage scenarios that can benefit from using
+MASQUE.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<div id="protection-from-web-servers">
+<section id="section-2.3.1">
+          <h4 id="name-protection-from-web-servers">
+<a href="#section-2.3.1" class="section-number selfRef">2.3.1. </a><a href="#name-protection-from-web-servers" class="section-name selfRef">Protection from Web Servers</a>
+          </h4>
+<p id="section-2.3.1-1">Connecting directly to Web servers allows them to access the public IP address
 of the user. There are many privacy concerns relating to user IP addresses
-<span>[<a href="#IP-PRIVACY" class="cite xref">IP-PRIVACY</a>]</span>. Because of
+(<span>[<a href="#IP-PRIVACY" class="cite xref">IP-PRIVACY</a>]</span>). Because of
 these, many user agents would rather not establish a direct connection to Web
-servers. They can do that by running their traffic through a MASQUE Proxy. The
-Web server will only see the IP address of the MASQUE Proxy, not that of the
-client.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+servers. They can do that by running their traffic through a MASQUE proxy. The
+Web server will only see the IP address of the MASQUE proxy, not that of the
+client.<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protection-from-network-providers">
-<section id="section-2.2">
-        <h3 id="name-protection-from-network-pro">
-<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-protection-from-network-pro" class="section-name selfRef">Protection from Network Providers</a>
-        </h3>
-<p id="section-2.2-1">Some users may wish to obfuscate the destination of their network traffic from
+<section id="section-2.3.2">
+          <h4 id="name-protection-from-network-pro">
+<a href="#section-2.3.2" class="section-number selfRef">2.3.2. </a><a href="#name-protection-from-network-pro" class="section-name selfRef">Protection from Network Providers</a>
+          </h4>
+<p id="section-2.3.2-1">Some users may wish to obfuscate the destination of their network traffic from
 their network provider. This prevents network providers from using data
-harvested from this network traffic in ways the user did not intend.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+harvested from this network traffic in ways the user did not intend.<a href="#section-2.3.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="partitioning">
-<section id="section-2.3">
-        <h3 id="name-partitioning">
-<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-partitioning" class="section-name selfRef">Partitioning</a>
-        </h3>
-<p id="section-2.3-1">While routing traffic through a MASQUE proxy reduces the network provider's
+<section id="section-2.3.3">
+          <h4 id="name-partitioning">
+<a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-partitioning" class="section-name selfRef">Partitioning</a>
+          </h4>
+<p id="section-2.3.3-1">While routing traffic through a MASQUE proxy reduces the network provider's
 ability to observe traffic, that information is transfered to the proxy
 operator. This can be suitable for some threat models, but for the majority of
 users transferring trust from their network provider to their proxy (or VPN)
-provider is not a meaningful security improvement.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-<p id="section-2.3-2">There is a technical solution that allows resolving this issue: it is possible
+provider is not a meaningful security improvement.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.3-2">There is a technical solution that allows resolving this issue: it is possible
 to nest MASQUE tunnels such that traffic flows through multiple MASQUE proxies.
 This has the advantage of partitioning sensitive information to prevent
-correlation <span>[<a href="#PARTITION" class="cite xref">PARTITION</a>]</span>.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
-<p id="section-2.3-3">Though the idea of nested tunnels dates back decades <span>[<a href="#TODO" class="cite xref">TODO</a>]</span>, MASQUE now
+correlation <span>[<a href="#PARTITION" class="cite xref">PARTITION</a>]</span>.<a href="#section-2.3.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3.3-3">Though the idea of nested tunnels dates back decades (<span>[<a href="#TODO" class="cite xref">TODO</a>]</span>), MASQUE now
 allows running HTTP/3 end-to-end from a user agent to an origin via multiple
 nested CONNECT-UDP tunnels. The proxy closest to the user can see the user's IP
 address but not the origin, whereas the other proxy can see the origin without
 knowing the user's IP address. If the two proxies are operated by non-colluding
 entities, this allows hiding the user's IP address from the origin without the
-proxies knowing the user's browsing history.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+proxies knowing the user's browsing history.<a href="#section-2.3.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="obfuscation">
-<section id="section-2.4">
-        <h3 id="name-obfuscation">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-obfuscation" class="section-name selfRef">Obfuscation</a>
-        </h3>
-<p id="section-2.4-1">The fact that MASQUE is layered over HTTP makes it much more resilient to
+<section id="section-2.3.4">
+          <h4 id="name-obfuscation">
+<a href="#section-2.3.4" class="section-number selfRef">2.3.4. </a><a href="#name-obfuscation" class="section-name selfRef">Obfuscation</a>
+          </h4>
+<p id="section-2.3.4-1">The fact that MASQUE is layered over HTTP makes it much more resilient to
 detection. To network observers, the unencrypted bits in a QUIC connection used
 for MASQUE are indistinguishable from those of a regular Web browsing
 connection. Separately, if paired with a non-probeable HTTP authentication
-scheme <span>[<a href="#CONCEALED-AUTH" class="cite xref">CONCEALED-AUTH</a>]</span>, any Web server can also become a MASQUE
+scheme (e.g., <span>[<a href="#CONCEALED-AUTH" class="cite xref">CONCEALED-AUTH</a>]</span>), any Web server can also become a MASQUE
 proxy while remaining indistinguishable from a regular Web server. This defeats
-detection tools that operate solely on packet formats.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">However, it is still possible to perform statitiscal analyses on the encrypted
+detection tools that operate solely on packet formats.<a href="#section-2.3.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.4-2">However, it is still possible to perform statitiscal analyses on the encrypted
 data. There exist commercially available products that are able to identify
 visited websites based solely on the timing and size of encrypted packets.
 While MASQUE increases the cost of such traffic analysis efforts, it doesn't
-prevent them from being used at scale.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
-<p id="section-2.4-3">MASQUE implementations can leverage the ability for HTTP/2, HTTP/3, TLS, or
+prevent them from being used at scale.<a href="#section-2.3.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.3.4-3">MASQUE implementations can leverage the ability for HTTP/2 (<span>[<a href="#HTTP2" class="cite xref">HTTP/2</a>]</span>), HTTP/3, TLS, or
 QUIC to introduce padding inside the encryption. That enables many defensive
 strategies such as ensuring that all packets are the same size, or introducing
 variable amounts of cover traffic. From a theoretical perspective, sending data
 at a constant bitrate is the only way to fully prevent statistical analysis,
 but it likely introduces too much overhead to be deployable at scale. Finding
 padding strategies that balance resistance against statistical analysis with
-overheads remains an open research problem.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+overheads remains an open research problem.<a href="#section-2.3.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -1317,8 +1370,8 @@ privacy-focused IETF protocols.<a href="#section-3-1" class="pilcrow">¶</a></p>
         <h3 id="name-ohttp">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-ohttp" class="section-name selfRef">OHTTP</a>
         </h3>
-<p id="section-3.1-1">Oblivious HTTP <span>[<a href="#OHTTP" class="cite xref">OHTTP</a>]</span> uses a cryptographic primitive
-<span>[<a href="#HPKE" class="cite xref">HPKE</a>]</span> that is more lightweight than TLS <span>[<a href="#TLS" class="cite xref">TLS</a>]</span>, making it
+<p id="section-3.1-1">Oblivious HTTP (<span>[<a href="#OHTTP" class="cite xref">OHTTP</a>]</span>) uses a cryptographic primitive
+(<span>[<a href="#HPKE" class="cite xref">HPKE</a>]</span>) that is more lightweight than TLS, making it
 a great fit for decorrelating HTTP requests. In traditional Web browsing, the
 user agent will often make many requests to the same origin (e.g., to load
 HTML, style sheets, images, scripts) and those requests are correlatable since
@@ -1329,7 +1382,7 @@ make non-correlatable requests (e.g., to anonymously report telemetry); for
 those, OHTTP provides better efficiency than using MASQUE with a separate
 connection per request. While OHTTP and MASQUE are separate technologies that
 serve different use cases, they can be colocated on the same HTTP server that
-acts as both a MASQUE Proxy and an OHTTP Relay.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+acts as both a MASQUE proxy and an OHTTP Relay.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="doh">
@@ -1337,7 +1390,7 @@ acts as both a MASQUE Proxy and an OHTTP Relay.<a href="#section-3.1-1" class="p
         <h3 id="name-doh">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-doh" class="section-name selfRef">DoH</a>
         </h3>
-<p id="section-3.2-1">DNS over HTTPS <span>[<a href="#DoH" class="cite xref">DoH</a>]</span> allows encrypting DNS traffic by sending it
+<p id="section-3.2-1">DNS over HTTPS (<span>[<a href="#DoH" class="cite xref">DoH</a>]</span>) allows encrypting DNS traffic by sending it
 through an encrypted HTTP connection. Colocating a DoH server with a MASQUE IP
 proxy provides better performance than using DNS over port 53 inside the
 encrypted tunnel.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
@@ -1376,6 +1429,10 @@ the documents referenced by this one.<a href="#section-4-1" class="pilcrow">¶</
       <dd>
 <span class="refAuthor">Khare, R.</span> and <span class="refAuthor">S. Lawrence</span>, <span class="refTitle">"Upgrading to TLS Within HTTP/1.1"</span>, <span class="seriesInfo">RFC 2817</span>, <span class="seriesInfo">DOI 10.17487/RFC2817</span>, <time datetime="2000-05" class="refDate">May 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2817">https://www.rfc-editor.org/rfc/rfc2817</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="CONNECT-ETHERNET">[CONNECT-ETHERNET]</dt>
+      <dd>
+<span class="refAuthor">Sedeño, A.</span>, <span class="refTitle">"Proxying Ethernet in HTTP"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-masque-connect-ethernet-08</span>, <time datetime="2025-10-10" class="refDate">10 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-masque-connect-ethernet-08">https://datatracker.ietf.org/doc/html/draft-ietf-masque-connect-ethernet-08</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="CONNECT-IP">[CONNECT-IP]</dt>
       <dd>
 <span class="refAuthor">Pauly, T., Ed.</span>, <span class="refAuthor">Schinazi, D.</span>, <span class="refAuthor">Chernyakhovsky, A.</span>, <span class="refAuthor">Kühlewind, M.</span>, and <span class="refAuthor">M. Westerlund</span>, <span class="refTitle">"Proxying IP in HTTP"</span>, <span class="seriesInfo">RFC 9484</span>, <span class="seriesInfo">DOI 10.17487/RFC9484</span>, <time datetime="2023-10" class="refDate">October 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9484">https://www.rfc-editor.org/rfc/rfc9484</a>&gt;</span>. </dd>
@@ -1396,11 +1453,19 @@ the documents referenced by this one.<a href="#section-4-1" class="pilcrow">¶</
       <dd>
 <span class="refAuthor">Barnes, R.</span>, <span class="refAuthor">Bhargavan, K.</span>, <span class="refAuthor">Lipp, B.</span>, and <span class="refAuthor">C. Wood</span>, <span class="refTitle">"Hybrid Public Key Encryption"</span>, <span class="seriesInfo">RFC 9180</span>, <span class="seriesInfo">DOI 10.17487/RFC9180</span>, <time datetime="2022-02" class="refDate">February 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9180">https://www.rfc-editor.org/rfc/rfc9180</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="HTTP">[HTTP]</dt>
+      <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="HTTP-DGRAM">[HTTP-DGRAM]</dt>
       <dd>
 <span class="refAuthor">Schinazi, D.</span> and <span class="refAuthor">L. Pardue</span>, <span class="refTitle">"HTTP Datagrams and the Capsule Protocol"</span>, <span class="seriesInfo">RFC 9297</span>, <span class="seriesInfo">DOI 10.17487/RFC9297</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9297">https://www.rfc-editor.org/rfc/rfc9297</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="H3">[HTTP/3]</dt>
+<dt id="HTTP2">[HTTP/2]</dt>
+      <dd>
+<span class="refAuthor">Thomson, M., Ed.</span> and <span class="refAuthor">C. Benfield, Ed.</span>, <span class="refTitle">"HTTP/2"</span>, <span class="seriesInfo">RFC 9113</span>, <span class="seriesInfo">DOI 10.17487/RFC9113</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9113">https://www.rfc-editor.org/rfc/rfc9113</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="HTTP3">[HTTP/3]</dt>
       <dd>
 <span class="refAuthor">Bishop, M., Ed.</span>, <span class="refTitle">"HTTP/3"</span>, <span class="seriesInfo">RFC 9114</span>, <span class="seriesInfo">DOI 10.17487/RFC9114</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9114">https://www.rfc-editor.org/rfc/rfc9114</a>&gt;</span>. </dd>
 <dd class="break"></dd>
@@ -1460,11 +1525,6 @@ inspiration and true leader of VPNs.<a href="#appendix-A-4" class="pilcrow">¶</
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">David Schinazi</span></div>
 <div dir="auto" class="left"><span class="org">Google LLC</span></div>
-<div dir="auto" class="left"><span class="street-address">1600 Amphitheatre Parkway</span></div>
-<div dir="auto" class="left">
-<span class="locality">Mountain View</span>, <span class="region">CA</span> <span class="postal-code">94043</span>
-</div>
-<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:dschinazi.ietf@gmail.com" class="email">dschinazi.ietf@gmail.com</a>
