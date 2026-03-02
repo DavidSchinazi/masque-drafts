@@ -1,7 +1,7 @@
 ---
 title: The MASQUE Proxy
 docname: draft-schinazi-masque-proxy-latest
-submissiontype: independent
+submissiontype: IETF
 number:
 date:
 v: 3
