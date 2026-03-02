@@ -18,11 +18,6 @@ author:
     ins: D. Schinazi
     name: David Schinazi
     org: Google LLC
-    street: 1600 Amphitheatre Parkway
-    city: Mountain View
-    region: CA
-    code: 94043
-    country: United States of America
     email: dschinazi.ietf@gmail.com
 informative:
   H3:
