@@ -37,7 +37,6 @@ protocols and extensions to HTTP that allow proxying all kinds of Internet
 traffic over HTTP. This document describes the architectural principles
 behind MASQUE, and the properties that MASQUE can provide.
 
-
 --- middle
 
 # Introduction
