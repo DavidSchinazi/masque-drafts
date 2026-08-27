@@ -4,20 +4,20 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Informational                          28 December 2025
-Expires: 1 July 2026
+Intended status: Informational                            27 August 2026
+Expires: 28 February 2027
 
 
-                            The MASQUE Proxy
+                        The MASQUE Architecture
                    draft-schinazi-masque-proxy-latest
 
 Abstract
 
    MASQUE (Multiplexed Application Substrate over QUIC Encryption) is a
    set of protocols and extensions to HTTP that allow proxying all kinds
-   of Internet traffic over HTTP.  This document defines the concept of
-   a "MASQUE Proxy", an Internet-accessible node that can relay client
-   traffic in order to provide privacy guarantees.
+   of Internet traffic over HTTP.  This document describes the
+   architectural principles behind MASQUE, and the properties that
+   MASQUE can provide.
 
 About This Document
 
@@ -46,27 +46,33 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 July 2026.
+   This Internet-Draft will expire on 28 February 2027.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
-   and restrictions with respect to this document.
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
 
 Table of Contents
 
    1.  Introduction
-   2.  Privacy Protections
-     2.1.  Protection from Web Servers
-     2.2.  Protection from Network Providers
-     2.3.  Partitioning
-     2.4.  Obfuscation
+   2.  Architectural Principles
+     2.1.  Benefits of HTTP
+     2.2.  Capabilities
+     2.3.  Privacy Protections
+       2.3.1.  Protection from Web Servers
+       2.3.2.  Protection from Network Providers
+       2.3.3.  Partitioning
+       2.3.4.  Obfuscation
    3.  Related Technologies
      3.1.  OHTTP
      3.2.  DoH
@@ -78,50 +84,79 @@ Table of Contents
 
 1.  Introduction
 
-   In the early days of HTTP, requests and responses weren't encrypted.
-   In order to add features such as caching, HTTP proxies were developed
-   to parse HTTP requests from clients and forward them on to other HTTP
-   servers.  As SSL/TLS became more common, the CONNECT method was
-   introduced [CONNECT] to allow proxying SSL/TLS over HTTP.  That gave
-   HTTP the ability to create tunnels that allow proxying any TCP-based
-   protocol.  While non-TCP-based protocols were always prevalent on the
-   Internet, the large-scale deployment of QUIC [QUIC] meant that TCP no
-   longer represented the majority of Internet traffic.  Simultaneously,
-   the creation of HTTP/3 [HTTP/3] allowed running HTTP over a non-TCP-
-   based protocol.  In particular, QUIC allows disabling loss recovery
-   [DGRAM] and that can then be used in HTTP [HTTP-DGRAM].  This
-   confluence of events created both the possibility and the necessity
-   for new proxying technologies in HTTP.
+   In the early days of HTTP ([HTTP])), requests and responses weren't
+   encrypted.  In order to add features such as caching, HTTP proxies
+   were developed to parse HTTP requests from clients and forward them
+   on to other HTTP servers.  As SSL/TLS ([TLS]) became more common, the
+   CONNECT method was introduced ([CONNECT]) to allow proxying SSL/TLS
+   over HTTP.  That gave HTTP the ability to create tunnels that allow
+   proxying any TCP-based protocol.  While non-TCP-based protocols were
+   always prevalent on the Internet, the large-scale deployment of QUIC
+   ([QUIC]) meant that TCP no longer represented the majority of
+   Internet traffic.  Simultaneously, the creation of HTTP/3 ([HTTP/3])
+   allowed running HTTP over a non-TCP-based protocol.  In particular,
+   QUIC allows disabling loss recovery ([DGRAM]) and that can then be
+   used in HTTP ([HTTP-DGRAM]).  This confluence of events created both
+   the possibility and the necessity for new proxying technologies in
+   HTTP.  This led to the creation of MASQUE (Multiplexed Application
+   Substrate over QUIC Encryption) in 2019.
 
-   This led to the creation of MASQUE (Multiplexed Application Substrate
-   over QUIC Encryption).  MASQUE allows proxying both UDP
-   ([CONNECT-UDP]) and IP ([CONNECT-IP]) over HTTP.  While MASQUE has
-   uses beyond improving user privacy, its focus and design are best
-   suited for protecting sensitive information.
+2.  Architectural Principles
 
-2.  Privacy Protections
+   Fundamentally, the main design choice for MASQUE was to run atop
+   HTTP.  While this choice was initially motivated by privacy benefits
+   (making it harder to distinguish MASQUE traffic from Web browsing),
+   it also facilitated the deployment of MASQUE given the wide
+   availability of HTTP implementations.
+
+2.1.  Benefits of HTTP
+
+   A large number of Internet-connected services use HTTP.  That has led
+   to widespread implementation and adoption of HTTP.  For existing
+   deployments of HTTP, adding MASQUE capabilities was possible without
+   reimplementing security or cryptographic protocols, as would have
+   been necessary for other proxying technologies.  Similarly, many
+   aspects of the HTTP ecosystem, such as Denial-of-Service protection,
+   load balancing, and monitoring were reused with minimal changes.
+
+   Another benefit is the ease of integration with other components of
+   HTTP (such as HTTP Authentication) and extension points (such as HTTP
+   header fields).
+
+2.2.  Capabilities
+
+   MASQUE allows proxying UDP ([CONNECT-UDP]), IP ([CONNECT-IP]), and
+   even Ethernet ([CONNECT-ETHERNET]) over HTTP.  There are also a
+   variety of extensions to these MASQUE protocols to support a wide
+   range of proxying needs.
+
+   In the rest of this document, we use the term "MASQUE proxy" to refer
+   to an HTTP proxy (as defined in Section 3.7 of [HTTP]) that
+   implements MASQUE capabilities.
+
+2.3.  Privacy Protections
 
    There are currently multiple usage scenarios that can benefit from
-   using a MASQUE Proxy.
+   using MASQUE.
 
-2.1.  Protection from Web Servers
+2.3.1.  Protection from Web Servers
 
    Connecting directly to Web servers allows them to access the public
    IP address of the user.  There are many privacy concerns relating to
-   user IP addresses [IP-PRIVACY].  Because of these, many user agents
+   user IP addresses ([IP-PRIVACY]).  Because of these, many user agents
    would rather not establish a direct connection to Web servers.  They
-   can do that by running their traffic through a MASQUE Proxy.  The Web
-   server will only see the IP address of the MASQUE Proxy, not that of
+   can do that by running their traffic through a MASQUE proxy.  The Web
+   server will only see the IP address of the MASQUE proxy, not that of
    the client.
 
-2.2.  Protection from Network Providers
+2.3.2.  Protection from Network Providers
 
    Some users may wish to obfuscate the destination of their network
    traffic from their network provider.  This prevents network providers
    from using data harvested from this network traffic in ways the user
    did not intend.
 
-2.3.  Partitioning
+2.3.3.  Partitioning
 
    While routing traffic through a MASQUE proxy reduces the network
    provider's ability to observe traffic, that information is transfered
@@ -135,7 +170,7 @@ Table of Contents
    multiple MASQUE proxies.  This has the advantage of partitioning
    sensitive information to prevent correlation [PARTITION].
 
-   Though the idea of nested tunnels dates back decades [TODO], MASQUE
+   Though the idea of nested tunnels dates back decades ([TODO]), MASQUE
    now allows running HTTP/3 end-to-end from a user agent to an origin
    via multiple nested CONNECT-UDP tunnels.  The proxy closest to the
    user can see the user's IP address but not the origin, whereas the
@@ -144,14 +179,14 @@ Table of Contents
    allows hiding the user's IP address from the origin without the
    proxies knowing the user's browsing history.
 
-2.4.  Obfuscation
+2.3.4.  Obfuscation
 
    The fact that MASQUE is layered over HTTP makes it much more
    resilient to detection.  To network observers, the unencrypted bits
    in a QUIC connection used for MASQUE are indistinguishable from those
    of a regular Web browsing connection.  Separately, if paired with a
-   non-probeable HTTP authentication scheme [CONCEALED-AUTH], any Web
-   server can also become a MASQUE proxy while remaining
+   non-probeable HTTP authentication scheme (e.g., [CONCEALED-AUTH]),
+   any Web server can also become a MASQUE proxy while remaining
    indistinguishable from a regular Web server.  This defeats detection
    tools that operate solely on packet formats.
 
@@ -162,15 +197,15 @@ Table of Contents
    traffic analysis efforts, it doesn't prevent them from being used at
    scale.
 
-   MASQUE implementations can leverage the ability for HTTP/2, HTTP/3,
-   TLS, or QUIC to introduce padding inside the encryption.  That
-   enables many defensive strategies such as ensuring that all packets
-   are the same size, or introducing variable amounts of cover traffic.
-   From a theoretical perspective, sending data at a constant bitrate is
-   the only way to fully prevent statistical analysis, but it likely
-   introduces too much overhead to be deployable at scale.  Finding
-   padding strategies that balance resistance against statistical
-   analysis with overheads remains an open research problem.
+   MASQUE implementations can leverage the ability for HTTP/2
+   ([HTTP/2]), HTTP/3, TLS, or QUIC to introduce padding inside the
+   encryption.  That enables many defensive strategies such as ensuring
+   that all packets are the same size, or introducing variable amounts
+   of cover traffic.  From a theoretical perspective, sending data at a
+   constant bitrate is the only way to fully prevent statistical
+   analysis, but it likely introduces too much overhead to be deployable
+   at scale.  Finding padding strategies that balance resistance against
+   statistical analysis with overheads remains an open research problem.
 
 3.  Related Technologies
 
@@ -179,25 +214,25 @@ Table of Contents
 
 3.1.  OHTTP
 
-   Oblivious HTTP [OHTTP] uses a cryptographic primitive [HPKE] that is
-   more lightweight than TLS [TLS], making it a great fit for
-   decorrelating HTTP requests.  In traditional Web browsing, the user
-   agent will often make many requests to the same origin (e.g., to load
-   HTML, style sheets, images, scripts) and those requests are
-   correlatable since the origin can include identifying query
-   parameters to join separate requests.  In such scenarios, MASQUE is a
-   better fit since it operates at the granularity of a connection.
-   However, there are scenarios where a user agent might want to make
-   non-correlatable requests (e.g., to anonymously report telemetry);
-   for those, OHTTP provides better efficiency than using MASQUE with a
-   separate connection per request.  While OHTTP and MASQUE are separate
+   Oblivious HTTP ([OHTTP]) uses a cryptographic primitive ([HPKE]) that
+   is more lightweight than TLS, making it a great fit for decorrelating
+   HTTP requests.  In traditional Web browsing, the user agent will
+   often make many requests to the same origin (e.g., to load HTML,
+   style sheets, images, scripts) and those requests are correlatable
+   since the origin can include identifying query parameters to join
+   separate requests.  In such scenarios, MASQUE is a better fit since
+   it operates at the granularity of a connection.  However, there are
+   scenarios where a user agent might want to make non-correlatable
+   requests (e.g., to anonymously report telemetry); for those, OHTTP
+   provides better efficiency than using MASQUE with a separate
+   connection per request.  While OHTTP and MASQUE are separate
    technologies that serve different use cases, they can be colocated on
-   the same HTTP server that acts as both a MASQUE Proxy and an OHTTP
+   the same HTTP server that acts as both a MASQUE proxy and an OHTTP
    Relay.
 
 3.2.  DoH
 
-   DNS over HTTPS [DoH] allows encrypting DNS traffic by sending it
+   DNS over HTTPS ([DoH]) allows encrypting DNS traffic by sending it
    through an encrypted HTTP connection.  Colocating a DoH server with a
    MASQUE IP proxy provides better performance than using DNS over port
    53 inside the encrypted tunnel.
@@ -223,6 +258,13 @@ Table of Contents
               HTTP/1.1", RFC 2817, DOI 10.17487/RFC2817, May 2000,
               <https://www.rfc-editor.org/rfc/rfc2817>.
 
+   [CONNECT-ETHERNET]
+              Sedeño, A., "Proxying Ethernet Frames in HTTP", Work in
+              Progress, Internet-Draft, draft-ietf-masque-connect-
+              ethernet-14, 18 August 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-masque-
+              connect-ethernet-14>.
+
    [CONNECT-IP]
               Pauly, T., Ed., Schinazi, D., Chernyakhovsky, A.,
               Kühlewind, M., and M. Westerlund, "Proxying IP in HTTP",
@@ -247,10 +289,19 @@ Table of Contents
               Public Key Encryption", RFC 9180, DOI 10.17487/RFC9180,
               February 2022, <https://www.rfc-editor.org/rfc/rfc9180>.
 
+   [HTTP]     Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Semantics", STD 97, RFC 9110,
+              DOI 10.17487/RFC9110, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9110>.
+
    [HTTP-DGRAM]
               Schinazi, D. and L. Pardue, "HTTP Datagrams and the
               Capsule Protocol", RFC 9297, DOI 10.17487/RFC9297, August
               2022, <https://www.rfc-editor.org/rfc/rfc9297>.
+
+   [HTTP/2]   Thomson, M., Ed. and C. Benfield, Ed., "HTTP/2", RFC 9113,
+              DOI 10.17487/RFC9113, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9113>.
 
    [HTTP/3]   Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
@@ -308,7 +359,4 @@ Author's Address
 
    David Schinazi
    Google LLC
-   1600 Amphitheatre Parkway
-   Mountain View, CA 94043
-   United States of America
    Email: dschinazi.ietf@gmail.com
